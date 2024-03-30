@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@fontsource/dm-sans/index.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -93,6 +94,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@fontsource/dm-sans/index.css",
               "src/styles.scss"
             ],
             "scripts": []
