@@ -5,12 +5,35 @@
         </div>
         <img src = "/assets/Logo.svg" alt="The gloKi Logo"/>
     </div>
-    <div class="main-content">
+    <div class="main-content" *ngIf="step==1">
         <h1>Select your gloKi&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
-        <button class="inverse">Existing</button>
-        <button>Create New</button>
+        <input type="file" style="display:none" accept=".json" (change)="onFileSelected($event)" #fileUpload/>
+        <button class="inverse" (click)="fileUpload.click()">Existing</button>
+        <button (click)="onGenerate($event)">Create New</button>
+    </div>
+    <div class="main-content" *ngIf="step==2">
+        <h1>Select your storage&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
+        <select required [(ngModel)]="selectedServer" (ngModelChange)="onServerSelected($event)">
+            <option value="" disabled selected hidden>storage</option>
+            <option [value]="location(true)">{{location(false)}}</option>
+            <option value="http://ouri.gloki.contact">To be removed</option>
+        </select>
+    </div>
+    <div class="main-content" *ngIf="step==3">
+        <div>
+            <h1>All is well</h1>
+        </div>
+        <div>
+            <h1>gloKi not found</h1>
+            <input type="checkbox" name="register" [(ngModel)]="registerChecked"/>
+            <label for="register">Register a new one</label>
+        </div>
+        <button [disabled]="!registerChecked" (click)="navigate(selectedServer)">Login</button>
     </div>
     <div class="footer">
-        <p>step 1/2</p>
+        <div class="progress-indicator">
+            <div class="progress-bar"><div class="progress-value" [ngStyle]="{'width': ''+step*34+'%'}"></div></div>
+            {{step}}/3
+        </div>
     </div>
 </div>
