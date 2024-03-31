@@ -13,6 +13,7 @@ export class LoginComponent {
   step: number = 1;
   selectedServer: string = '';
   registerChecked: boolean = false;
+  agentExists: boolean = false;
 
   constructor(
     private router: Router,
@@ -54,7 +55,13 @@ export class LoginComponent {
   }
 
   onServerSelected(event: any) {
-    this.step = 3;
+    this.agentService.isExistAgent(this.selectedServer, this.key).subscribe({
+      next: (exists: Boolean) => {
+        this.agentExists = exists.valueOf();
+        this.step = 3;
+      },
+      error: (e) => {}
+    });
   }
 
   navigate(server: string) {
