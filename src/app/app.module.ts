@@ -9,13 +9,15 @@ import { ScanComponent } from './scan/scan.component';
 
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    ScanComponent
+    ScanComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

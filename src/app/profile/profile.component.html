@@ -1,1 +1,37 @@
-<p>profile works!</p>
+<div class="profile-wrapper">
+    <h1 class="page-header">name.gloki</h1>
+    <div class="profile-container">
+        <div class="profile-info">
+          <div *ngIf="isEdit" class="edit-mode">
+            <div class="form-field">
+              <input type="text" [(ngModel)]="firstName" placeholder="First Name">
+              <label>First Name</label>
+            </div>
+            <div class="form-field">
+              <input type="text" [(ngModel)]="lastName" placeholder="Last Name">
+              <label>Last Name</label>
+            </div>
+            <button [disabled]="!isFormValid" (click)="saveProfile()">Save</button>
+          </div>
+          <div *ngIf="!isEdit" class="info-mode">
+            <div class="info-field">
+              <span>{{ firstName }}</span>
+              <label>First Name</label>
+            </div>
+            <div class="info-field">
+              <span>{{ lastName }}</span>
+              <label>Last Name</label>
+            </div>
+            <button (click)="editProfile()">Edit</button>
+          </div>
+        </div>
+        <div class="profile-photo">
+          <div *ngIf="isEdit" class="file-upload">
+            <input type="file" (change)="onFileSelected($event)" accept="image/*">
+            <div *ngIf="!selectedPhoto" class="upload-text">Add your photo</div>
+            <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Profile Photo">
+          </div>
+          <img *ngIf="!isEdit" [src]="userPhoto" alt="Profile Photo">
+        </div>
+    </div>
+</div>
