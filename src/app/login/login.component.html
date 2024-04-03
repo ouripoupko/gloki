@@ -15,10 +15,9 @@
         <h1>Select your storage&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
         <select required [(ngModel)]="selectedServer" (ngModelChange)="onServerSelected($event)">
             <option value="" disabled selected hidden>storage</option>
-            <option [value]="location(true)">{{location(false)}}</option>
-            <option value="http://guest.gloki.contact">Storage 1</option>
-            <option value="http://guest.gloki.contact">Storage 2</option>
-            <option value="http://guest.gloki.contact">Storage 3</option>
+            <option [value]="location(true)">{{location(true)}}</option>
+            <option value="http://guest.gloki.contact">http://guest.gloki.contact</option>
+            <option value="https://ouri.gloki.contact">https://ouri.gloki.contact</option>
         </select>
     </div>
     <div class="main-content" *ngIf="step==3">
@@ -30,7 +29,7 @@
             <input type="checkbox" name="register" [(ngModel)]="registerChecked"/>
             <label for="register">Register a new one</label>
         </div>
-        <button [disabled]="!registerChecked && !agentExists" (click)="navigate(selectedServer)">Login</button>
+        <button [disabled]="!registerChecked && !agentExists" (click)="doLogin()">Login</button>
     </div>
     <div class="footer">
         <div class="progress-indicator">

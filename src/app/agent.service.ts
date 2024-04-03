@@ -49,14 +49,14 @@ export class AgentService {
       );
   }
 
-  addContract(server: string, agent: string, contract: Contract): Observable<Boolean> {
+  addContract(server: string, agent: string, contract: Contract): Observable<string> {
     console.log('add new contract:', contract);
     let params = new HttpParams().set('action', 'deploy_contract');
-    return this.http.put<Boolean>(`${server}/ibc/app/${agent}`,
+    return this.http.put<string>(`${server}/ibc/app/${agent}`,
                                     contract,
                                     {...this.httpOptions, params: params}).pipe(
       tap(_ => console.log('added contract')),
-      catchError(this.handleError<Boolean>('addContract')),
+      catchError(this.handleError<string>('addContract')),
       first()
     );
   }

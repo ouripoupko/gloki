@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AgentService } from '../agent.service';
+import { Contract } from '../contract';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +16,14 @@ export class LoginComponent {
   selectedServer: string = '';
   registerChecked: boolean = false;
   agentExists: boolean = false;
+  profileName: string = 'gloki-main-contract';
+  profileContract?: String;
+  isLoading: boolean = false;
 
   constructor(
     private router: Router,
     private agentService: AgentService,
+    private httpClient: HttpClient
   ) { }
 
   onFileSelected(event: any) {
@@ -55,17 +61,73 @@ export class LoginComponent {
   }
 
   onServerSelected(event: any) {
+    this.isLoading = true;
     this.agentService.isExistAgent(this.selectedServer, this.key).subscribe({
       next: (exists: Boolean) => {
+        console.log('agent exists:', exists);
         this.agentExists = exists.valueOf();
-        this.step = 3;
+        this.agentService.getContracts(this.selectedServer, this.key)
+        .subscribe((contracts:Contract[]) => {
+          for (let contract of contracts) {
+            if (contract.name === this.profileName) {
+              this.profileContract = contract.id;
+            }
+          }
+          console.log('contract found:', this.profileContract);
+          this.step = 3;
+          this.isLoading = false;
+        });
       },
       error: (e) => {}
     });
   }
 
-  navigate(server: string) {
-    this.router.navigate(['main'], { queryParams: { server: server, agent: this.key}});
+  doLogin() {
+    this.isLoading = true;
+    if (this.agentExists) {
+      this.checkContract();
+    } else {
+      this.agentService.registerAgent(this.selectedServer, this.key).subscribe((reply) => {
+        console.log('register agent:', reply);
+        this.checkContract()
+      });
+    }
+  }
+
+  checkContract() {
+    if (this.profileContract) {
+      this.navigate();
+    } else {
+      let contract = {} as Contract;
+
+      contract.name = this.profileName;
+      contract.contract = "profile.py";
+      contract.code = "";
+      contract.protocol = "BFT";
+      contract.default_app = "";
+      contract.pid = this.key;
+      contract.address = this.selectedServer;
+
+      contract.profile = "";
+
+      contract.constructor = {};
+
+      this.httpClient.get(`assets/${contract.contract}`, { responseType: 'text' })
+        .subscribe(data => {
+          contract.code = data;
+          this.agentService.addContract(this.selectedServer, this.key, contract)
+            .subscribe((id) => {
+              console.log('register contract:', id);
+              this.profileContract = id;
+              this.navigate();
+          });
+      });
+
+    }
+  }
+
+  navigate() {
+    this.router.navigate(['main'], { queryParams: { server: this.selectedServer, agent: this.key, contract: this.profileContract}});
   }
 
 }
