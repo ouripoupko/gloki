@@ -1,0 +1,8 @@
+<p>share works!</p>
+<div>
+    <ngx-qrcode-styling #qrcode [config]="config"></ngx-qrcode-styling>
+</div>
+<div>
+    <label for="message">Your message:</label>
+    <input type="text" name="message" [(ngModel)]="message" (ngModelChange)="onChange($event, qrcode)">
+</div>

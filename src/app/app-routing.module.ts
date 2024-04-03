@@ -6,6 +6,7 @@ import { ScanComponent } from './scan/scan.component';
 import { CommunitiesComponent } from './communities/communities.component';
 import { CommunityComponent } from './community/community.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ShareComponent } from './share/share.component';
 
 const routes: Routes = [
   { path: '', children: [
@@ -15,7 +16,8 @@ const routes: Routes = [
     { path: 'scan', component: ScanComponent},
     { path: 'communities', component: CommunitiesComponent},
     { path: 'community', component: CommunityComponent},
-    { path: 'profile', component: ProfileComponent}
+    { path: 'profile', component: ProfileComponent},
+    { path: 'share', component: ShareComponent}
   ]}
 ];
 

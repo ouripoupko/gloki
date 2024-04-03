@@ -6,10 +6,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { ScanComponent } from './scan/scan.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ProfileComponent } from './profile/profile.component';
+import { NgxQrcodeStylingModule } from 'ngx-qrcode-styling';
+import { ShareComponent } from './share/share.component';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @NgModule({
   declarations: [
@@ -17,13 +20,16 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     MainComponent,
     ScanComponent,
-    ProfileComponent
+    ProfileComponent,
+    ShareComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxQrcodeStylingModule,
+    NgxScannerQrcodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
