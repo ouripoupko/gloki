@@ -6,9 +6,9 @@
         <img src = "assets/Logo.svg" alt="The gloKi Logo"/>
     </div>
     <app-gloki class="main-content" *ngIf="state.step==1" />
-    <app-gloki class="main-content" *ngIf="state.step==2" />
-    <app-gloki class="main-content" *ngIf="state.step==3" />
-    <app-gloki class="main-content" *ngIf="state.step==4" />
+    <app-storage class="main-content" *ngIf="state.step==2" />
+    <app-connect class="main-content" *ngIf="state.step==3" />
+    <app-do-login class="main-content" *ngIf="state.step==4" />
     <div class="footer">
         <div *ngIf="state.isLoading">Loading ...</div>
         <div class="progress-indicator">

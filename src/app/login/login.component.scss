@@ -39,7 +39,7 @@
         }
     }
 
-    .main-content {
+    ::ng-deep .main-content {
         display: flex;
         flex-direction: column;
         align-items: center;
