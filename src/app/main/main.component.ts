@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlokiService } from '../gloki.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -7,7 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  ngOnInit() {
+  isLoading: boolean = false;
 
+  constructor (
+    private gloki: GlokiService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    console.log('profile', this.gloki.profile);
+    this.isLoading = true;
+    if (!this.gloki.profile) {
+      this.gloki.readProfile().subscribe(_ => {
+        this.isLoading = false;
+        if (!this.gloki.isProfileFull()) {
+          this.router.navigate(['profile'])
+        }
+      });
+    }
   }
+ 
 }

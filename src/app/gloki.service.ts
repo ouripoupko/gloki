@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AgentService } from './agent.service';
-import { Contract } from './contract';
-import { firstValueFrom } from 'rxjs';
+import { Contract, Method, Profile } from './contract';
+import { concat, concatMap, firstValueFrom, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 const PROFILE_CONTRACT_NAME = 'unique-gloki-profile';
@@ -15,47 +15,59 @@ export class GlokiService {
   server: string = '';
   agentExists: boolean = false;
   contracts?: Contract[];
-  profileContract?: String;
+  profileContract?: string;
+  profile?: Profile;
 
   constructor(
     private agentService: AgentService,
     private httpClient: HttpClient,
   ) { }
 
-  setServer(key: string, server: string) {
+  setServer(server: string, key: string) {
     this.agent = key;
     this.server = server;
     this.contracts = undefined;
     this.profileContract = undefined;
-    return new Promise<boolean>(async (resolve, reject) => {
-      this.agentExists = (await firstValueFrom<Boolean>(this.agentService.isExistAgent(this.server, this.agent))).valueOf();
-      console.log('agent exists:', this.agentExists);
-      if (this.agentExists) {
-        this.contracts = await firstValueFrom<Contract[]>(this.agentService.getContracts(this.server, this.agent));
-        console.log('read contracts');
-        for (let contract of this.contracts) {
-          if (contract.name === PROFILE_CONTRACT_NAME) {
-            this.profileContract = contract.id;
-            console.log('profile found:', this.profileContract);
-          }
-        }
+    return this.agentService.isExistAgent(this.server, this.agent).pipe(
+      tap((reply) => {
+        this.agentExists = reply.valueOf();
+        console.log('agent exists:', this.agentExists);
+      }),
+      concatMap(this.getContractsIfExists.bind(this))
+    )
+  }
+
+  getContractsIfExists(isExist: Boolean) {
+    if (this.agentExists) {
+      return this.agentService.getContracts(this.server, this.agent).pipe(
+        tap((contracts) => {
+          this.contracts = contracts
+          console.log('read contracts');
+        }),
+        tap(this.checkContractsForProfile.bind(this)),
+        map(_ => { return (this.profileContract ? true : false); })
+      );
+    }
+    return of(false);
+  }
+
+  checkContractsForProfile(contracts: Contract[]) {
+    for (let contract of contracts) {
+      if (contract.name === PROFILE_CONTRACT_NAME) {
+        this.profileContract = contract.id;
+        console.log('profile found:', this.profileContract);
       }
-      resolve(this.profileContract ? true : false);
-    });
+    }
   }
 
   connect() {
-    return new Promise<void>(async (resolve, reject) => {
-      await firstValueFrom(this.agentService.registerAgent(this.server, this.agent));
-      console.log('register agent');
-      if (!this.profileContract) {
-        await this.deployProfileContract();
-      }
-      resolve();
-    });
+    let observables = [];
+    if (!this.agentExists) observables.push(this.agentService.registerAgent(this.server, this.agent));
+    if (!this.profileContract) observables.push(this.deployProfileContract());
+    return concat(observables);
   }
 
-  async deployProfileContract() {
+  deployProfileContract() {
     let contract = {} as Contract;
 
     contract.name = PROFILE_CONTRACT_NAME;
@@ -70,9 +82,41 @@ export class GlokiService {
 
     contract.constructor = {};
 
-    let data = await firstValueFrom(this.httpClient.get(`assets/${contract.contract}`, { responseType: 'text' }));
-    contract.code = data;
-    this.profileContract = await firstValueFrom(this.agentService.addContract(this.server, this.agent, contract));
-    console.log('profile deployed:', this.profileContract);
+    return this.httpClient.get(`assets/${contract.contract}`, { responseType: 'text' }).pipe(
+      concatMap((data) => {
+        contract.code = data;
+        return this.agentService.addContract(this.server, this.agent, contract);
+      })
+    );
+  }
+
+  readProfile() {
+    if (!this.profileContract) return of(null);
+    let method = {} as Method;
+    method.name = 'get_profile';
+    method.values = {};
+    return this.agentService.read(this.server, this.agent, this.profileContract, method).pipe(
+      tap((profile) => {
+        if(profile) {
+          this.profile = profile as Profile;
+          console.log('read profile', this.profile);
+        }
+      })
+    );
+  }
+
+  writeProfile() {
+    if (!this.profileContract) return of(null);
+    let method = {} as Method;
+    method.name = 'set_values';
+    method.values = {'items': this.profile};
+    return this.agentService.write(this.server, this.agent, this.profileContract, method);
+  }
+
+  isProfileFull() {
+    return (
+      this.profile?.first_name &&
+      this.profile?.last_name &&
+      this.profile?.image_url );
   }
 }

@@ -16,11 +16,9 @@ export class ConnectComponent {
 
   onConnect(event: any) {
     this.state.isLoading = true;
-    this.gloki.connect().then(_ => {
+    this.gloki.connect().subscribe(_ => {
       this.state.step = 4;
       this.state.isLoading = false;
-    }).catch(error => {
-      // Handle error
     });
   }
 }

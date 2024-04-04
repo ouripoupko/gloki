@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GlokiService } from '../gloki.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +13,11 @@ export class ProfileComponent {
   lastName = '';
   selectedPhoto: string | null = null;
   userPhoto = ''; // Set the default user photo URL here
+
+  constructor (
+    private gloki: GlokiService,
+    private router: Router
+  ) {}
 
   get isFormValid(): boolean {
     return this.firstName.trim() !== '' && this.lastName.trim() !== '' && this.selectedPhoto !== null;
@@ -30,6 +37,11 @@ export class ProfileComponent {
       // Save the profile data and update the userPhoto
       this.userPhoto = this.selectedPhoto || '';
       this.isEdit = false;
+      this.gloki.writeProfile().subscribe(_ => {
+        if (this.gloki.isProfileFull()) {
+          this.router.navigate(['main']);
+        }
+      });
     }
   }
 

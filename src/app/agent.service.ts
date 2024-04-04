@@ -74,6 +74,24 @@ export class AgentService {
     );
   }
 
+  write(server: string, identity: string, contract: string, method: Method): Observable<any> {
+    const url = `${server}/ibc/app/${identity}/${contract}/${method.name}`;
+    let params = new HttpParams().set('action', 'contract_write');
+    return this.http.post<any>(url, method, {...this.httpOptions, params: params}).pipe(
+      tap(_ => console.log('wrote something')),
+      catchError(this.handleError<any>(`write name=${name}`))
+    );
+  }
+
+  read(server: string, identity: string, contract: string, method: Method): Observable<any> {
+    const url = `${server}/ibc/app/${identity}/${contract}/${method.name}`;
+    let params = new HttpParams().set('action', 'contract_read');
+    return this.http.post<any>(url, method, {...this.httpOptions, params: params}).pipe(
+      tap(_ => console.log('read something')),
+      catchError(this.handleError<any>(`read name=${name}`))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 

@@ -18,12 +18,10 @@ export class StorageComponent {
 
   onServerSelected(event: any) {
     this.state.isLoading = true;
-    this.gloki.setServer(this.selectedServer, this.state.key).then(result => {
+    this.gloki.setServer(this.selectedServer, this.state.key).subscribe(result => {
       this.state.agentExists = result;
       this.state.step = result ? 4 : 3;
       this.state.isLoading = false;
-    }).catch(error => {
-      // Handle error
     });
   }
 
