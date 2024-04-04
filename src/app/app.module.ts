@@ -7,6 +7,10 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { ScanComponent } from './scan/scan.component';
 import { ProfileComponent } from './profile/profile.component';
+import { GlokiComponent } from './login/gloki/gloki.component';
+import { StorageComponent } from './login/storage/storage.component';
+import { ConnectComponent } from './login/connect/connect.component';
+import { DoLoginComponent } from './login/do-login/do-login.component';
 
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +25,11 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     MainComponent,
     ScanComponent,
     ProfileComponent,
-    ShareComponent
+    ShareComponent,
+    GlokiComponent,
+    StorageComponent,
+    ConnectComponent,
+    DoLoginComponent
   ],
   imports: [
     BrowserModule,

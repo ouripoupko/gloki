@@ -27,6 +27,7 @@ export class AgentService {
     let params = new HttpParams().set('action', 'is_exist_agent');
     return this.http.get<Boolean>(`${server}/ibc/app/${identity}`, {params: params}).pipe(
         tap(_ => console.log('query agent')),
+        catchError(this.handleError<Boolean>('isExistAgent')),
         first()
       );
   }

@@ -5,36 +5,15 @@
         </div>
         <img src = "assets/Logo.svg" alt="The gloKi Logo"/>
     </div>
-    <div class="main-content" *ngIf="step==1">
-        <h1>Select your gloKi&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
-        <input type="file" style="display:none" accept=".json" (change)="onFileSelected($event)" #fileUpload/>
-        <button class="inverse" (click)="fileUpload.click()">Existing</button>
-        <button (click)="onGenerate($event)">Create New</button>
-    </div>
-    <div class="main-content" *ngIf="step==2">
-        <h1>Select your storage&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
-        <select required [(ngModel)]="selectedServer" (ngModelChange)="onServerSelected($event)">
-            <option value="" disabled selected hidden>storage</option>
-            <option [value]="location(true)">{{location(true)}}</option>
-            <option value="http://guest.gloki.contact">http://guest.gloki.contact</option>
-            <option value="https://ouri.gloki.contact">https://ouri.gloki.contact</option>
-        </select>
-    </div>
-    <div class="main-content" *ngIf="step==3">
-        <div *ngIf="agentExists">
-            <h1>All is well</h1>
-        </div>
-        <div *ngIf="!agentExists">
-            <h1>gloKi not found</h1>
-            <input type="checkbox" name="register" [(ngModel)]="registerChecked"/>
-            <label for="register">Register a new one</label>
-        </div>
-        <button [disabled]="!registerChecked && !agentExists" (click)="doLogin()">Login</button>
-    </div>
+    <app-gloki class="main-content" *ngIf="state.step==1" />
+    <app-gloki class="main-content" *ngIf="state.step==2" />
+    <app-gloki class="main-content" *ngIf="state.step==3" />
+    <app-gloki class="main-content" *ngIf="state.step==4" />
     <div class="footer">
+        <div *ngIf="state.isLoading">Loading ...</div>
         <div class="progress-indicator">
-            <div class="progress-bar"><div class="progress-value" [ngStyle]="{'width': ''+step*34+'%'}"></div></div>
-            {{step}}/3
+            <div class="progress-bar"><div class="progress-value" [ngStyle]="{'width': ''+state.step*26+'%'}"></div></div>
+            {{state.step}}/4
         </div>
     </div>
 </div>
