@@ -1,0 +1,26 @@
+.mainbar-container {
+    padding: 17px 15px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px solid white;
+
+    .logo {
+        width: 85px;
+    }
+
+    .bar-utilities {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .grey-box {
+            height: 41px;
+            width: 37px;
+            background: #888888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+    }
+}

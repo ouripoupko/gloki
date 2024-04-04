@@ -1,0 +1,30 @@
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.community {
+    padding: 27px 23px;
+    font-size: 35px;
+    border-bottom: 1px solid white;
+}
+
+.links {
+    margin: 64px 52px;
+    background-color: white;
+    color: black;
+    padding: 31px;
+    border-radius: 21px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    button {
+        color: white;
+        background-color: #165A99;
+        border-radius: 9px;
+        font-size: 25px;
+        border: none;
+        padding: 10px;
+    }
+}

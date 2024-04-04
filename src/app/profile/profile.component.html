@@ -1,37 +1,57 @@
-<div class="profile-wrapper">
-    <h1 class="page-header">name.gloki</h1>
+<div class="main-container">
+  <app-main-bar />
+  <div class="profile-wrapper">
     <div class="profile-container">
-        <div class="profile-info">
-          <div *ngIf="isEdit" class="edit-mode">
-            <div class="form-field">
-              <input type="text" [(ngModel)]="firstName" placeholder="First Name">
-              <label>First Name</label>
-            </div>
-            <div class="form-field">
-              <input type="text" [(ngModel)]="lastName" placeholder="Last Name">
-              <label>Last Name</label>
-            </div>
-            <button [disabled]="!isFormValid" (click)="saveProfile()">Save</button>
-          </div>
-          <div *ngIf="!isEdit" class="info-mode">
-            <div class="info-field">
-              <span>{{ firstName }}</span>
-              <label>First Name</label>
-            </div>
-            <div class="info-field">
-              <span>{{ lastName }}</span>
-              <label>Last Name</label>
-            </div>
-            <button (click)="editProfile()">Edit</button>
-          </div>
+      <div class="profile-photo">
+        <div *ngIf="isEdit" class="file-upload">
+          <input type="file" (change)="onFileSelected($event)" accept="image/*">
+          <div *ngIf="!selectedPhoto" class="upload-text">Add your photo</div>
+          <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Profile Photo">
         </div>
-        <div class="profile-photo">
-          <div *ngIf="isEdit" class="file-upload">
-            <input type="file" (change)="onFileSelected($event)" accept="image/*">
-            <div *ngIf="!selectedPhoto" class="upload-text">Add your photo</div>
-            <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Profile Photo">
+        <img *ngIf="!isEdit" [src]="userPhoto" alt="Profile Photo">
+      </div>
+      <div class="profile-info">
+        <div *ngIf="isEdit" class="edit-mode">
+          <div class="form-field">
+            <input type="text" [(ngModel)]="firstName" placeholder="First Name">
+            <label>First Name</label>
           </div>
-          <img *ngIf="!isEdit" [src]="userPhoto" alt="Profile Photo">
+          <div class="form-field">
+            <input type="text" [(ngModel)]="lastName" placeholder="Last Name">
+            <label>Last Name</label>
+          </div>
+          <button [disabled]="!isFormValid" (click)="saveProfile()">Save</button>
         </div>
+        <div *ngIf="!isEdit" class="info-mode">
+          <div class="info-field">
+            <span>{{ firstName }}</span>
+            <label>First Name</label>
+          </div>
+          <div class="info-field">
+            <span>{{ lastName }}</span>
+            <label>Last Name</label>
+          </div>
+          <button (click)="editProfile()">Edit</button>
+        </div>
+      </div>
+      <a routerLink="/main">
+        <img src="../../assets/x.svg">
+      </a>
     </div>
+    <div class="links">
+      <a href="https://duodiv.com">View gloKi</a>
+      <a href="https://duodiv.com">View gloKi 2</a>
+    </div>
+    <div class="description">
+      <p class="big-p">
+        Completing your profile will allow others to verify you.
+      </p>
+      <p class="small-p">
+        In gloKi communities, people view photos of each other during live video calls to verify that the person in the photo is the person in the call. 
+      </p>
+      <p class="small-p">
+        The verification process will automatically start when you join a community. 
+      </p>
+    </div>
+  </div>
 </div>

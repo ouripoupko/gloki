@@ -11,3 +11,18 @@ body {
     display: flex;
     justify-content: center;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+.main-container {
+    background: linear-gradient(167.1deg, #081E32 16.16%, #185B98 94.75%);
+    width: 100vw;
+    min-height: 100vh;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+}

@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { NgxQrcodeStylingModule } from 'ngx-qrcode-styling';
 import { ShareComponent } from './share/share.component';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { MainBarComponent } from './main-bar/main-bar.component';
+import { CommunityComponent } from './community/community.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
     GlokiComponent,
     StorageComponent,
     ConnectComponent,
-    DoLoginComponent
+    DoLoginComponent,
+    MainBarComponent,
+    CommunityComponent
   ],
   imports: [
     BrowserModule,

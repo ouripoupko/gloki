@@ -1,0 +1,14 @@
+<div class="mainbar-container">
+    <img class="logo" src="../../assets/Logo.svg" />
+    <div class="bar-utilities">
+        <img class="find-icon" src="../../assets/find.svg" />
+        <img class="plus-icon" src="../../assets/plus.svg" />
+        <a routerLink="/profile">
+            <div class="grey-box" *ngIf="!isProfileFull">
+                <img class="camera-icon" src="../../assets/camera.svg" />
+            </div>
+            <img class="profile-pic" *ngIf="isProfileFull" [src]="userPhoto" />
+        </a>
+        
+    </div>
+</div>
