@@ -1,0 +1,8 @@
+<div class="share-container">
+    <div class="description">This a demo community for the EDDY 2024 conference in Rotterdam. We hope you enjoy!</div>
+    <div class="instructions">Show this QR code to invite others to the community:</div>
+    <div class="qrcode">
+        <ngx-qrcode-styling #qrcode [config]="config"></ngx-qrcode-styling>
+    </div>
+    <button (click)="toggleShare(false)">Close</button>
+</div>

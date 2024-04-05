@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GlokiService } from '../../gloki.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -8,7 +8,7 @@ import { Location } from '@angular/common';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   isEdit = true;
   userPhoto = ''; // Set the default user photo URL here
 

@@ -1,14 +1,12 @@
 <div class="main-container">
     <app-main-bar />
     <div class="community">
-        <a [routerLink]="[community.id]">{{ community.name }}</a>
+        {{ gloki.communityContracts[communityId] && gloki.communityContracts[communityId].name }}
     </div>
+    <app-share *ngIf="shareMode" (toggleEvent)="toggleShareMode($event)" [contractId]="communityId"/>
     <div class="links" *ngIf="!shareMode">
         <button (click)="openLink('https://duodiv.com')">Link 1</button>
         <button (click)="openLink('https://duodiv.com')">Link 2</button>
-        <button (click)="toggleShareMode()">Share</button>      
-    </div>
-    <div class="share-mode" *ngIf="shareMode">
-        share
+        <button (click)="toggleShareMode(true)">Share</button>      
     </div>
 </div>

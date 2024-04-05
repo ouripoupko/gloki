@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlokiService } from 'src/app/gloki.service';
 
@@ -8,7 +8,7 @@ import { GlokiService } from 'src/app/gloki.service';
   templateUrl: './new-community.component.html',
   styleUrl: './new-community.component.scss'
 })
-export class NewCommunityComponent {
+export class NewCommunityComponent implements OnInit {
 
   name: string = '';
   description: string = '';

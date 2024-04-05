@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GlokiService } from 'src/app/gloki.service';
 
 @Component({
   selector: 'app-community',
@@ -7,24 +8,26 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './community.component.scss'
 })
 export class CommunityComponent implements OnInit {
-  communityId: string | null = null;
-  community = {name: "", id: ""};
+  communityId: string = '';
   shareMode: boolean = false;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    public gloki: GlokiService
+  ) { }
 
   ngOnInit(): void {
+    if (!this.gloki.profileContract) {
+//      this.router.navigate(['login']);
+    }
     this.route.paramMap.subscribe(params => {
-      this.communityId = params.get('communityId');
-      this.community.id = this.communityId || "";
-      this.community.name = "name";
-      // Use the communityId to fetch the specific community data
-      // from a service or perform any other necessary actions
+      this.communityId = params.get('communityId') || '';
     });
   }
 
-  toggleShareMode(): void {
-    this.shareMode = !this.shareMode;
+  toggleShareMode(mode: boolean): void {
+    this.shareMode = mode;
   }
 
   openLink(url: string): void {

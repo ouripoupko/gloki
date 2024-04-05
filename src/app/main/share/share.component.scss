@@ -1,0 +1,44 @@
+@import "src/variables.scss";
+
+.share-container {
+    width: 100%;
+    background-color: white;
+    border-radius: 0px 0px 21px 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.8vh;
+
+    .description {
+        font-size: 25px;
+        font-weight: 600;
+        color: $gloki-dark;
+        width: calc($gloki-width * 0.88);
+        margin-top: 3vh;
+    }
+
+    .instructions {
+        font-size: 20px;
+        color: $gloki-dark;
+        width: calc($gloki-width * 0.88);
+    }
+
+    .qrcode {
+        border-radius: 17px;
+        border-color: $gloki-dark;
+        border-width: 5px;
+        border-style: solid;
+        padding: 10px;
+    }
+
+    button {
+        border-radius: 9px;
+        width: calc($gloki-width * 0.59);
+        height: 6.3vh;
+        background-color: $gloki-blue;
+        color: white;
+        margin-bottom: 6vh;
+        font-size: 25px;
+        font-weight: 600;
+    }
+}

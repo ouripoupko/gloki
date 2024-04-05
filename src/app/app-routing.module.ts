@@ -5,7 +5,7 @@ import { MainComponent } from './main/main.component';
 import { ScanComponent } from './scan/scan.component';
 import { CommunityComponent } from './main/community/community.component';
 import { ProfileComponent } from './main/profile/profile.component';
-import { ShareComponent } from './share/share.component';
+import { ShareComponent } from './main/share/share.component';
 import { NewCommunityComponent } from './main/new-community/new-community.component';
 
 const routes: Routes = [

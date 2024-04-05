@@ -1,5 +1,12 @@
 @import "src/variables.scss";
 
+.main-container {
+  background: linear-gradient(167.1deg, $gloki-dark 16.16%, $gloki-blue 94.75%);
+  width: $gloki-width;
+  height: 100%;
+  color: white;
+}
+
 a {
     color: white;
     text-decoration: none;

@@ -18,7 +18,7 @@ export class GlokiService {
   agent: string = '';
   server: string = '';
   agentExists: boolean = false;
-  communityContracts: Contract[] = [];
+  communityContracts: {[key: string]: Contract} = {};
   profileContract?: string;
   profile: Profile = {} as Profile;
 
@@ -30,18 +30,20 @@ export class GlokiService {
   setServer(server: string, key: string) {
     this.agent = key;
     this.server = server;
-    this.communityContracts = [];
+    this.communityContracts = {};
     this.profileContract = undefined;
     return this.agentService.isExistAgent(this.server, this.agent).pipe(
       tap((reply) => {
         this.agentExists = reply.valueOf();
         console.log('agent exists:', this.agentExists, reply);
       }),
-      concatMap(this.getContractsIfExists.bind(this))
+      concatMap(_ => {return this.getContractsIfExists();})
     )
   }
 
-  getContractsIfExists(isExist: Boolean) {
+  getContractsIfExists() {
+    console.log('getContractsIfExists', this.agentExists);
+    this.communityContracts = {};
     if (this.agentExists) {
       return this.agentService.getContracts(this.server, this.agent).pipe(
         tap(this.processContracts.bind(this)),
@@ -60,7 +62,7 @@ export class GlokiService {
       console.log('contract file', contract.contract);
       console.log('contract profile', contract.profile);
       if (contract.contract === 'community.py' && contract.profile === this.profileContract) {
-        this.communityContracts.push(contract);
+        this.communityContracts[contract.id] = contract;
       }
     }
     console.log('communities', this.communityContracts);
@@ -70,6 +72,7 @@ export class GlokiService {
     let registerAgent = this.agentExists ? of('') : this.agentService.registerAgent(this.server, this.agent).pipe(
       tap(reply => {
         console.log('register agent', reply);
+        this.agentExists = true;
       })
     );
 
@@ -79,7 +82,9 @@ export class GlokiService {
   }
 
   deployProfileContract() {
-    return this.deployContract(PROFILE_CONTRACT_NAME, "profile.py", "", "");
+    return this.deployContract(PROFILE_CONTRACT_NAME, "profile.py", "", "").pipe(
+      tap(reply => {this.profileContract = reply;})
+    );
   }
 
   deployCommunity(name: string, description: string) {
@@ -110,6 +115,17 @@ export class GlokiService {
         );
       })
     );
+  }
+
+  login() {
+    this.agentService.listen(this.server, this.agent).addEventListener('message', message => {
+      if(message.data.length > 0) {
+        let content = JSON.parse(message.data)
+        console.log('listen', content);
+        if (content.action == "deploy_contract")
+          this.getContractsIfExists().subscribe();
+      }
+    });
   }
 
   readProfile() {
@@ -144,4 +160,13 @@ export class GlokiService {
       strNotEmpty(this.profile?.image_url) );
   }
 
+  getInvite(id: string) {
+    if (!(id in this.communityContracts)) return "invalid invitation";
+    return JSON.stringify({
+      server: this.server,
+      agent: this.agent,
+      contract: id,
+      name: this.communityContracts[id].name
+    });
+  }
 }
