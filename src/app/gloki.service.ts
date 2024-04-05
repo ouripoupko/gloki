@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AgentService } from './agent.service';
 import { Contract, Method, Profile } from './contract';
-import { concat, concatMap, firstValueFrom, map, of, tap } from 'rxjs';
+import { Observable, concat, concatAll, concatMap, endWith, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 const PROFILE_CONTRACT_NAME = 'unique-gloki-profile';
+
+function strNotEmpty(str?: string): boolean {
+  return str !== undefined && str !== null && str.length > 0;
+} 
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +35,7 @@ export class GlokiService {
     return this.agentService.isExistAgent(this.server, this.agent).pipe(
       tap((reply) => {
         this.agentExists = reply.valueOf();
-        console.log('agent exists:', this.agentExists);
+        console.log('agent exists:', this.agentExists, reply);
       }),
       concatMap(this.getContractsIfExists.bind(this))
     )
@@ -61,10 +65,15 @@ export class GlokiService {
   }
 
   connect() {
-    let observables = [];
-    if (!this.agentExists) observables.push(this.agentService.registerAgent(this.server, this.agent));
-    if (!this.profileContract) observables.push(this.deployProfileContract());
-    return concat(observables);
+    let registerAgent = this.agentExists ? of('') : this.agentService.registerAgent(this.server, this.agent).pipe(
+      tap(reply => {
+        console.log('register agent', reply);
+      })
+    );
+
+    let deployContract = strNotEmpty(this.profileContract) ? of(null) : this.deployProfileContract();
+
+    return concat(registerAgent, deployContract);
   }
 
   deployProfileContract() {
@@ -85,7 +94,9 @@ export class GlokiService {
     return this.httpClient.get(`assets/${contract.contract}`, { responseType: 'text' }).pipe(
       concatMap((data) => {
         contract.code = data;
-        return this.agentService.addContract(this.server, this.agent, contract);
+        return this.agentService.addContract(this.server, this.agent, contract).pipe(
+          tap(reply => {console.log('deplloy contract', reply);})
+        );
       })
     );
   }
@@ -110,7 +121,9 @@ export class GlokiService {
     let method = {} as Method;
     method.name = 'set_values';
     method.values = {'items': this.profile};
-    return this.agentService.write(this.server, this.agent, this.profileContract, method);
+    return this.agentService.write(this.server, this.agent, this.profileContract, method).pipe(
+      tap((reply)=> {console.log('write contract', reply);})
+    );
   }
 
   isProfileFull() {
