@@ -1,8 +1,9 @@
 <div class="main-container">
     <app-main-bar />
     <div>
-        <div *ngFor="let community of communities" class="community">
+        <div *ngFor="let community of gloki.communityContracts" class="community">
           <a [routerLink]="[community.id]">{{ community.name }}</a>
         </div>
     </div>
+    <div><img (click)='gotoCreate()' src='assets/plus.svg'></div>
 </div>

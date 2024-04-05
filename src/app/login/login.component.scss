@@ -2,18 +2,14 @@
 @import '@material-symbols/font-400/outlined.css';
 
 .login-container {
-    background-image: linear-gradient(150deg, #165A99, $gloki-dark);
+    background-image: linear-gradient(150deg, $gloki-blue, $gloki-dark);
     color: white;
-    width: 100vw;
+    width: $gloki-width;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-
-    @media (min-width: 700px) {
-        width: 700px;
-    }
 
     .header {
         display: flex;

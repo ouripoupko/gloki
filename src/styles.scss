@@ -1,10 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import "src/variables.scss";
 
 html, body {
     height: 100%;
     width: 100%;
     margin: 0px;
     font-family: 'DM Sans';
+
 }
 
 body {
@@ -14,13 +16,6 @@ body {
 
 * {
     box-sizing: border-box;
-}
-
-.main-container {
-    background: linear-gradient(167.1deg, #081E32 16.16%, #185B98 94.75%);
-    width: 100vw;
-    min-height: 100vh;
-    color: white;
 }
 
 a {

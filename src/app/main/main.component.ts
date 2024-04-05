@@ -10,17 +10,19 @@ import { Router } from '@angular/router';
 export class MainComponent implements OnInit {
 
   isLoading: boolean = false;
-  communities = [{name: "EDDY 2024", id: "112"}, {name: "Global Democracy Initiative", id: "32"}, {name: "Miller Family", id: "99"}];
 
   constructor (
-    private gloki: GlokiService,
+    public gloki: GlokiService,
     private router: Router
   ) {}
 
   ngOnInit() {
+    if (!this.gloki.profileContract) {
+      this.router.navigate(['login'])
+    }
     console.log('profile', this.gloki.profile);
     this.isLoading = true;
-    if (!this.gloki.profile) {
+    if (!this.gloki.isProfileFull()) {
       this.gloki.readProfile().subscribe(_ => {
         this.isLoading = false;
         if (!this.gloki.isProfileFull()) {
@@ -28,6 +30,10 @@ export class MainComponent implements OnInit {
         }
       });
     }
+  }
+
+  gotoCreate() {
+    this.router.navigate(['create']);
   }
  
 }

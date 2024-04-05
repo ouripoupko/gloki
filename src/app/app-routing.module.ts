@@ -3,9 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { ScanComponent } from './scan/scan.component';
-import { CommunityComponent } from './community/community.component';
-import { ProfileComponent } from './profile/profile.component';
+import { CommunityComponent } from './main/community/community.component';
+import { ProfileComponent } from './main/profile/profile.component';
 import { ShareComponent } from './share/share.component';
+import { NewCommunityComponent } from './main/new-community/new-community.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
       { path: 'main/:communityId', component: CommunityComponent },
       { path: 'scan', component: ScanComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: 'share', component: ShareComponent }
+      { path: 'share', component: ShareComponent },
+      { path: 'create', component: NewCommunityComponent }
     ]
   }
 ];

@@ -5,30 +5,30 @@
       <div class="profile-photo">
         <div *ngIf="isEdit" class="file-upload">
           <input type="file" (change)="onFileSelected($event)" accept="image/*">
-          <div *ngIf="!selectedPhoto" class="upload-text">Add your photo</div>
-          <img *ngIf="selectedPhoto" [src]="selectedPhoto" alt="Profile Photo">
+          <div *ngIf="!gloki.profile.image_url" class="upload-text">Add your photo</div>
+          <img *ngIf="gloki.profile.image_url" [src]="gloki.profile.image_url" alt="Profile Photo">
         </div>
         <img *ngIf="!isEdit" [src]="userPhoto" alt="Profile Photo">
       </div>
       <div class="profile-info">
         <div *ngIf="isEdit" class="edit-mode">
           <div class="form-field">
-            <input type="text" [(ngModel)]="firstName" placeholder="First Name">
+            <input type="text" [(ngModel)]="gloki.profile.first_name" placeholder="First Name">
             <label>First Name</label>
           </div>
           <div class="form-field">
-            <input type="text" [(ngModel)]="lastName" placeholder="Last Name">
+            <input type="text" [(ngModel)]="gloki.profile.last_name" placeholder="Last Name">
             <label>Last Name</label>
           </div>
           <button [disabled]="!isFormValid" (click)="saveProfile()">Save</button>
         </div>
         <div *ngIf="!isEdit" class="info-mode">
           <div class="info-field">
-            <span>{{ firstName }}</span>
+            <span>{{ gloki.profile.first_name }}</span>
             <label>First Name</label>
           </div>
           <div class="info-field">
-            <span>{{ lastName }}</span>
+            <span>{{ gloki.profile.last_name }}</span>
             <label>Last Name</label>
           </div>
           <button (click)="editProfile()">Edit</button>

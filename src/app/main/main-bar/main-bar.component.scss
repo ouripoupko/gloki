@@ -1,8 +1,11 @@
+@import "src/variables.scss";
+
 .mainbar-container {
     padding: 17px 15px;
     display: flex;
     justify-content: space-between;
     border-bottom: 3px solid white;
+    height: 10vh;
 
     .logo {
         width: 85px;
@@ -16,7 +19,7 @@
         .grey-box {
             height: 41px;
             width: 37px;
-            background: #888888;
+            background: $gloki-grey;
             display: flex;
             align-items: center;
             justify-content: center;

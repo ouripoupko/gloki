@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { GlokiService } from '../gloki.service';
+import { GlokiService } from '../../gloki.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -9,37 +10,42 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent {
   isEdit = true;
-  firstName = '';
-  lastName = '';
-  selectedPhoto: string | null = null;
   userPhoto = ''; // Set the default user photo URL here
 
   constructor (
-    private gloki: GlokiService,
-    private router: Router
+    public gloki: GlokiService,
+    private router: Router,
+    private location: Location
   ) {}
 
+  ngOnInit() {
+    if (!this.gloki.profileContract) {
+      this.router.navigate(['login'])
+    }
+  }
+
   get isFormValid(): boolean {
-    return this.firstName.trim() !== '' && this.lastName.trim() !== '' && this.selectedPhoto !== null;
+    return this.gloki.isProfileFull();
   }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.selectedPhoto = e.target.result;
+      this.gloki.profile.image_url = e.target.result;
     };
     reader.readAsDataURL(file);
   }
 
   saveProfile() {
+    console.log('save clicked');
     if (this.isFormValid) {
       // Save the profile data and update the userPhoto
-      this.userPhoto = this.selectedPhoto || '';
+      this.userPhoto = this.gloki.profile.image_url || '';
       this.isEdit = false;
       this.gloki.writeProfile().subscribe(_ => {
         if (this.gloki.isProfileFull()) {
-          this.router.navigate(['main']);
+          this.location.back();
         }
       });
     }

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 const PROFILE_CONTRACT_NAME = 'unique-gloki-profile';
 
 function strNotEmpty(str?: string): boolean {
-  return str !== undefined && str !== null && str.length > 0;
+  return str !== undefined && str !== null && str.trim() !== '';
 } 
 
 @Injectable({
@@ -18,9 +18,9 @@ export class GlokiService {
   agent: string = '';
   server: string = '';
   agentExists: boolean = false;
-  contracts?: Contract[];
+  communityContracts: Contract[] = [];
   profileContract?: string;
-  profile?: Profile;
+  profile: Profile = {} as Profile;
 
   constructor(
     private agentService: AgentService,
@@ -30,7 +30,7 @@ export class GlokiService {
   setServer(server: string, key: string) {
     this.agent = key;
     this.server = server;
-    this.contracts = undefined;
+    this.communityContracts = [];
     this.profileContract = undefined;
     return this.agentService.isExistAgent(this.server, this.agent).pipe(
       tap((reply) => {
@@ -44,24 +44,26 @@ export class GlokiService {
   getContractsIfExists(isExist: Boolean) {
     if (this.agentExists) {
       return this.agentService.getContracts(this.server, this.agent).pipe(
-        tap((contracts) => {
-          this.contracts = contracts
-          console.log('read contracts');
-        }),
-        tap(this.checkContractsForProfile.bind(this)),
+        tap(this.processContracts.bind(this)),
         map(_ => { return (this.profileContract ? true : false); })
       );
     }
     return of(false);
   }
 
-  checkContractsForProfile(contracts: Contract[]) {
+  processContracts(contracts: Contract[]) {
     for (let contract of contracts) {
       if (contract.name === PROFILE_CONTRACT_NAME) {
         this.profileContract = contract.id;
         console.log('profile found:', this.profileContract);
       }
+      console.log('contract file', contract.contract);
+      console.log('contract profile', contract.profile);
+      if (contract.contract === 'community.py' && contract.profile === this.profileContract) {
+        this.communityContracts.push(contract);
+      }
     }
+    console.log('communities', this.communityContracts);
   }
 
   connect() {
@@ -77,17 +79,26 @@ export class GlokiService {
   }
 
   deployProfileContract() {
+    return this.deployContract(PROFILE_CONTRACT_NAME, "profile.py", "", "");
+  }
+
+  deployCommunity(name: string, description: string) {
+    if (!this.profileContract) return of('');
+    return this.deployContract(name, "community.py", this.profileContract, "");
+  }
+
+  deployContract(name: string, file_name: string, profile: string, community: string){
     let contract = {} as Contract;
 
-    contract.name = PROFILE_CONTRACT_NAME;
-    contract.contract = "profile.py";
+    contract.name = name;
+    contract.contract = file_name;
     contract.code = "";
     contract.protocol = "BFT";
     contract.default_app = "";
     contract.pid = this.agent;
     contract.address = this.server;
 
-    contract.profile = "";
+    contract.profile = profile;
 
     contract.constructor = {};
 
@@ -128,8 +139,9 @@ export class GlokiService {
 
   isProfileFull() {
     return (
-      this.profile?.first_name &&
-      this.profile?.last_name &&
-      this.profile?.image_url );
+      strNotEmpty(this.profile?.first_name) &&
+      strNotEmpty(this.profile?.last_name) &&
+      strNotEmpty(this.profile?.image_url) );
   }
+
 }
