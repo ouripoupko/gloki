@@ -26,3 +26,9 @@ export interface Profile {
   last_name: string;
   image_url: string;
 }
+
+export interface Partner {
+  address: string;
+  agent: string;
+  profile: string;
+}

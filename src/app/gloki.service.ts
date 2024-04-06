@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AgentService } from './agent.service';
-import { Contract, Method, Profile } from './contract';
+import { Contract, Method, Partner, Profile } from './contract';
 import { concat, concatMap, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -61,16 +61,28 @@ export class GlokiService {
   }
 
   processContracts(contracts: Contract[]) {
+
+    // find profile
     for (let contract of contracts) {
       if (contract.name === PROFILE_CONTRACT_NAME) {
         this.profileContract = contract.id;
         console.log('profile found:', this.profileContract);
       }
-      console.log('contract file', contract.contract);
-      console.log('contract profile', contract.profile);
-      if (contract.contract === 'community.py' && contract.profile === this.profileContract) {
-        this.communityContracts[contract.id] = contract;
-      }
+    }
+
+    // find communities
+    for (let contract of contracts) {
+      if (contract.contract === 'community.py') {
+        let partners_method = { name: 'get_partners', values: {}} as Method;
+        this.agentService.read(this.server, this.agent, contract.id, partners_method)
+          .subscribe((reply) => {
+            reply.forEach((partner: Partner) => {
+              if (partner.agent === this.agent && partner.profile === this.profileContract) {
+                this.communityContracts[contract.id] = contract;
+              }
+            });
+          })
+        }
     }
     console.log('communities', this.communityContracts);
   }
