@@ -34,4 +34,15 @@ export class CommunityComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  openCommunityApp() {
+    const baseURL = window.location.origin;
+    const url = new URL("/community", baseURL);
+    url.searchParams.append("server", this.gloki.server);
+    url.searchParams.append("agent", this.gloki.agent);
+    url.searchParams.append("contract", this.communityId);
+    console.log('url', url);
+
+    window.open(url, "_blank");
+  }
+
 }

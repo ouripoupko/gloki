@@ -5,7 +5,7 @@
     </div>
     <app-share *ngIf="shareMode" (toggleEvent)="toggleShareMode($event)" [contractId]="communityId"/>
     <div class="links" *ngIf="!shareMode">
-        <button (click)="openLink('https://duodiv.com')">Link 1</button>
+        <button (click)="openCommunityApp()">Open Community</button>
         <button (click)="openLink('https://duodiv.com')">Link 2</button>
         <button (click)="toggleShareMode(true)">Share</button>      
     </div>
