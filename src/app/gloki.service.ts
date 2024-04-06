@@ -28,6 +28,7 @@ export class GlokiService {
   communityContracts: {[key: string]: Contract} = {};
   profileContract?: string;
   profile: Profile = {} as Profile;
+  eventSource?: EventSource;
 
   constructor(
     private agentService: AgentService,
@@ -136,14 +137,32 @@ export class GlokiService {
     );
   }
 
+  logES() {
+    if(this.eventSource) {
+      console.log('readyState', this.eventSource.readyState);
+      console.log('url', this.eventSource.url);
+      console.log('withCredentials', this.eventSource.withCredentials);
+    } else {
+      console.log('eventSource empty')
+    }
+  }
+
   login() {
-    this.agentService.listen(this.server, this.agent).addEventListener('message', message => {
+    this.eventSource = this.agentService.listen(this.server, this.agent);
+    this.logES();
+    this.eventSource.addEventListener('message', message => {
       if(message.data.length > 0) {
         let content = JSON.parse(message.data)
         console.log('listen', content);
-        if (content.action == "deploy_contract")
+        if (content.action == "deploy_contract" || content.action === "a2a_reply_join")
           this.getContractsIfExists().subscribe();
       }
+    });
+    this.eventSource.addEventListener('open', open => {
+      console.log('open', open);
+    });
+    this.eventSource.addEventListener('error', error => {
+      console.log('error', error);
     });
   }
 
