@@ -3,7 +3,7 @@
 .main-container {
     background: linear-gradient(167.1deg, $gloki-dark 16.16%, $gloki-blue 94.75%);
     width: $gloki-width;
-    height: 100%;
+    min-height: 100%;
     color: white;
 
     a {
