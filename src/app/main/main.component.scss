@@ -10,9 +10,26 @@
         color: white;
     }
 
-    .community {
-        padding: 27px 23px;
-        font-size: 35px;
-        border-bottom: 1px solid white;
+    .community-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 85%;
+        width: 100%;
+
+        .just-list {
+            width: 100%;
+            .community {
+                width: 100%;
+                padding: 27px 23px;
+                font-size: 35px;
+                border-bottom: 1px solid white;
+            }
+        }
+
+        .add-btn {
+            padding: 3vh;
+        }
     }
 }

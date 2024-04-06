@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AgentService } from './agent.service';
 import { Contract, Method, Profile } from './contract';
-import { Observable, concat, concatAll, concatMap, endWith, map, of, tap } from 'rxjs';
+import { concat, concatMap, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 const PROFILE_CONTRACT_NAME = 'unique-gloki-profile';
+
+export interface Invite {
+  server: string;
+  agent: string;
+  contract: string;
+  name: string;
+}
 
 function strNotEmpty(str?: string): boolean {
   return str !== undefined && str !== null && str.trim() !== '';
@@ -167,6 +174,30 @@ export class GlokiService {
       agent: this.agent,
       contract: id,
       name: this.communityContracts[id].name
-    });
+    } as Invite);
+  }
+
+  parseInvite(invite: string) {
+    try {
+      let result = {} as Invite;
+      let json = JSON.parse(invite);
+      result.server = json.server;
+      result.agent = json.agent;
+      result.contract = json.contract;
+      result.name = json.name;
+      if (strNotEmpty(result.server) && strNotEmpty(result.agent) && strNotEmpty(result.contract) && strNotEmpty(result.name)) {
+        return result
+      }
+    } catch {
+    }
+
+    return undefined;
+  }
+
+  joinCommunity(invite: Invite) {
+    if (!this.profileContract) return of(null);
+
+    return this.agentService.joinContract(this.server, this.agent, invite.server,
+      invite.agent, invite.contract, this.profileContract);
   }
 }

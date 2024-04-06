@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
-import { ScanComponent } from './scan/scan.component';
+import { ScanComponent } from './main/scan/scan.component';
 import { ProfileComponent } from './main/profile/profile.component';
 import { GlokiComponent } from './login/gloki/gloki.component';
 import { StorageComponent } from './login/storage/storage.component';
@@ -19,7 +19,9 @@ import { NewCommunityComponent } from './main/new-community/new-community.compon
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxQrcodeStylingModule } from 'ngx-qrcode-styling';
-import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+
+LOAD_WASM().subscribe();
 
 @NgModule({
   declarations: [

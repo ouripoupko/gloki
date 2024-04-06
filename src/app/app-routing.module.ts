@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
-import { ScanComponent } from './scan/scan.component';
+import { ScanComponent } from './main/scan/scan.component';
 import { CommunityComponent } from './main/community/community.component';
 import { ProfileComponent } from './main/profile/profile.component';
 import { ShareComponent } from './main/share/share.component';

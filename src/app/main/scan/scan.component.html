@@ -1,0 +1,24 @@
+<div class="scan-container" *ngIf="!showResults">
+  <div class="camera">
+    <ngx-scanner-qrcode #action="scanner" [isBeep]="false" [config]="config" (event)="onEvent($event, action)"></ngx-scanner-qrcode>
+    <p *ngIf="action.isLoading">⌛ Loading...</p>
+  </div>
+  <!-- start/stop -->
+  <button [disabled]="action.isLoading" (click)="handle(action, action.isStart ? 'stop' : 'start')">
+    {{action.isStart ? 'Stop' : 'Scan'}}
+  </button>
+</div>
+<div class="result-container" *ngIf="showResults">
+  <ng-container *ngIf="result">
+    <h1>Scan success!</h1>
+    <h1>Community name:</h1>
+    <h1>{{result.name}}</h1>
+    <h1>How would you like to continue?</h1>
+    <button (click)="resultEvent.emit(result)">Approve</button>
+  </ng-container>
+  <ng-container *ngIf="!result">
+    <h1>Something went wrong!</h1>
+  </ng-container>
+  <button class="revert" (click)="showResults=false">Retry</button>
+</div>
+<!-- [(device)]="desiredDevice" -->

@@ -1,9 +1,12 @@
 <div class="main-container">
-    <app-main-bar />
-    <div>
-        <div *ngFor="let item of gloki.communityContracts | keyvalue" class="community">
-          <a [routerLink]="[item.key]">{{ item.value.name }}</a>
-        </div>
+    <app-main-bar (toggleEvent)="toggleFindMode($event)" />
+    <app-scan *ngIf="findMode" (resultEvent)="onJoin($event)"/>
+    <div *ngIf="!findMode" class="community-list">
+      <div class="just-list">
+          <div *ngFor="let item of gloki.communityContracts | keyvalue" class="community">
+            <a [routerLink]="[item.key]">{{ item.value.name }}</a>
+          </div>
+      </div>
+      <div class="add-btn"><img (click)='gotoCreate()' src='assets/plus.svg'></div>
     </div>
-    <div><img (click)='gotoCreate()' src='assets/plus.svg'></div>
 </div>

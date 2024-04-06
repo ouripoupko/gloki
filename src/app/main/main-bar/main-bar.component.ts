@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-main-bar',
@@ -8,4 +8,12 @@ import { Component } from '@angular/core';
 export class MainBarComponent {
   isProfileFull = false;
   userPhoto = '';
+  @Output() toggleEvent = new EventEmitter<boolean>();
+  find = false;
+
+  toggleFind() {
+    this.find = !this.find;
+    this.toggleEvent.emit(this.find);
+  }
+
 }

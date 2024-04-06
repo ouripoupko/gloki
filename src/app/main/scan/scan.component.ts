@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 //import { BarcodeFormat } from '@zxing/library';
 import {
   ScannerQRCodeConfig,
   ScannerQRCodeResult,
   NgxScannerQrcodeComponent,
 } from 'ngx-scanner-qrcode';
+import { GlokiService, Invite } from 'src/app/gloki.service';
 
 @Component({
   selector: 'app-scan',
@@ -13,14 +14,14 @@ import {
 })
 export class ScanComponent {
 
-
-  result: String = '';
+  showResults: boolean = false;
+  result?: Invite;
 
   public config: ScannerQRCodeConfig = {
     constraints: {
-      video: {
-        width: 400
-      },
+      // video: {
+      //   width: 400
+      // },
     },
     // canvasStyles: [
     //   { /* layer */
@@ -37,11 +38,19 @@ export class ScanComponent {
   };
 
   @ViewChild('action') action!: NgxScannerQrcodeComponent;
+  @Output() resultEvent = new EventEmitter<Invite>();
+
+
+  constructor (
+    private gloki: GlokiService
+  ) {}
 
   public onEvent(e: ScannerQRCodeResult[], action?: any): void {
     e && action && action.stop();
-    this.result = e?.[0]?.value;
     console.log(e);
+    this.result = this.gloki.parseInvite(e?.[0]?.value);
+    console.log('result', this.result);
+    this.showResults = true;
   }
 
   public handle(action: any, fn: string): void {

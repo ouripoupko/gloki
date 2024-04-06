@@ -1,7 +1,7 @@
 <div class="mainbar-container">
     <img class="logo" src="../../assets/Logo.svg" />
     <div class="bar-utilities">
-        <img class="find-icon" src="../../assets/find.svg" />
+        <img class="find-icon" src="../../assets/find.svg" (click)="toggleFind()"/>
         <a routerLink="/profile">
             <div class="grey-box" *ngIf="!isProfileFull">
                 <img class="camera-icon" src="../../assets/camera.svg" />
