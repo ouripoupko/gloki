@@ -34,12 +34,20 @@ export class ProfileComponent implements OnInit {
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    const reader = new FileReader();
+
+    this.resizeImage(file, 200, 200).then(dataUrl => {
+      this.userPhoto = dataUrl;
+      console.log('imageURL', this.userPhoto);
+    }, err => {
+      console.error("Photo error", err);
+    });
+
+    /*const reader = new FileReader();
     reader.onload = (e: any) => {
       //this.gloki.profile.image_url = e.target.result;
       this.userPhoto = e.target.result;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file);*/
   }
 
   saveProfile() {
@@ -59,5 +67,53 @@ export class ProfileComponent implements OnInit {
 
   editProfile() {
     this.isEdit = true;
+  }
+
+  resizeImage(file:File, maxWidth:number, maxHeight:number):Promise<string> {
+    return new Promise((resolve, reject) => {
+      let image = new Image();
+      image.src = URL.createObjectURL(file);
+      image.onload = () => {
+        let width = image.width;
+        let height = image.height;
+        
+        if (width <= maxWidth && height <= maxHeight) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            if (e.target?.result) {
+              resolve(e.target.result as string);
+            } else {
+              reject(new Error('Error reading file'));
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+
+        let newWidth;
+        let newHeight;
+
+        if (width > height) {
+            newHeight = height * (maxWidth / width);
+            newWidth = maxWidth;
+        } else {
+            newWidth = width * (maxHeight / height);
+            newHeight = maxHeight;
+        }
+
+        let canvas = document.createElement('canvas');
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        let context = canvas.getContext('2d');
+
+        if (context) {
+          context.drawImage(image, 0, 0, newWidth, newHeight);
+        }
+
+        resolve(canvas.toDataURL('image/jpeg'));
+
+      };
+      image.onerror = reject;
+    });
   }
 }
