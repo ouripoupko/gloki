@@ -1,6 +1,7 @@
 <h1>Select your storage&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
 <select required [(ngModel)]="selectedServer" (ngModelChange)="onServerSelected($event)">
     <option value="" disabled selected hidden>storage</option>
+    <option value="http://ouri.gloki.contact">http://ouri.gloki.contact</option>
     <option value="http://guest.gloki.contact">http://guest.gloki.contact</option>
     <option value="http://localhost:5001">http://localhost:5001</option>
 </select>

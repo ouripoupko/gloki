@@ -19,7 +19,7 @@ export class CommunityComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.gloki.profileContract) {
-//      this.router.navigate(['login']);
+      this.router.navigate(['login']);
     }
     this.route.paramMap.subscribe(params => {
       this.communityId = params.get('communityId') || '';
