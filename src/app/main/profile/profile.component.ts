@@ -29,14 +29,15 @@ export class ProfileComponent implements OnInit {
   }
 
   get isFormValid(): boolean {
-    return this.gloki.isProfileFull();
+    return !!(this.gloki.profile.first_name && this.gloki.profile.last_name && this.userPhoto);
   }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = (e: any) => {
-      this.gloki.profile.image_url = e.target.result;
+      //this.gloki.profile.image_url = e.target.result;
+      this.userPhoto = e.target.result;
     };
     reader.readAsDataURL(file);
   }
@@ -45,7 +46,8 @@ export class ProfileComponent implements OnInit {
     console.log('save clicked');
     if (this.isFormValid) {
       // Save the profile data and update the userPhoto
-      this.userPhoto = this.gloki.profile.image_url || '';
+      //this.userPhoto = this.gloki.profile.image_url || '';
+      this.gloki.profile.image_url = this.userPhoto;
       this.isEdit = false;
       this.gloki.writeProfile().subscribe(_ => {
         if (this.gloki.isProfileFull()) {

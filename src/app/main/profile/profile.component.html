@@ -5,8 +5,8 @@
       <div class="profile-photo">
         <div *ngIf="isEdit" class="file-upload">
           <input type="file" (change)="onFileSelected($event)" accept="image/*">
-          <div *ngIf="!gloki.profile.image_url" class="upload-text">Add your photo</div>
-          <img *ngIf="gloki.profile.image_url" [src]="gloki.profile.image_url" alt="Profile Photo">
+          <div *ngIf="!userPhoto" class="upload-text">Add your photo</div>
+          <img *ngIf="userPhoto" [src]="userPhoto" alt="Profile Photo">
         </div>
         <img *ngIf="!isEdit" [src]="userPhoto" alt="Profile Photo">
       </div>
@@ -35,7 +35,7 @@
         </div>
       </div>
       <a routerLink="/main">
-        <img src="../../assets/x.svg">
+        <img src="assets/x.svg">
       </a>
     </div>
     <div class="links">
