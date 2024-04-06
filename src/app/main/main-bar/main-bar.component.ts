@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { GlokiService } from 'src/app/gloki.service';
 
 @Component({
   selector: 'app-main-bar',
@@ -10,6 +11,10 @@ export class MainBarComponent {
   userPhoto = '';
   @Output() toggleEvent = new EventEmitter<boolean>();
   find = false;
+
+  constructor (
+    public gloki: GlokiService
+  ) {}
 
   toggleFind() {
     this.find = !this.find;

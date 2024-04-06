@@ -44,6 +44,7 @@ export class MainComponent implements OnInit {
   }
 
   onJoin(invite: Invite) {
+    this.findMode = false;
     this.gloki.joinCommunity(invite)?.subscribe();
   }
 

@@ -25,6 +25,7 @@
         margin-bottom: 5vh;
         font-size: 25px;
         font-weight: 600;
+        border: none;
     }
 }
 
@@ -56,6 +57,7 @@
         font-size: 25px;
         font-weight: 600;
         margin: 10px 0px;
+        border: none;
 
         &.revert {
             background-color: $gloki-grey;

@@ -22,6 +22,10 @@ export class ProfileComponent implements OnInit {
     if (!this.gloki.profileContract) {
       this.router.navigate(['login'])
     }
+    if (this.gloki.isProfileFull()) {
+      this.isEdit = false;
+      this.userPhoto = this.gloki.profile.image_url;
+    }
   }
 
   get isFormValid(): boolean {

@@ -16,6 +16,13 @@
         align-items: center;
         gap: 30px;
 
+        .profile-pic {
+            width: 37px;
+            height: 41px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
         .grey-box {
             height: 41px;
             width: 37px;

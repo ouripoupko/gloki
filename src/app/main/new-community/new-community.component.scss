@@ -67,6 +67,12 @@
                 width: calc($gloki-width * 0.2);
                 height: 3.6vh;
                 font-size: 15px;
+                border: none;
+            }
+
+            #cancel {
+                background-color: $gloki-grey;
+                color: white;
             }
         }
     }

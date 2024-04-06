@@ -1,12 +1,12 @@
 <div class="mainbar-container">
-    <img class="logo" src="../../assets/Logo.svg" />
+    <img class="logo" src="assets/Logo.svg" />
     <div class="bar-utilities">
-        <img class="find-icon" src="../../assets/find.svg" (click)="toggleFind()"/>
+        <img class="find-icon" src="assets/find.svg" (click)="toggleFind()"/>
         <a routerLink="/profile">
-            <div class="grey-box" *ngIf="!isProfileFull">
-                <img class="camera-icon" src="../../assets/camera.svg" />
+            <div class="grey-box" *ngIf="!gloki.profile.image_url">
+                <img class="camera-icon" src="assets/camera.svg" />
             </div>
-            <img class="profile-pic" *ngIf="isProfileFull" [src]="userPhoto" />
+            <img class="profile-pic" *ngIf="gloki.profile.image_url" [src]="gloki.profile.image_url" />
         </a>
         
     </div>

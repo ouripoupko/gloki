@@ -2,7 +2,7 @@
     <app-main-bar />
     <div class="new-community-container">
         <div class="top-margin">
-            <img (click)="onCancel($event)" class="x-icon" src="../../assets/x.svg" />
+            <img (click)="onCancel($event)" class="x-icon" src="assets/x.svg" />
         </div>
         <div class="main-area">
             <div class="input-area">
@@ -13,7 +13,7 @@
                 <label for="description">short description</label>
             </div>
             <div class="button-area">
-                <button (click)="onCancel($event)">Cancel</button>
+                <button id="cancel" (click)="onCancel($event)">Cancel</button>
                 <button [disabled]="name.trim()===''" (click)="onSave($event)">Save</button>
             </div>
         </div>
