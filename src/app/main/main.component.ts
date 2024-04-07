@@ -12,8 +12,10 @@ export class MainComponent implements OnInit {
   isLoading: boolean = false;
   findMode: boolean = false;
   isWaitingForJoin: boolean = false;
+  showTimerNum: boolean = true;
   countdown: number = 10;
   countdownInterval: any;
+  timerMsg = 'This may take several seconds\nThank you for your patience';
 
   constructor (
     public gloki: GlokiService,
@@ -66,6 +68,7 @@ export class MainComponent implements OnInit {
       } else if (readyState != 0) {
         clearInterval(intervalId); // Stop the interval
         this.stopCountdown();
+        this.timerMsg = 'Oops! Something went wrong';
         console.log('failed to listen to server. gave up on joining community')
       }
     }, 100);
@@ -84,6 +87,7 @@ export class MainComponent implements OnInit {
 
   stopCountdown() {
     clearInterval(this.countdownInterval);
+    this.showTimerNum = false;
   }
 
 
