@@ -18,11 +18,9 @@ export class MainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('entering main', this.gloki.profileContract);
     if (!this.gloki.profileContract) {
       this.router.navigate(['login'])
     }
-    console.log('profile', this.gloki.profile);
     this.isLoading = true;
     if (!this.gloki.isProfileFull()) {
       this.gloki.readProfile().subscribe(_ => {

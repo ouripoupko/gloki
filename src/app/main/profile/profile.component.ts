@@ -37,7 +37,6 @@ export class ProfileComponent implements OnInit {
 
     this.resizeImage(file, 200, 200).then(dataUrl => {
       this.userPhoto = dataUrl;
-      console.log('imageURL', this.userPhoto);
     }, err => {
       console.error("Photo error", err);
     });
@@ -51,7 +50,6 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile() {
-    console.log('save clicked');
     if (this.isFormValid) {
       // Save the profile data and update the userPhoto
       //this.userPhoto = this.gloki.profile.image_url || '';

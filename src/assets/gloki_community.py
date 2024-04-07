@@ -34,6 +34,9 @@ class Community:
     def get_nominates(self):
         return [key for key in self.nominates]
     
+    def set_property(self, key, value):
+        self.properties[key] = value
+    
     def get_properties(self):
         return self.properties.get_dict()
 

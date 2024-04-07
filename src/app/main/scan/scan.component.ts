@@ -47,7 +47,6 @@ export class ScanComponent {
 
   public onEvent(e: ScannerQRCodeResult[], action?: any): void {
     e && action && action.stop();
-    console.log(e);
     this.result = this.gloki.parseInvite(e?.[0]?.value);
     console.log('result', this.result);
     this.showResults = true;

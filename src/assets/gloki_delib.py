@@ -9,7 +9,7 @@ class Delib:
             self.parameters['counter'] = 1
 
     def approve_partner(self, partner):
-        return read(self.community, 'is_member', {'agent': partner}) if self.community else True
+        return True
 
     def create_statement(self, parent, text):
         if parent and parent not in self.statements:

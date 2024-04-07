@@ -10,6 +10,7 @@ import { GlokiService } from 'src/app/gloki.service';
 export class CommunityComponent implements OnInit {
   communityId: string = '';
   shareMode: boolean = false;
+  deliberationId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +24,7 @@ export class CommunityComponent implements OnInit {
     }
     this.route.paramMap.subscribe(params => {
       this.communityId = params.get('communityId') || '';
+      this.deliberationId = this.gloki.communityDeliberation[this.communityId];
     });
   }
 
@@ -34,15 +36,19 @@ export class CommunityComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  openApp(app: string) {
+  openApp(app: string, contract: string) {
     const baseURL = window.location.origin;
     const url = new URL("/" + app, baseURL);
     url.searchParams.append("server", this.gloki.server);
     url.searchParams.append("agent", this.gloki.agent);
-    url.searchParams.append("contract", this.communityId);
+    url.searchParams.append("contract", contract);
     console.log('url', url);
 
     window.open(url, "_blank");
+  }
+
+  joinDelib() {
+    this.gloki.joinDelib(this.communityId);
   }
 
 }

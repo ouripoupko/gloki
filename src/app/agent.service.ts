@@ -51,7 +51,6 @@ export class AgentService {
   }
 
   addContract(server: string, agent: string, contract: Contract): Observable<string> {
-    console.log('add new contract:', contract);
     let params = new HttpParams().set('action', 'deploy_contract');
     return this.http.put<string>(`${server}/ibc/app/${agent}`,
                                     contract,

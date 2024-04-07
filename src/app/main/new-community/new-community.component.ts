@@ -26,7 +26,6 @@ export class NewCommunityComponent implements OnInit {
   }
 
   onSave(event: any) {
-    console.log('save clicked', this.name);
     this.gloki.deployCommunity(this.name, this.description).subscribe(_ => {
       this.location.back();
     });

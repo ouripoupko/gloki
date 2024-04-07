@@ -5,8 +5,9 @@
     </div>
     <app-share *ngIf="shareMode" (toggleEvent)="toggleShareMode($event)" [contractId]="communityId"/>
     <div class="links" *ngIf="!shareMode">
-        <button (click)="openApp('community')">Open Community</button>
-        <button (click)="openApp('delib')">Join discussion</button>
+        <button (click)="openApp('community', communityId)">Open Community</button>
+        <button *ngIf="!gloki.delibContracts[deliberationId]" (click)="joinDelib()">Join discussion</button>
+        <button *ngIf="!!gloki.delibContracts[deliberationId]" (click)="openApp('delib', deliberationId)" [disabled]="false">Open discussion</button>
         <button (click)="toggleShareMode(true)">Share</button>      
     </div>
 </div>

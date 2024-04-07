@@ -5,6 +5,9 @@ import { concat, concatMap, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 const PROFILE_CONTRACT_NAME = 'unique-gloki-profile';
+const PROFILE_FILE_NAME = 'profile.py'
+const COMMUNITY_FILE_NAME = 'gloki_community.py';
+const DELIB_FILE_NAME = 'gloki_delib.py';
 
 export interface Invite {
   server: string;
@@ -26,9 +29,11 @@ export class GlokiService {
   server: string = '';
   agentExists: boolean = false;
   communityContracts: {[key: string]: Contract} = {};
+  delibContracts: {[key: string]: Contract} = {};
   profileContract?: string;
   profile: Profile = {} as Profile;
   eventSource?: EventSource;
+  communityDeliberation: {[key: string]: string} = {};
 
   constructor(
     private agentService: AgentService,
@@ -50,18 +55,17 @@ export class GlokiService {
   }
 
   getContractsIfExists() {
-    console.log('getContractsIfExists', this.agentExists);
-    this.communityContracts = {};
     if (this.agentExists) {
       return this.agentService.getContracts(this.server, this.agent).pipe(
-        tap(this.processContracts.bind(this)),
+        tap(this.classifyContracts.bind(this)),
         map(_ => { return (this.profileContract ? true : false); })
       );
     }
     return of(false);
   }
 
-  processContracts(contracts: Contract[]) {
+  classifyContracts(contracts: Contract[]) {
+    this.communityContracts = {};
 
     // find profile
     for (let contract of contracts) {
@@ -73,19 +77,46 @@ export class GlokiService {
 
     // find communities
     for (let contract of contracts) {
-      if (contract.contract === 'community.py') {
+      if (contract.contract === COMMUNITY_FILE_NAME || contract.contract === DELIB_FILE_NAME) {
         let partners_method = { name: 'get_partners', values: {}} as Method;
-        this.agentService.read(this.server, this.agent, contract.id, partners_method)
-          .subscribe((reply) => {
-            reply.forEach((partner: Partner) => {
-              if (partner.agent === this.agent && partner.profile === this.profileContract) {
+        this.agentService.read(this.server, this.agent, contract.id, partners_method).subscribe((reply) => {
+          reply.forEach((partner: Partner) => {
+            if (partner.agent === this.agent && partner.profile === this.profileContract) {
+              if (contract.contract === COMMUNITY_FILE_NAME) {
                 this.communityContracts[contract.id] = contract;
+                this.findDeliberation(contract.id);
+              } else if (contract.contract === DELIB_FILE_NAME) {
+                this.delibContracts[contract.id] = contract;
               }
-            });
-          })
-        }
+            }
+          });
+        })
+      }
     }
-    console.log('communities', this.communityContracts);
+  }
+
+  findDeliberation(communityId: string) {
+    if (this.profileContract) {
+      let method = {} as Method;
+      method.name = 'get_properties';
+      method.values = {};
+      this.agentService.read(this.server, this.agent, communityId, method).subscribe((properties) => {
+        if(properties?.deliberation) {
+          let delibId = properties.deliberation;
+          this.communityDeliberation[communityId] = delibId;
+        }
+      });
+    }
+  }
+
+  joinDelib(community: string) {
+    if (community in this.communityDeliberation && this.profileContract) {
+      const communityContract = this.communityContracts[community];
+      const delibId = this.communityDeliberation[community];
+      this.agentService.joinContract(this.server, this.agent, communityContract.address,
+        communityContract.pid, delibId, this.profileContract).subscribe();
+    }
+
   }
 
   connect() {
@@ -102,17 +133,33 @@ export class GlokiService {
   }
 
   deployProfileContract() {
-    return this.deployContract(PROFILE_CONTRACT_NAME, "profile.py", "", "").pipe(
+    return this.deployContract(PROFILE_CONTRACT_NAME, PROFILE_FILE_NAME, "", {}).pipe(
       tap(reply => {this.profileContract = reply;})
     );
   }
 
   deployCommunity(name: string, description: string) {
     if (!this.profileContract) return of('');
-    return this.deployContract(name, "community.py", this.profileContract, "");
+    return this.deployContract(name, COMMUNITY_FILE_NAME, this.profileContract, {}).pipe(
+      tap(reply => {this.deployDelib(name, reply);})
+    );
   }
 
-  deployContract(name: string, file_name: string, profile: string, community: string){
+  deployDelib(name: string, community: string) {
+    console.log('deploy deliberation', name, community);
+    if (!this.profileContract) return of('');
+    return this.deployContract(name, DELIB_FILE_NAME, this.profileContract, {community: community}).subscribe((reply) => {
+      let method = {} as Method;
+      method.name = 'set_property';
+      method.values = {'key': 'deliberation', 'value': reply};
+      if(this.profileContract) {
+        this.agentService.write(this.server, this.agent, community, method).subscribe(_ => {
+        });
+      }  
+    });
+  }
+
+  deployContract(name: string, file_name: string, profile: string, ctor: any){
     let contract = {} as Contract;
 
     contract.name = name;
@@ -125,13 +172,12 @@ export class GlokiService {
 
     contract.profile = profile;
 
-    contract.constructor = {};
+    contract.constructor = ctor;
 
     return this.httpClient.get(`assets/${contract.contract}`, { responseType: 'text' }).pipe(
       concatMap((data) => {
         contract.code = data;
         return this.agentService.addContract(this.server, this.agent, contract).pipe(
-          tap(reply => {console.log('deplloy contract', reply);})
         );
       })
     );
@@ -153,9 +199,10 @@ export class GlokiService {
     this.eventSource.addEventListener('message', message => {
       if(message.data.length > 0) {
         let content = JSON.parse(message.data)
-        console.log('listen', content);
-        if (content.action == "deploy_contract" || content.action === "a2a_reply_join")
+        if (content.action == "deploy_contract" || content.action === "a2a_reply_join") {
+          console.log('listen', content);
           this.getContractsIfExists().subscribe();
+        }
       }
     });
     this.eventSource.addEventListener('open', open => {
@@ -175,7 +222,6 @@ export class GlokiService {
       tap((profile) => {
         if(profile) {
           this.profile = profile as Profile;
-          console.log('read profile', this.profile);
         }
       })
     );
