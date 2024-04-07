@@ -32,4 +32,28 @@
             padding: 3vh;
         }
     }
+
+    .timer {
+        padding: 20px;
+        border-radius: 21px;
+        background-color: white;
+        color: $gloki-dark;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100vw - 80px);
+
+        .timer-num {
+            font-size: 45px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
 }
