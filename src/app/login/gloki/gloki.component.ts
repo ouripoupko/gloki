@@ -8,6 +8,8 @@ import { StateService } from '../state.service';
 })
 export class GlokiComponent {
 
+  showInfo: boolean = false;
+  
   constructor(
     private state: StateService
   ) { }

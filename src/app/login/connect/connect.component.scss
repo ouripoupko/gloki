@@ -1,4 +1,27 @@
+@import "src/variables.scss";
+
 h1 {
     padding: 0 20px;
     text-align: center;
+}
+
+.raised-circle {
+    border-radius: 50%;
+    width: 2vh;
+    height: 2vh;
+    display: inline-block;
+    background: white;
+    color: $gloki-dark;
+    text-align: center;
+    font-size: 1.6vh;
+    transform: translateY(-1vh);
+}
+
+.info-box {
+    position:absolute;
+    height: 50vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

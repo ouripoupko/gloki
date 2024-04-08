@@ -1,4 +1,9 @@
-<h1>Select your gloKi&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
+<h1>Select your gloKi&thinsp;<sup><span (click)="showInfo=true" class="raised-circle">?</span></sup></h1>
 <input type="file" style="display:none" accept=".json" (change)="onFileSelected($event)" #fileUpload/>
 <button class="inverse" (click)="fileUpload.click()">Existing</button>
 <button (click)="onGenerate($event)">Create New</button>
+<app-info class="info-box" *ngIf="showInfo" (click)="showInfo=false">
+    <div class="info-header">What is gloKi?</div>
+    <div class="info-summary">gloKi is a cryptographic key pair stored on your device</div>
+    <div class="info-content">People with gloKi's verify each other to make sure there is only one gloKi per person and that only human's have them - laying the foundation for a trustworthy public square.</div>
+</app-info>

@@ -9,6 +9,8 @@ import { StateService } from '../state.service';
 })
 export class ConnectComponent {
 
+  showInfo: boolean = false;
+
   constructor (
     private gloki: GlokiService,
     private state: StateService

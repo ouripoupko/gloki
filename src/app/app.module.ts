@@ -15,6 +15,7 @@ import { ShareComponent } from './main/share/share.component';
 import { MainBarComponent } from './main/main-bar/main-bar.component';
 import { CommunityComponent } from './main/community/community.component';
 import { NewCommunityComponent } from './main/new-community/new-community.component';
+import { InfoComponent } from './login/info/info.component';
 
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -37,7 +38,8 @@ LOAD_WASM().subscribe();
     DoLoginComponent,
     MainBarComponent,
     CommunityComponent,
-    NewCommunityComponent
+    NewCommunityComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule,

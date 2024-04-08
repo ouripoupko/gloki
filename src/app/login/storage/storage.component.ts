@@ -10,6 +10,7 @@ import { GlokiService } from 'src/app/gloki.service';
 export class StorageComponent {
 
   selectedServer: string = '';
+  showInfo: boolean = false;
 
   constructor (
     private state: StateService,

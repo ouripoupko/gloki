@@ -1,0 +1,40 @@
+
+@import "src/variables.scss";
+
+.info-container {
+    width: calc($gloki-width * 0.75);
+    height: 40vh;
+    background-color: white;
+    color: $gloki-dark;
+    padding: 31px;
+    border-radius: 21px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    button {
+        color: white;
+        background-color: $gloki-blue;
+        border-radius: 9px;
+        font-size: 25px;
+        border: none;
+        padding: 10px;
+    }
+}
+
+:host ::ng-deep .info-header {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+:host ::ng-deep .info-summary {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.1;
+}
+
+:host ::ng-deep .info-content {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.1;
+}

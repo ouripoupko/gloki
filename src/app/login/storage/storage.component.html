@@ -1,5 +1,13 @@
-<h1>Select your storage&thinsp;<sup><span class="raised-circle">?</span></sup></h1>
+<h1>Your IBC Blockchain&thinsp;<sup><span (click)="showInfo=true" class="raised-circle">?</span></sup></h1>
 <select required [(ngModel)]="selectedServer" (ngModelChange)="onServerSelected($event)">
-    <option value="" disabled selected hidden>storage</option>
+    <option value="" disabled selected hidden>select</option>
+    <option value="https://gdi.gloki.contact">https://gdi.gloki.contact</option>
     <option value="https://ouri.gloki.contact">https://ouri.gloki.contact</option>
+    <option value="https://guest.gloki.contact">https://guest.gloki.contact</option>
+    <!-- <option value="http://localhost:5001">local</option> -->
 </select>
+<app-info class="info-box" *ngIf="showInfo" (click)="showInfo=false">
+    <div class="info-header">What is IBC?</div>
+    <div class="info-summary">Your gloKi connects to your own personal blockchain.</div>
+    <div class="info-content">IBC blockchain is a personal blockchain. You store your personal profile and all your personal information on an IBC blockchain. You access your data with your gloKi.</div>
+</app-info>
