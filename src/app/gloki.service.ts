@@ -199,8 +199,8 @@ export class GlokiService {
     this.eventSource.addEventListener('message', message => {
       if(message.data.length > 0) {
         let content = JSON.parse(message.data)
-        if (content.action == "deploy_contract" || content.action === "a2a_reply_join") {
-          console.log('listen', content);
+        console.log('listen', content);
+        if (content.action == "deploy_contract" || content.action === "a2a_reply_join" || content.action === "a2a_connect") {
           this.getContractsIfExists().subscribe();
         }
       }
