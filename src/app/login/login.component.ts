@@ -8,7 +8,7 @@ import { StateService } from './state.service';
 })
 export class LoginComponent {
 
-  registerChecked: boolean = false;
+  hamburgerOpen: boolean = false;
 
   constructor(
     public state: StateService

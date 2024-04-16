@@ -1,7 +1,8 @@
-<div class="login-container">
+<app-hamburger *ngIf="hamburgerOpen" (closeEvent)="hamburgerOpen=false"></app-hamburger>
+<div class="login-container" *ngIf="!hamburgerOpen">
     <div class="header">
         <div class="hamburger-menu">
-            <div class="material-symbols-outlined">menu</div>
+            <div class="material-symbols-outlined" (click)="hamburgerOpen=true">menu</div>
         </div>
         <img src = "assets/Logo.svg" alt="The gloKi Logo"/>
     </div>
@@ -12,8 +13,8 @@
     <div class="footer">
         <div *ngIf="state.isLoading">Loading ...</div>
         <div class="progress-indicator">
-            <div class="progress-bar"><div class="progress-value" [ngStyle]="{'width': ''+state.step*25.2+'%'}"></div></div>
-            {{state.step}}/4
+            <div class="progress-bar"><div class="progress-value" [ngStyle]="{'width': ''+(state.step-1)*25.2+'%'}"></div></div>
+            {{(state.step-1)*25}}%
         </div>
     </div>
 </div>

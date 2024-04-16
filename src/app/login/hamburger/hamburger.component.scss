@@ -1,0 +1,54 @@
+@import "src/variables.scss";
+
+.hamburger-container {
+    background-image: linear-gradient(150deg, $gloki-blue, $gloki-dark 39%);
+    width: $gloki-width;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .top-bar {
+        padding: 17px 15px;
+        display: flex;
+        justify-content: start;
+        align-items: flex-start;
+        height: 10vh;
+        width: 100%;
+
+        .logo {
+            width: 85px;
+        }
+    }
+
+    .menu-container {
+        width: calc($gloki-width * 0.75);
+        height: 40vh;
+        background-color: white;
+        color: $gloki-dark;
+        padding: 31px;
+        border-radius: 21px;
+        display: flex;
+        flex-direction: column;
+        font-size: 3.2vh;
+        font-weight: bold;
+
+        .closing-x {
+            align-self: end;
+            height: 4vh;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0px;
+            margin: 0;
+            li {
+                padding-bottom: 4vh;
+
+                a:link, a:visited {
+                    color: $gloki-dark;
+                }
+            }
+        }
+    }    
+}
