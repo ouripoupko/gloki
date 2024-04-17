@@ -1,8 +1,9 @@
 <app-hamburger *ngIf="hamburgerOpen" (closeEvent)="hamburgerOpen=false"></app-hamburger>
 <div class="login-container" *ngIf="!hamburgerOpen">
     <div class="header">
-        <div class="hamburger-menu">
-            <div class="material-symbols-outlined" (click)="hamburgerOpen=true">menu</div>
+        <div class="top-bar">
+            <div class="material-symbols-outlined back-arrow" *ngIf="state.step>1" (click)="state.step=backward[state.step-1]">arrow_back</div>
+            <div class="material-symbols-outlined hamburger-menu" (click)="hamburgerOpen=true">menu</div>
         </div>
         <img src = "assets/Logo.svg" alt="The gloKi Logo"/>
     </div>

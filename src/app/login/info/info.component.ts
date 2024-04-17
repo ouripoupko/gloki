@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-info',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './info.component.scss'
 })
 export class InfoComponent {
-
+  @Output() closeEvent = new EventEmitter<null>();
 }

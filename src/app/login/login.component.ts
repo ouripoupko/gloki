@@ -9,6 +9,7 @@ import { StateService } from './state.service';
 export class LoginComponent {
 
   hamburgerOpen: boolean = false;
+  backward: number[] = [1, 1, 2, 2];
 
   constructor(
     public state: StateService

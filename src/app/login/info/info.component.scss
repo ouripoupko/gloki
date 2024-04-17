@@ -11,6 +11,27 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    position: relative;
+
+    .closing-x {
+        align-self: flex-end;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background: $gloki-dark;
+        color: white;
+        text-align: center;
+        font-size: 15px;
+        cursor: pointer;
+
+        .slightly-raise-x {
+            margin-top: -1px;
+        }
+    }
 
     button {
         color: white;
