@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { StateService } from '../state.service';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoComponent } from 'src/app/dialogs/info/info.component';
 
 @Component({
   selector: 'app-gloki',
@@ -8,11 +10,24 @@ import { StateService } from '../state.service';
 })
 export class GlokiComponent {
 
-  showInfo: boolean = false;
+  // showInfo: boolean = false;
   
   constructor(
-    private state: StateService
+    private state: StateService,
+    public dialog: MatDialog
   ) { }
+
+  showInfo() {
+    this.dialog.open(InfoComponent, {
+      panelClass: 'info-box',
+      backdropClass: 'dialog-backdrop',
+      data: {
+        header:'What is gloKi?',
+        summary:'gloKi is a cryptographic key pair stored on your device',
+        content: 'People with gloKi\'s verify each other to make sure there is only one gloKi per person and that only human\'s have them - laying the foundation for a trustworthy public square.'
+      }
+    });
+  }
 
   onFileSelected(event: any) {
     if(event.target.files.length > 0)

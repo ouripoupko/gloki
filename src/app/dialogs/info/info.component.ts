@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-info',
@@ -6,5 +7,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './info.component.scss'
 })
 export class InfoComponent {
-  @Output() closeEvent = new EventEmitter<null>();
+
+  constructor (
+    @Inject(MAT_DIALOG_DATA) public data: {header: string, summary: string, content: string}
+  ) { }
 }

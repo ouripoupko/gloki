@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-//import { BarcodeFormat } from '@zxing/library';
+import { Component, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   ScannerQRCodeConfig,
   ScannerQRCodeResult,
@@ -15,7 +15,7 @@ import { GlokiService, Invite } from 'src/app/gloki.service';
 export class ScanComponent {
 
   showResults: boolean = false;
-  result?: Invite;
+  result?: any;
 
   public config: ScannerQRCodeConfig = {
     constraints: {
@@ -38,16 +38,19 @@ export class ScanComponent {
   };
 
   @ViewChild('action') action!: NgxScannerQrcodeComponent;
-  @Output() resultEvent = new EventEmitter<Invite>();
-
-
+  
   constructor (
-    private gloki: GlokiService
+    private gloki: GlokiService,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      testResult: (result: string) => boolean,
+      resultHeader: string,
+      resultStringify: (result: any) => string
+    }
   ) {}
 
   public onEvent(e: ScannerQRCodeResult[], action?: any): void {
     e && action && action.stop();
-    this.result = this.gloki.parseInvite(e?.[0]?.value);
+    this.result = this.data.testResult(e?.[0]?.value);
     console.log('result', this.result);
     this.showResults = true;
   }

@@ -1,6 +1,6 @@
 <div class="main-container">
     <app-main-bar (toggleEvent)="toggleFindMode($event)" />
-    <app-scan *ngIf="findMode" (resultEvent)="onJoin($event)"/>
+    <app-scan *ngIf="findMode"/>
     <div *ngIf="!findMode" class="community-list">
       <div class="just-list">
           <div *ngFor="let item of gloki.communityContracts | keyvalue" class="community">

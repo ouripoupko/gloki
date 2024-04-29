@@ -1,11 +1,11 @@
-<h1>Type your IBC address&thinsp;<sup><span (click)="showInfo=true" class="raised-circle">?</span></sup></h1>
+<h1>Type your IBC address&thinsp;<sup><span (click)="showInfo()" class="raised-circle">?</span></sup></h1>
 <div class="input-container">
     <!-- Input field -->
     <input type="text" class="input-field" placeholder="Type address..."
          [(ngModel)]="selectedServer" (ngModelChange)="onServerChange()"
          (click)="autocompleteVisible=true" (blur)="delayedHide()">
     <!-- Icon inside input area -->
-    <img class="icon" src="assets/QR code scanner.png" onclick="handleIconClick()" />
+    <img class="icon" src="assets/QR code scanner.png" (click)="doScan()" />
     <div class="autocomplete" *ngIf="autocompleteVisible && options.length > 0">
         <ul>
             <li *ngFor="let option of options" (click)="selectOption(option)" [innerHTML]="option"></li>
@@ -16,8 +16,3 @@
     </div>
 </div>
 <button class="continue" [disabled]="!mayContinue" (click)="onServerSelected($event)">Continue</button>
-<app-info class="info-box" *ngIf="showInfo" (click)="showInfo=false">
-    <div class="info-header">What is IBC?</div>
-    <div class="info-summary">Your gloKi connects to your own personal blockchain.</div>
-    <div class="info-content">Identity Blockchain (IBC) is a personal blockchain. You store your personal profile and all your personal information on an IBC. You access your data with your gloKi.</div>
-</app-info>

@@ -1,0 +1,31 @@
+
+.info-box
+.mat-mdc-dialog-container
+.mdc-dialog__container
+.mat-mdc-dialog-surface {
+    width: calc($gloki-width * 0.75);
+    height: 40vh;
+    background-color: white;
+    border-radius: 21px;
+    position: absolute;
+    top: 37.5vh;
+    font-family: 'DM Sans';
+}
+
+.scan-box
+.mat-mdc-dialog-container
+.mdc-dialog__container
+.mat-mdc-dialog-surface {
+    max-width: none;
+    width: $gloki-width;
+    height: 75vh;
+    background-color: white;
+    border-radius: 0px 0px 21px 21px;
+    position: absolute;
+    top: 10vh;
+    font-family: 'DM Sans';
+}
+
+.dialog-backdrop {
+    cursor: default;
+}

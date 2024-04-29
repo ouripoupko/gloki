@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { StateService } from '../state.service';
 import { GlokiService } from 'src/app/gloki.service';
 import { timeout } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoComponent } from 'src/app/dialogs/info/info.component';
+import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
 
 @Component({
   selector: 'app-storage',
@@ -11,12 +14,11 @@ import { timeout } from 'rxjs';
 export class StorageComponent {
 
   selectedServer: string = '';
-  showInfo: boolean = false;
   autocompleteVisible: boolean = false;
   cachedOptions: string[] = [];
   originalOptions = [
     'https://gdi.gloki.contact',
-//    'http://localhost:5001'
+    'http://localhost:5001'
   ];
   options: string[] = [];
   mayContinue = false;
@@ -26,6 +28,7 @@ export class StorageComponent {
   constructor (
     private state: StateService,
     private gloki: GlokiService,
+    public dialog: MatDialog
   ) {
     this.cachedOptions = JSON.parse(window.localStorage.getItem(this.storageKey) ?? '[]');
     this.options = [...this.cachedOptions, ...this.originalOptions];
@@ -41,7 +44,9 @@ export class StorageComponent {
     this.state.isLoading = true;
     this.gloki.setServer(this.selectedServer, this.state.key).subscribe({
       next: result => {
-        this.cachedOptions.push(this.selectedServer);
+        if (!this.cachedOptions.includes(this.selectedServer) && !this.originalOptions.includes(this.selectedServer)) {
+          this.cachedOptions.push(this.selectedServer);
+        }
         window.localStorage.setItem(this.storageKey, JSON.stringify(this.cachedOptions));
         this.state.agentExists = result;
         this.state.step = result ? 4 : 3;
@@ -50,6 +55,7 @@ export class StorageComponent {
       error: error => {
         this.errorMessage = 'Bad response. Please type another address.';
         this.state.isLoading = false;
+        this.mayContinue = false;
       }
     });
   }
@@ -76,4 +82,32 @@ export class StorageComponent {
     }
   }
   
+  showInfo() {
+    this.dialog.open(InfoComponent, {
+      panelClass: 'info-box',
+      backdropClass: 'dialog-backdrop',
+      data: {
+        header: 'What is IBC?',
+        summary: 'Your gloKi connects to your own personal blockchain.',
+        content: 'Identity Blockchain (IBC) is a personal blockchain. You store your personal profile and all your personal information on an IBC. You access your data with your gloKi.'
+      }
+    });
+  }
+
+  doScan () {
+    const dialogRef = this.dialog.open(ScanComponent, {
+      panelClass: 'scan-box',
+      backdropClass: 'dialog-backdrop',
+      data: {
+        testResult: (result: string) => result,
+        resultHeader: 'IBC Address:',
+        resultStringify: (result: string) => result
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.selectedServer = result;
+      this.mayContinue = this.isValidHttpUrl();
+    });
+  }
 }

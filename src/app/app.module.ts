@@ -22,6 +22,7 @@ import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgxQrcodeStylingModule } from 'ngx-qrcode-styling';
 import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { MatDialogModule } from '@angular/material/dialog';
 
 LOAD_WASM().subscribe();
 
@@ -49,7 +50,8 @@ LOAD_WASM().subscribe();
     HttpClientModule,
     FormsModule,
     NgxQrcodeStylingModule,
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

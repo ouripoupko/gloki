@@ -1,4 +1,6 @@
-<div class="info-container">
-    <div class="closing-x" (click)="closeEvent.emit()"><div class="slightly-raise-x">x</div></div>
-    <ng-content></ng-content>
-</div>
+<mat-dialog-content class="info-container">
+    <div class="closing-x" mat-dialog-close><div class="slightly-raise-x">x</div></div>
+    <div class="info-header">{{data.header}}</div>
+    <div class="info-summary">{{data.summary}}</div>
+    <div class="info-content">{{data.content}}</div>
+</mat-dialog-content>
