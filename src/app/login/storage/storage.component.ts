@@ -61,7 +61,7 @@ export class StorageComponent {
   }
 
   delayedHide() {
-    setTimeout (()=>{this.autocompleteVisible = false}, 100);
+    setTimeout (()=>{this.autocompleteVisible = false}, 300);
   }
 
   onServerChange() {

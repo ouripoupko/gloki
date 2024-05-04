@@ -14,9 +14,4 @@ export class DoLoginComponent {
     private gloki: GlokiService
   ) { }
 
-  navigate() {
-    this.gloki.login();
-    this.router.navigate(['main']);
-  }
-
 }

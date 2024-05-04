@@ -1,132 +1,22 @@
 @import "src/variables.scss";
 
-.main-container {
-  background: linear-gradient(167.1deg, $gloki-dark 16.16%, $gloki-blue 94.75%);
-  width: $gloki-width;
-  height: 100%;
-  color: white;
-}
-
 .profile-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 
-    .description, .links {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      color: $gloki-dark;
-    }
-
-    .description {
-      margin: 0 34px;
-      padding: 20px;
-      border-radius: 21px;
-      background-color: white;
-      p {
-        margin-top: 0;
-      }
-      .big-p {
-        margin-bottom: 10px;
-        font-size: 25px;
-      }
-    }
-
-    .links {
-      width: 100%;
-      padding: 0 34px;
-      a {
-        background-color: white;
-        padding: 10px 20px;
-        font-size: 25px;
-        width: 100%;
-        border-radius: 21px;
-        color: $gloki-dark;
-      }
-    }
-}
-
-.page-header {
-    margin-top: 157px;
-    margin-bottom: 85px;
-    text-align: center;
-}
-.profile-container {
+  .profile-container {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
-    padding: 20px;
-  
-    .profile-info {
-      flex: 1;
-      margin-left: 20px;
-      margin-right: 10px;
-      display: flex;
-      flex-direction: column;
-      height: 198px;
-  
-      .edit-mode,
-      .info-mode {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-  
-        .form-field,
-        .info-field {
-          margin-bottom: 20px;
-  
-          input {
-            width: 100%;
-            padding: 8px;
-            font-size: 16px;
-            border: 1px solid white;
-            border-radius: 4px;
-          }
-  
-          label {
-            display: block;
-            margin-top: 5px;
-            font-size: 14px;
-          }
-        }
-  
-        button {
-          margin-top: auto;
-          padding: 10px 20px;
-          font-size: 16px;
-          background-color: $gloki-green;
-          color: $gloki-dark;
-          border: none;
-          border-radius: 9px;
-          cursor: pointer;
-          width: 84px;
-  
-          &:hover {
-            background-color: $gloki-green;
-          }
-
-          &:disabled {
-            background-color: white;
-            cursor: not-allowed;
-          }
-        }
-      }
-  
-      .info-mode {
-        .info-field {
-          span {
-            font-size: 18px;
-            font-weight: bold;
-          }
-        }
-      }
-    }
+    padding: 24px 20px 0px 34px;
   
     .profile-photo {
-        border-radius: 21px;
-        overflow: hidden;
+      margin-top: 18px;
+      border-radius: 21px;
+      overflow: hidden;
+
       .file-upload {
         width: 152px;
         height: 198px;
@@ -137,7 +27,7 @@
         justify-content: center;
         position: relative;
         cursor: pointer;
-  
+
         input[type="file"] {
           position: absolute;
           top: 0;
@@ -147,22 +37,123 @@
           opacity: 0;
           cursor: pointer;
         }
-  
+
         .upload-text {
-          font-size: 16px;
+          padding: 20px;
+          font-size: 20px;
+          text-align: center;
         }
-  
+
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
         }
       }
-  
+
       img {
         width: 152px;
         height: 198px;
         object-fit: cover;
       }
     }
+
+    .profile-info {
+      flex: 1;
+      margin: 29px 18px 0px 20px;
+      display: flex;
+      flex-direction: column;
+      height: 187px;
+  
+      .edit-mode,
+      .info-mode {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+  
+        .form-field,
+        .info-field {
+  
+          input {
+            width: 100%;
+            height: 32px;
+            font-size: 20px;
+            border: 1px solid white;
+          }
+  
+          label {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+          }
+        }
+  
+        button {
+          font-size: 15px;
+          background-color: $gloki-green;
+          color: $gloki-dark;
+          border: none;
+          border-radius: 9px;
+          cursor: pointer;
+          width: 84px;
+          height: 34px;
+  
+          &:disabled {
+            background-color: white;
+            cursor: not-allowed;
+          }
+        }
+      }
+  
+      .info-mode {
+        .info-field {
+          span {
+            font-size: 25px;
+            font-weight: bold;
+          }
+
+          label {
+            color: $gloki-grey;
+          }
+        }
+      }
+    }
+  }
+
+  .information {
+    margin: 0 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    button {
+      border-radius: 21px;
+      font-size: 25px;
+      text-align: start;
+      padding: 8px 20px;
+    }
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: $gloki-dark;
+    margin: 0 34px;
+    padding: 20px 54px 35px 30px;
+    border-radius: 21px;
+    background-color: white;
+    p {
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 105%;
+      font-size: 20px;
+    }
+    .big-p {
+      margin-bottom: 10px;
+      font-size: 25px;
+    }
+  }
+
 }

@@ -193,7 +193,7 @@ export class GlokiService {
     }
   }
 
-  login() {
+  listen() {
     this.eventSource = this.agentService.listen(this.server, this.agent);
     this.logES();
     this.eventSource.addEventListener('message', message => {

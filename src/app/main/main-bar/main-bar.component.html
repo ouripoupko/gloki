@@ -4,7 +4,7 @@
     </a>
     <div class="bar-utilities">
         <img class="find-icon" src="assets/find.svg" (click)="toggleFind()"/>
-        <a routerLink="/profile">
+        <a routerLink="/main/profile" replaceUrl>
             <div class="grey-box" *ngIf="!gloki.profile.image_url">
                 <img class="camera-icon" src="assets/camera.svg" />
             </div>

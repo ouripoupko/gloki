@@ -1,16 +1,4 @@
 <div class="main-container">
     <app-main-bar (toggleEvent)="toggleFindMode($event)" />
-    <app-scan *ngIf="findMode"/>
-    <div *ngIf="!findMode" class="community-list">
-      <div class="just-list">
-          <div *ngFor="let item of gloki.communityContracts | keyvalue" class="community">
-            <a [routerLink]="[item.key]">{{ item.value.name }}</a>
-          </div>
-      </div>
-      <div class="add-btn"><img (click)='gotoCreate()' src='assets/plus.svg'></div>
-    </div>
-    <div class="timer" *ngIf="isWaitingForJoin">
-      <div class="timer-num" *ngIf="showTimerNum">{{ countdown | number:'1.1-1' }}</div>
-      <h1>{{timerMsg}}</h1>
-    </div>
+    <router-outlet></router-outlet>
 </div>

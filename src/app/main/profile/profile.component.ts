@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GlokiService } from '../../gloki.service';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoComponent } from 'src/app/dialogs/info/info.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -14,14 +16,13 @@ export class ProfileComponent implements OnInit {
 
   constructor (
     public gloki: GlokiService,
-    private router: Router,
-    private location: Location
+    private location: Location,
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    if (!this.gloki.profileContract) {
-      this.router.navigate(['login'])
-    }
+    console.log('ngOnInit profile page');
     if (this.gloki.isProfileFull()) {
       this.isEdit = false;
       this.userPhoto = this.gloki.profile.image_url;
@@ -51,13 +52,11 @@ export class ProfileComponent implements OnInit {
 
   saveProfile() {
     if (this.isFormValid) {
-      // Save the profile data and update the userPhoto
-      //this.userPhoto = this.gloki.profile.image_url || '';
       this.gloki.profile.image_url = this.userPhoto;
       this.isEdit = false;
       this.gloki.writeProfile().subscribe(_ => {
         if (this.gloki.isProfileFull()) {
-          this.location.back();
+          this.router.navigate(['main', 'communities'], {replaceUrl: true});
         }
       });
     }
@@ -113,5 +112,25 @@ export class ProfileComponent implements OnInit {
       };
       image.onerror = reject;
     });
+  }
+
+  viewInfo(header: string, content: string) {
+    this.dialog.open(InfoComponent, {
+      panelClass: 'info-box',
+      backdropClass: 'dialog-backdrop',
+      data: {
+        header: header,
+        summary: '',
+        content: content
+      }
+    });
+  }
+
+  viewGlokiInfo() {
+    this.viewInfo('Your gloki:', this.gloki.agent)
+  }
+
+  viewIbcInfo() {
+    this.viewInfo('Your IBC address:', this.gloki.server)
   }
 }

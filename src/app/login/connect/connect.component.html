@@ -1,9 +1,4 @@
 <h1>Wow, you're pretty good at this!</h1>
-<div style="position: relative">Click below to connect your <sup style="position: absolute; left: 103%"><span (click)="showInfo=true" class="raised-circle">?</span></sup></div>
+<div style="position: relative">Click below to connect your <sup style="position: absolute; left: 103%"><span (click)="showInfo()" class="raised-circle">?</span></sup></div>
 <div>IBC blockchain with your gloKi</div>
 <button (click)="onConnect($event)">Connect IBC</button>
-<app-info class="info-box" *ngIf="showInfo" (click)="showInfo=false">
-    <div class="info-header">Connect IBC</div>
-    <div class="info-summary">Connect to register your gloKi on your IBC blockchain.</div>
-    <div class="info-content">It seems there is no record of your gloKi on your IBC blockchain. Connect to register your gloKi on your IBC blockchain for the first time. You will only need to do it once.</div>
-</app-info>

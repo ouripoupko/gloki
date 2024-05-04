@@ -17,6 +17,7 @@ import { CommunityComponent } from './main/community/community.component';
 import { NewCommunityComponent } from './main/new-community/new-community.component';
 import { InfoComponent } from './dialogs/info/info.component';
 import { HamburgerComponent } from './dialogs/hamburger/hamburger.component';
+import { ListComponent } from './main/list/list.component';
 
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -42,7 +43,8 @@ LOAD_WASM().subscribe();
     CommunityComponent,
     NewCommunityComponent,
     InfoComponent,
-    HamburgerComponent
+    HamburgerComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

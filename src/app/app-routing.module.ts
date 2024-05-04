@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
-import { ScanComponent } from './dialogs/scan/scan.component';
+import { ListComponent } from './main/list/list.component';
 import { CommunityComponent } from './main/community/community.component';
 import { ProfileComponent } from './main/profile/profile.component';
-import { ShareComponent } from './dialogs/share/share.component';
 import { NewCommunityComponent } from './main/new-community/new-community.component';
 
 const routes: Routes = [
@@ -14,12 +13,12 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'login' },
       { path: 'login', component: LoginComponent },
-      { path: 'main', component: MainComponent },
-      { path: 'main/:communityId', component: CommunityComponent },
-      { path: 'scan', component: ScanComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'share', component: ShareComponent },
-      { path: 'create', component: NewCommunityComponent }
+      { path: 'main', component: MainComponent, children: [
+        { path: 'communities', component: ListComponent },
+        { path: 'community/:communityId', component: CommunityComponent },
+        { path: 'profile', component: ProfileComponent },
+        { path: 'create', component: NewCommunityComponent }
+      ]}
     ]
   }
 ];
