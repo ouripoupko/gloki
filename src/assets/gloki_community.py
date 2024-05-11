@@ -7,6 +7,9 @@ class Community:
         self.approvals = self.db['approvals']
         self.properties = self.db['properties']
 
+    def set_instructions(self, instructions):
+        self.properties['instructions'] = instructions
+
     def get_all(self):
         return {'tasks': self.get_tasks(),
                 'members': self.get_members(),
@@ -40,13 +43,12 @@ class Community:
     def get_properties(self):
         return self.properties.get_dict()
 
-    def request_join(self, instructions=None):
+    def request_join(self):
         requester = master()
         if requester in self.members or requester in self.nominates:
             return False
         if len(self.members) == 0:
             self.members[requester] = []
-            self.properties['instructions'] = instructions
         elif len(self.members) < 5:
             if len(self.nominates) == 0:
                 self.nominates[requester] = [member for member in self.members]

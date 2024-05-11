@@ -1,6 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { InfoComponent } from 'src/app/dialogs/info/info.component';
 import { GlokiService } from 'src/app/gloki.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { GlokiService } from 'src/app/gloki.service';
   templateUrl: './new-community.component.html',
   styleUrl: './new-community.component.scss'
 })
-export class NewCommunityComponent implements OnInit {
+export class NewCommunityComponent {
 
   name: string = '';
   description: string = '';
@@ -16,22 +18,26 @@ export class NewCommunityComponent implements OnInit {
   constructor (
     private gloki: GlokiService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
   ) {}
-
-  ngOnInit() {
-    if (!this.gloki.profileContract) {
-      this.router.navigate(['login']);
-    }
-  }
 
   onSave(event: any) {
     this.gloki.deployCommunity(this.name, this.description).subscribe(_ => {
-      this.location.back();
+      console.log('going to navigate')
+      this.router.navigate(['main', 'communities'], {replaceUrl: true});
     });
   }
 
-  onCancel(event: any) {
-    this.location.back();
+  showInfo() {
+    this.dialog.open(InfoComponent, {
+      panelClass: 'info-box',
+//      backdropClass: 'dialog-backdrop',
+      data: {
+        header: 'Tell newcomers how to join',
+        summary: 'Explain how to become a verified community member',
+        content: 'For example: "To verify the person in front of you, make sure the profile picture faithfully represents him or her"'
+      }
+    });
   }
 }

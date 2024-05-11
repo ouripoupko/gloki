@@ -1,9 +1,9 @@
 <div class="mainbar-container">
-    <a routerLink="/main">
+    <a routerLink="/main/communities">
         <img class="logo" src="assets/Logo.svg" />
     </a>
     <div class="bar-utilities">
-        <img class="find-icon" src="assets/find.svg" (click)="toggleFind()"/>
+        <img class="find-icon" src="assets/find.svg" (click)="onFind()"/>
         <a routerLink="/main/profile" replaceUrl>
             <div class="grey-box" *ngIf="!gloki.profile.image_url">
                 <img class="camera-icon" src="assets/camera.svg" />

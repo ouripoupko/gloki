@@ -1,13 +1,10 @@
-<div class="main-container">
-    <app-main-bar />
-    <div class="community">
-        {{ gloki.communityContracts[communityId] && gloki.communityContracts[communityId].name }}
-    </div>
-    <app-share *ngIf="shareMode" (toggleEvent)="toggleShareMode($event)" [contractId]="communityId"/>
-    <div class="links" *ngIf="!shareMode">
-        <button (click)="openApp('community', communityId)">Open Community</button>
-        <button *ngIf="!gloki.delibContracts[deliberationId]" (click)="joinDelib()">Join discussion</button>
-        <button *ngIf="!!gloki.delibContracts[deliberationId]" (click)="openApp('delib', deliberationId)" [disabled]="false">Open discussion</button>
-        <button (click)="toggleShareMode(true)">Share</button>      
-    </div>
+<div class="community">
+    {{ gloki.communityContracts[communityId] && gloki.communityContracts[communityId].name }}
+</div>
+<app-share *ngIf="shareMode" (toggleEvent)="toggleShareMode($event)" [contractId]="communityId"/>
+<div class="links" *ngIf="!shareMode">
+    <button (click)="openApp('community', communityId)">Open Community</button>
+    <button *ngIf="!gloki.delibContracts[deliberationId]" (click)="joinDelib()">Join discussion</button>
+    <button *ngIf="!!gloki.delibContracts[deliberationId]" (click)="openApp('delib', deliberationId)" [disabled]="false">Open discussion</button>
+    <button (click)="toggleShareMode(true)">Share</button>      
 </div>

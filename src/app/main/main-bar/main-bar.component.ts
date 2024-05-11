@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { GlokiService } from 'src/app/gloki.service';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
+import { GlokiService, Invite } from 'src/app/gloki.service';
 
 @Component({
   selector: 'app-main-bar',
@@ -7,18 +10,31 @@ import { GlokiService } from 'src/app/gloki.service';
   styleUrl: './main-bar.component.scss'
 })
 export class MainBarComponent {
-  isProfileFull = false;
-  userPhoto = '';
-  @Output() toggleEvent = new EventEmitter<boolean>();
-  find = false;
 
   constructor (
-    public gloki: GlokiService
+    public gloki: GlokiService,
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
-  toggleFind() {
-    this.find = !this.find;
-    this.toggleEvent.emit(this.find);
+  onFind() {
+    const dialogRef = this.dialog.open(ScanComponent, {
+      panelClass: 'scan-box',
+      backdropClass: 'dialog-backdrop',
+      data: {
+        testResult: (result: string) => {
+          return JSON.parse(result) as Invite;
+        },
+        resultHeader: 'Community Name:',
+        resultStringify: (result: Invite) => result.name
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.gloki.joinCommunity(result).subscribe(() => {
+          this.router.navigate(['main', 'communities'], {replaceUrl: true})
+        });
+      }
+    });
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlokiService } from '../gloki.service';
 import { Router } from '@angular/router';
 
@@ -8,8 +8,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-
-  findMode: boolean = false;
 
   constructor (
     public gloki: GlokiService,
@@ -23,9 +21,5 @@ export class MainComponent {
     }
     console.log('ngOnInit main going to listen', this.gloki.profileContract);
     this.gloki.listen();
-  }
-
-  toggleFindMode(mode: boolean): void {
-    this.findMode = mode;
   }
 }

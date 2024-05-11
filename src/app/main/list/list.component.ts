@@ -35,34 +35,6 @@ export class ListComponent implements OnInit {
     }
   }
   
-  onJoin(invite: Invite) {
-//    this.findMode = false;
-    if(!this.gloki.eventSource || this.gloki.eventSource.readyState == 2) {
-      this.gloki.listen();
-    }
-
-    this.isWaitingForJoin = true;
-    this.startCountdown();
-
-    const intervalId = setInterval(() => {
-      // Check if the value equals 1
-      let readyState = this.gloki.eventSource?.readyState;
-      if (readyState == 1) {
-        clearInterval(intervalId); // Stop the interval
-        // Perform something when the value becomes good
-        this.gloki.joinCommunity(invite)?.subscribe(() => {
-          this.isWaitingForJoin = false;
-          this.stopCountdown();
-        });
-      } else if (readyState != 0) {
-        clearInterval(intervalId); // Stop the interval
-        this.stopCountdown();
-        this.timerMsg = 'Oops! Something went wrong';
-        console.log('failed to listen to server. gave up on joining community')
-      }
-    }, 100);
-  }
-
   startCountdown() {
     this.countdown = 10;
     this.countdownInterval = setInterval(() => {

@@ -1,13 +1,9 @@
 <!-- <app-scan *ngIf="findMode"/> -->
 <div class="community-list">
   <div class="just-list">
-      <div *ngFor="let item of gloki.communityContracts | keyvalue" class="community">
-        <!-- <a [routerLink]="[item.key]">{{ item.value.name }}</a> -->
+      <div *ngFor="let item of gloki.communityContracts | keyvalue" class="community" [routerLink]="'../community/'+item.key">
+        {{ item.value.name }}
       </div>
   </div>
   <div class="add-btn"><img routerLink='../create' replaceUrl src='assets/plus.svg'></div>
-</div>
-<div class="timer" *ngIf="isWaitingForJoin">
-  <!-- <div class="timer-num" *ngIf="showTimerNum">{{ countdown | number:'1.1-1' }}</div> -->
-  <h1>{{timerMsg}}</h1>
 </div>

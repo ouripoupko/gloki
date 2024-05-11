@@ -34,6 +34,7 @@ export class GlokiService {
   profile: Profile = {} as Profile;
   eventSource?: EventSource;
   communityDeliberation: {[key: string]: string} = {};
+  reconnectInterval = 0;
 
   constructor(
     private agentService: AgentService,
@@ -138,10 +139,19 @@ export class GlokiService {
     );
   }
 
-  deployCommunity(name: string, description: string) {
+  deployCommunity(name: string, instructions: string) {
     if (!this.profileContract) return of('');
     return this.deployContract(name, COMMUNITY_FILE_NAME, this.profileContract, {}).pipe(
-      tap(reply => {this.deployDelib(name, reply);})
+      tap(reply => {
+        let method = {} as Method;
+        method.name = 'set_instructions';
+        method.values = {'instructions': instructions};
+        if(this.profileContract) {
+          this.agentService.write(this.server, this.agent, reply, method).subscribe(_ => {
+          });
+        }  
+        this.deployDelib(name, reply);
+      })
     );
   }
 
@@ -194,6 +204,7 @@ export class GlokiService {
   }
 
   listen() {
+    this.reconnectInterval = 10000;
     this.eventSource = this.agentService.listen(this.server, this.agent);
     this.logES();
     this.eventSource.addEventListener('message', message => {
@@ -207,9 +218,14 @@ export class GlokiService {
     });
     this.eventSource.addEventListener('open', open => {
       console.log('open', open);
+      this.reconnectInterval = 0;
     });
     this.eventSource.addEventListener('error', error => {
       console.log('error', error);
+      setTimeout(() => {
+        this.eventSource?.close;
+        this.listen();
+      }, this.reconnectInterval);
     });
   }
 
