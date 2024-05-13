@@ -1,0 +1,43 @@
+@import "src/variables.scss";
+
+.unverified-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .unverified-message {
+        background-color: white;
+        border-radius: 21px;
+        width: calc($gloki-width * 0.75);
+        display: flex;
+        flex-direction: column;
+        gap: 2.5vh;
+        color: $gloki-dark;
+        margin-top: 7vh;
+        padding: calc($gloki-width * 0.07);
+
+        h1 {
+            font-size: 3.2vh;
+            margin: 0px;
+        }
+
+        h2 {
+            font-size: 2.7vh;
+            margin: 0px;
+        }
+
+        .unverified-message-content {
+            font-size: 2.2vh;
+        }
+
+        button {
+            background-color: $gloki-blue;
+            border-radius: 9px;
+            font-size: 2.7vh;
+            color: white;
+            height: 6.3vh;
+            border: none;
+        }
+
+    }
+}

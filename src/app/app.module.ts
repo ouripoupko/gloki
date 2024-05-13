@@ -18,6 +18,10 @@ import { NewCommunityComponent } from './main/new-community/new-community.compon
 import { InfoComponent } from './dialogs/info/info.component';
 import { HamburgerComponent } from './dialogs/hamburger/hamburger.component';
 import { ListComponent } from './main/list/list.component';
+import { DeliberationComponent } from './main/community/deliberation/deliberation.component';
+import { MembersComponent } from './main/community/members/members.component';
+import { UnverifiedComponent } from './main/community/unverified/unverified.component';
+import { VerificationComponent } from './main/community/verification/verification.component';
 
 import { HttpClientModule } from  '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -44,7 +48,11 @@ LOAD_WASM().subscribe();
     NewCommunityComponent,
     InfoComponent,
     HamburgerComponent,
-    ListComponent
+    ListComponent,
+    DeliberationComponent,
+    MembersComponent,
+    UnverifiedComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserModule,

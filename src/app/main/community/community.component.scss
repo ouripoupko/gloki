@@ -1,14 +1,18 @@
 @import "src/variables.scss";
+@import '@material-symbols/font-400/outlined.css';
 
-a {
-    color: white;
-    text-decoration: none;
-}
-
-.community {
+.community-header {
     padding: 23px 23px;
     font-size: 35px;
-    border-bottom: 1px solid white;
+    border-bottom: 3px solid white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .community-icon {
+        font-size: 40px;
+        padding: 0px 5px;
+    }
 }
 
 .links {

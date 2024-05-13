@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GlokiService } from 'src/app/gloki.service';
+import { GlokiService } from 'src/app/services/gloki.service';
 import { StateService } from '../state.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';

@@ -1,10 +1,15 @@
-<div class="community">
-    {{ gloki.communityContracts[communityId] && gloki.communityContracts[communityId].name }}
+<div class="community-header">
+    <div class="community-name">
+        {{ gloki.communityContracts[communityId] && gloki.communityContracts[communityId].name }}
+    </div>
+    <div class="community-icons">
+        <span class="material-symbols-outlined community-icon">fingerprint</span>
+        <span class="community-icon"><img src="assets/members.svg" /></span>
+        <span class="community-icon"><img src="assets/deliberate.svg" /></span>
+        <span class="material-symbols-outlined community-icon">share</span>
+    </div>
 </div>
-<app-share *ngIf="shareMode" (toggleEvent)="toggleShareMode($event)" [contractId]="communityId"/>
-<div class="links" *ngIf="!shareMode">
-    <button (click)="openApp('community', communityId)">Open Community</button>
-    <button *ngIf="!gloki.delibContracts[deliberationId]" (click)="joinDelib()">Join discussion</button>
-    <button *ngIf="!!gloki.delibContracts[deliberationId]" (click)="openApp('delib', deliberationId)" [disabled]="false">Open discussion</button>
-    <button (click)="toggleShareMode(true)">Share</button>      
-</div>
+<app-unverified *ngIf="subpage == Subpage.UNVERIFIED" (joinAuthentication)="joinAuthentication($event)"/>
+<app-members *ngIf="subpage == Subpage.MEMBERS" />
+<app-verification *ngIf="subpage == Subpage.VERIFICATION" />
+<app-deliberation *ngIf="subpage == Subpage.DELIBERATION" />

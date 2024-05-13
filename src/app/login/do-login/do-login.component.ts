@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlokiService } from 'src/app/gloki.service';
+import { GlokiService } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-do-login',

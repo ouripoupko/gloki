@@ -5,7 +5,7 @@ import {
   ScannerQRCodeResult,
   NgxScannerQrcodeComponent,
 } from 'ngx-scanner-qrcode';
-import { GlokiService, Invite } from 'src/app/gloki.service';
+import { GlokiService, Invite } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-scan',

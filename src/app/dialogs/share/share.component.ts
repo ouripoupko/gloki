@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { NgxQrcodeStylingComponent, Options } from 'ngx-qrcode-styling';
-import { GlokiService } from 'src/app/gloki.service';
+import { GlokiService } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-share',

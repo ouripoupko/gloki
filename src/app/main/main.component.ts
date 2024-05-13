@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GlokiService } from '../gloki.service';
+import { GlokiService } from '../services/gloki.service';
 import { Router } from '@angular/router';
 
 @Component({

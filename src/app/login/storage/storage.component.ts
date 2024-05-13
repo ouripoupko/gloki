@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StateService } from '../state.service';
-import { GlokiService } from 'src/app/gloki.service';
+import { GlokiService } from 'src/app/services/gloki.service';
 import { timeout } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';

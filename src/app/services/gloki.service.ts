@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AgentService } from './agent.service';
-import { Contract, Method, Partner, Profile } from './contract';
+import { AgentService } from '../agent.service';
+import { Contract, Method, Partner, Profile } from '../contract';
 import { concat, concatMap, map, of, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Community } from './community';
 
 const PROFILE_CONTRACT_NAME = 'unique-gloki-profile';
 const PROFILE_FILE_NAME = 'profile.py'
@@ -292,5 +293,21 @@ export class GlokiService {
 
     return this.agentService.joinContract(this.server, this.agent, invite.server,
       invite.agent, invite.contract, this.profileContract);
+  }
+
+  read(id: string, methodName: string, params = {}) {
+    if (!id) return of(null);
+    let method = {} as Method;
+    method.name = methodName;
+    method.values = params;
+    return this.agentService.read(this.server, this.agent, id, method);
+  }
+
+  write(id: string, methodName: string, params = {}) {
+    if (!id) return of(null);
+    let method = {} as Method;
+    method.name = methodName;
+    method.values = params;
+    return this.agentService.write(this.server, this.agent, id, method);
   }
 }

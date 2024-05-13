@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
-import { GlokiService, Invite } from 'src/app/gloki.service';
+import { GlokiService, Invite } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-main-bar',

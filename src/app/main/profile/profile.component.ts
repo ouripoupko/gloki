@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GlokiService } from '../../gloki.service';
+import { GlokiService } from '../../services/gloki.service';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
