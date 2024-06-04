@@ -5,7 +5,6 @@ import {
   ScannerQRCodeResult,
   NgxScannerQrcodeComponent,
 } from 'ngx-scanner-qrcode';
-import { GlokiService, Invite } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-scan',
@@ -40,7 +39,6 @@ export class ScanComponent {
   @ViewChild('action') action!: NgxScannerQrcodeComponent;
   
   constructor (
-    private gloki: GlokiService,
     @Inject(MAT_DIALOG_DATA) public data: {
       testResult: (result: string) => boolean,
       resultHeader: string,

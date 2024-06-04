@@ -11,22 +11,22 @@
     <div class="profile-info">
       <div *ngIf="isEdit" class="edit-mode">
         <div class="form-field">
-          <input type="text" [(ngModel)]="gloki.profile.first_name" placeholder="first name">
+          <input type="text" [(ngModel)]="profileService.profile.first_name" placeholder="first name">
           <label>first name</label>
         </div>
         <div class="form-field">
-          <input type="text" [(ngModel)]="gloki.profile.last_name" placeholder="last name">
+          <input type="text" [(ngModel)]="profileService.profile.last_name" placeholder="last name">
           <label>last name</label>
         </div>
         <button [disabled]="!isFormValid" (click)="saveProfile()">Save</button>
       </div>
       <div *ngIf="!isEdit" class="info-mode">
         <div class="info-field">
-          <span>{{ gloki.profile.first_name }}</span>
+          <span>{{ profileService.profile.first_name }}</span>
           <label>First Name</label>
         </div>
         <div class="info-field">
-          <span>{{ gloki.profile.last_name }}</span>
+          <span>{{ profileService.profile.last_name }}</span>
           <label>Last Name</label>
         </div>
         <button (click)="editProfile()">Edit</button>

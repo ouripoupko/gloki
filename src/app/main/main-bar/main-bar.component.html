@@ -5,10 +5,10 @@
     <div class="bar-utilities">
         <img class="find-icon" src="assets/find.svg" (click)="onFind()"/>
         <a routerLink="/main/profile" replaceUrl>
-            <div class="grey-box" *ngIf="!gloki.profile.image_url">
+            <div class="grey-box" *ngIf="!profileService.profile.image_url">
                 <img class="camera-icon" src="assets/camera.svg" />
             </div>
-            <img class="profile-pic" *ngIf="gloki.profile.image_url" [src]="gloki.profile.image_url" />
+            <img class="profile-pic" *ngIf="profileService.profile.image_url" [src]="profileService.profile.image_url" />
         </a>
         
     </div>

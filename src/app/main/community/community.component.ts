@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Community } from 'src/app/services/community';
 import { GlokiService } from 'src/app/services/gloki.service';
 
 enum Subpage {
@@ -34,18 +33,18 @@ export class CommunityComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.communityId = params.get('communityId') || '';
-      this.deliberationId = this.gloki.communityDeliberation[this.communityId];
-      this.gloki.read(this.communityId, 'get_all').subscribe(reply => {
-        this.tasks = reply.tasks;
-        this.members = reply.members;
-        this.nominates = reply.nominates;
-        this.properties = reply.properties;
-        if (this.gloki.agent in this.members) this.subpage = Subpage.MEMBERS;
-        else this.subpage = Subpage.UNVERIFIED;
-      });
-    });
+    // this.route.paramMap.subscribe(params => {
+    //   this.communityId = params.get('communityId') || '';
+    //   this.deliberationId = this.gloki.communityDeliberation[this.communityId];
+    //   this.gloki.read(this.communityId, 'get_all').subscribe(reply => {
+    //     this.tasks = reply.tasks;
+    //     this.members = reply.members;
+    //     this.nominates = reply.nominates;
+    //     this.properties = reply.properties;
+    //     if (this.gloki.agent in this.members) this.subpage = Subpage.MEMBERS;
+    //     else this.subpage = Subpage.UNVERIFIED;
+    //   });
+    // });
   }
 
   toggleShareMode(mode: boolean): void {
@@ -57,18 +56,18 @@ export class CommunityComponent implements OnInit {
   }
 
   openApp(app: string, contract: string) {
-    const baseURL = window.location.origin;
-    const url = new URL("/" + app, baseURL);
-    url.searchParams.append("server", this.gloki.server);
-    url.searchParams.append("agent", this.gloki.agent);
-    url.searchParams.append("contract", contract);
-    console.log('url', url);
+    // const baseURL = window.location.origin;
+    // const url = new URL("/" + app, baseURL);
+    // url.searchParams.append("server", this.gloki.server);
+    // url.searchParams.append("agent", this.gloki.agent);
+    // url.searchParams.append("contract", contract);
+    // console.log('url', url);
 
-    window.open(url, "_blank");
+    // window.open(url, "_blank");
   }
 
   joinDelib() {
-    this.gloki.joinDelib(this.communityId);
+    // this.gloki.joinDelib(this.communityId);
   }
 
   joinAuthentication(event: void) {

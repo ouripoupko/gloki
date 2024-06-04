@@ -1,8 +1,8 @@
-import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
+import { CommunityService } from 'src/app/services/community.service';
 import { GlokiService } from 'src/app/services/gloki.service';
 
 @Component({
@@ -16,15 +16,13 @@ export class NewCommunityComponent {
   description: string = '';
 
   constructor (
-    private gloki: GlokiService,
-    private location: Location,
+    private communityService: CommunityService,
     private router: Router,
     public dialog: MatDialog,
   ) {}
 
   onSave(event: any) {
-    this.gloki.deployCommunity(this.name, this.description).subscribe(_ => {
-      console.log('going to navigate')
+    this.communityService.deployCommunity(this.name, this.description).subscribe(_ => {
       this.router.navigate(['main', 'communities'], {replaceUrl: true});
     });
   }
@@ -32,7 +30,7 @@ export class NewCommunityComponent {
   showInfo() {
     this.dialog.open(InfoComponent, {
       panelClass: 'info-box',
-//      backdropClass: 'dialog-backdrop',
+      // backdropClass: 'dialog-backdrop',
       data: {
         header: 'Tell newcomers how to join',
         summary: 'Explain how to become a verified community member',

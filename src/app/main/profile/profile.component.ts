@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GlokiService } from '../../services/gloki.service';
-import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
 import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,25 +12,25 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
   isEdit = true;
-  userPhoto = ''; // Set the default user photo URL here
+  userPhoto: string = '';
 
   constructor (
     public gloki: GlokiService,
-    private location: Location,
+    public profileService: ProfileService,
     public dialog: MatDialog,
     private router: Router
   ) {}
 
   ngOnInit() {
     console.log('ngOnInit profile page');
-    if (this.gloki.isProfileFull()) {
+    if (this.profileService.isProfileFull()) {
       this.isEdit = false;
-      this.userPhoto = this.gloki.profile.image_url;
+      this.userPhoto = this.profileService.profile?.image_url;
     }
   }
 
   get isFormValid(): boolean {
-    return !!(this.gloki.profile.first_name && this.gloki.profile.last_name && this.userPhoto);
+    return !!(this.profileService.profile?.first_name && this.profileService.profile?.last_name && this.userPhoto);
   }
 
   onFileSelected(event: any) {
@@ -52,12 +52,10 @@ export class ProfileComponent implements OnInit {
 
   saveProfile() {
     if (this.isFormValid) {
-      this.gloki.profile.image_url = this.userPhoto;
+      this.profileService.profile.image_url = this.userPhoto;
       this.isEdit = false;
-      this.gloki.writeProfile().subscribe(_ => {
-        if (this.gloki.isProfileFull()) {
-          this.router.navigate(['main', 'communities'], {replaceUrl: true});
-        }
+      this.profileService.writeProfile().subscribe(_ => {
+        this.router.navigate(['main', 'communities'], {replaceUrl: true});
       });
     }
   }
@@ -127,10 +125,10 @@ export class ProfileComponent implements OnInit {
   }
 
   viewGlokiInfo() {
-    this.viewInfo('Your gloki:', this.gloki.agent)
+  //   this.viewInfo('Your gloki:', this.gloki.agent)
   }
 
   viewIbcInfo() {
-    this.viewInfo('Your IBC address:', this.gloki.server)
+  //   this.viewInfo('Your IBC address:', this.gloki.server)
   }
 }

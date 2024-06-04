@@ -15,11 +15,9 @@ export class MainComponent {
   ) {}
 
   ngOnInit() {
-    if (!this.gloki.profileContract) {
+    if (!this.gloki.agentExists) {
       this.router.navigate(['login'], {replaceUrl: true});
       return;
     }
-    console.log('ngOnInit main going to listen', this.gloki.profileContract);
-    this.gloki.listen();
   }
 }

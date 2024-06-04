@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { StateService } from '../state.service';
 import { GlokiService } from 'src/app/services/gloki.service';
-import { timeout } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
 import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
@@ -48,7 +47,6 @@ export class StorageComponent {
           this.cachedOptions.push(this.selectedServer);
         }
         window.localStorage.setItem(this.storageKey, JSON.stringify(this.cachedOptions));
-        this.state.agentExists = result;
         this.state.step = result ? 4 : 3;
         this.state.isLoading = false;
       },

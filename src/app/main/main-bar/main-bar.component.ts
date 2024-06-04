@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Invite } from 'src/app/contract';
 import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
-import { GlokiService, Invite } from 'src/app/services/gloki.service';
+import { CommunityService } from 'src/app/services/community.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-main-bar',
@@ -12,7 +14,8 @@ import { GlokiService, Invite } from 'src/app/services/gloki.service';
 export class MainBarComponent {
 
   constructor (
-    public gloki: GlokiService,
+    public profileService: ProfileService,
+    private communityService: CommunityService,
     public dialog: MatDialog,
     private router: Router
   ) {}
@@ -31,7 +34,7 @@ export class MainBarComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.gloki.joinCommunity(result).subscribe(() => {
+        this.communityService.joinCommunity(result).subscribe(() => {
           this.router.navigate(['main', 'communities'], {replaceUrl: true})
         });
       }

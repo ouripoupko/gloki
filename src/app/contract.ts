@@ -21,14 +21,15 @@ export interface Method {
   values: any;
 }
 
-export interface Profile {
-  first_name: string;
-  last_name: string;
-  image_url: string;
-}
-
 export interface Partner {
   address: string;
   agent: string;
   profile: string;
+}
+
+export interface Invite {
+  server: string;
+  agent: string;
+  contract: string;
+  name: string;
 }
