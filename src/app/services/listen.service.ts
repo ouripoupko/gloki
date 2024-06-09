@@ -7,14 +7,14 @@ import { AgentService } from '../agent.service';
 export class ListenService {
 
   reconnectInterval = 0;
-  subscribers: {[key: string]: {[key: string]: ()=>void}} = {};
+  subscribers: {[key: string]: {[key: string]: (content: any)=>void}} = {};
   eventSource?: EventSource;
 
   constructor(
     private agentService: AgentService
   ) { }
 
-  subscribe(contract: string, action: string, target: () => void) {
+  subscribe(contract: string, action: string, target: (content: any) => void) {
     this.subscribers[contract] = {...this.subscribers[contract], [action]: target};
   }
 
@@ -26,7 +26,7 @@ export class ListenService {
       if(message.data.length > 0) {
         let content = JSON.parse(message.data)
         console.log('listen', content);
-        this.subscribers[content.contract]?.[content.action]?.();
+        this.subscribers[content.contract]?.[content.action]?.(content);
       }
     });
     this.eventSource.addEventListener('open', open => {

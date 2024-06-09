@@ -15,6 +15,7 @@ export class MainComponent {
   ) {}
 
   ngOnInit() {
+    console.log('main ngOnInit', this.gloki.agentExists);
     if (!this.gloki.agentExists) {
       this.router.navigate(['login'], {replaceUrl: true});
       return;

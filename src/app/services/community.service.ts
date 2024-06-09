@@ -4,7 +4,7 @@ import { Contract, Invite, Method } from '../contract';
 import { CommonService } from './common.service';
 import { ListenService } from './listen.service';
 import { ProfileService } from './profile.service';
-import { concatMap, map, of, tap } from 'rxjs';
+import { ReplaySubject, concatMap, map, of, tap } from 'rxjs';
 import { DeliberationService } from './deliberation.service';
 
 const COMMUNITY_FILE_NAME = 'gloki_community.py';
@@ -15,6 +15,7 @@ export interface Community {
   members: any;
   nominates: any;
   properties: any;
+  notifier: ReplaySubject<void>;
 }
 
 @Injectable({
@@ -38,13 +39,17 @@ export class CommunityService {
       if (contract.contract === COMMUNITY_FILE_NAME) {
         this.commonService.isContractUsesProfile(contract.id, profile).subscribe((reply) => {
           if (reply) {
-            this.communities[contract.id] = { contract: contract} as Community;
+            this.communities[contract.id] = { contract: contract, notifier: new ReplaySubject<void>(1)} as Community;
             this.readCommunity(contract.id);
-            this.listenService.subscribe(contract.id, 'contract_write', ()=>{this.readCommunity(contract.id);})
+            this.listenService.subscribe(contract.id, 'contract_write', (content: any)=>{
+              console.log('community listener', content);
+              this.readCommunity(contract.id);
+            })
           }
         });
       }
     }
+    console.log('finished building communities', this.communities);
   }
 
   deployCommunity(name: string, instructions: string) {
@@ -76,7 +81,8 @@ export class CommunityService {
     method.name = 'get_all';
     method.values = {};
     this.agentService.read(communityId, method).subscribe((community: Community) => {
-      this.communities[communityId] = {...this.communities[communityId], ...community};
+      Object.assign(this.communities[communityId], community);
+      this.communities[communityId].notifier.next();
     });
   }
 

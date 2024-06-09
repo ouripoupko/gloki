@@ -1,6 +1,6 @@
 <div class="community-header">
     <div class="community-name">
-        <!-- {{ gloki.communityContracts[communityId] && gloki.communityContracts[communityId].name }} -->
+        {{ community?.contract?.name }}
     </div>
     <div class="community-icons">
         <span class="material-symbols-outlined community-icon">fingerprint</span>
@@ -9,7 +9,7 @@
         <span class="material-symbols-outlined community-icon">share</span>
     </div>
 </div>
-<app-unverified *ngIf="subpage == Subpage.UNVERIFIED" (joinAuthentication)="joinAuthentication($event)"/>
+<app-unverified *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
 <app-members *ngIf="subpage == Subpage.MEMBERS" />
 <app-verification *ngIf="subpage == Subpage.VERIFICATION" />
 <app-deliberation *ngIf="subpage == Subpage.DELIBERATION" />

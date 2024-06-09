@@ -19,6 +19,7 @@ export class DoLoginComponent {
   login() {
     this.state.isLoading = true;
     this.gloki.login().subscribe(_ => {
+      console.log('done login');
       this.router.navigate(['main', 'communities'], {replaceUrl: true})
     });
   }

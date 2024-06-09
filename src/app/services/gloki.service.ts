@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AgentService } from '../agent.service';
 import { Contract, Invite, Method } from '../contract';
-import { concatMap, map, of } from 'rxjs';
+import { concatMap, map, of, tap } from 'rxjs';
 import { ProfileService } from './profile.service';
 import { CommunityService } from './community.service';
 import { DeliberationService } from './deliberation.service';
@@ -24,24 +24,35 @@ export class GlokiService {
 
   setServer(server: string, agent: string) {
     this.agentService.setServer(server, agent)
-    return this.agentService.isExistAgent();
+    return this.agentService.isExistAgent().pipe(
+      tap((reply: any) => {
+        if(reply) this.agentExists = true;
+      })
+    );
   }
 
   connect() {
-    return this.agentService.registerAgent()
+    return this.agentService.registerAgent().pipe(
+      tap(_ => {
+        this.agentExists = true;
+      })
+    );
   }
 
   login() {
     return this.agentService.getContracts().pipe(
       concatMap((contracts: Contract[]) => {
-        this.profileService.initialize(contracts);
-        if (this.profileService.contract) {
-          this.communityService.initialize(contracts, this.profileService.contract);
-          this.deliberationService.initialize(contracts, this.profileService.contract);
-          return of();
-        } else {
-          return this.profileService.deployProfileContract();
-        }
+        return this.profileService.initialize(contracts).pipe(
+          concatMap(_ => {
+            if (this.profileService.contract) {
+              this.communityService.initialize(contracts, this.profileService.contract);
+              this.deliberationService.initialize(contracts, this.profileService.contract);
+              return of(null);
+            } else {
+              return this.profileService.deployProfileContract();
+            }
+          })
+        );
       }),
       map(_ => {
         this.listenService.subscribe('', 'deploy_contract', this.login.bind(this));

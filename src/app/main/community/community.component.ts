@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AgentService } from 'src/app/agent.service';
+import { Community, CommunityService } from 'src/app/services/community.service';
 import { GlokiService } from 'src/app/services/gloki.service';
 
 enum Subpage {
@@ -16,7 +18,8 @@ enum Subpage {
   styleUrl: './community.component.scss'
 })
 export class CommunityComponent implements OnInit {
-  communityId: string = '';
+  communityId?: string;
+  community?: Community;
   shareMode: boolean = false;
   deliberationId: string = '';
   tasks: any;
@@ -29,22 +32,31 @@ export class CommunityComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public gloki: GlokiService
+    private agentService: AgentService,
+    public gloki: GlokiService,
+    public communityService: CommunityService
   ) { }
 
   ngOnInit(): void {
-    // this.route.paramMap.subscribe(params => {
-    //   this.communityId = params.get('communityId') || '';
-    //   this.deliberationId = this.gloki.communityDeliberation[this.communityId];
-    //   this.gloki.read(this.communityId, 'get_all').subscribe(reply => {
-    //     this.tasks = reply.tasks;
-    //     this.members = reply.members;
-    //     this.nominates = reply.nominates;
-    //     this.properties = reply.properties;
-    //     if (this.gloki.agent in this.members) this.subpage = Subpage.MEMBERS;
-    //     else this.subpage = Subpage.UNVERIFIED;
-    //   });
-    // });
+    console.log('community init');
+    this.route.paramMap.subscribe(params => {
+      this.communityId = params.get('communityId') || '';
+      this.community = this.communityService.communities[this.communityId];
+      this.community.notifier.asObservable().subscribe(_=>this.showCommunity())
+    });
+  }
+
+  showCommunity() {
+    const isMember = this.agentService.agent in this.community?.members;
+    const isCandidate = this.agentService.agent in this.community?.nominates;
+    if (isMember) {
+      this.subpage = Subpage.DELIBERATION;
+    } else if (isCandidate) {
+      this.subpage = Subpage.VERIFICATION;
+    } else {
+      this.subpage = Subpage.UNVERIFIED;
+    }
+    console.log('community show', this.subpage);
   }
 
   toggleShareMode(mode: boolean): void {
@@ -68,9 +80,5 @@ export class CommunityComponent implements OnInit {
 
   joinDelib() {
     // this.gloki.joinDelib(this.communityId);
-  }
-
-  joinAuthentication(event: void) {
-    this.gloki.write(this.communityId, 'request_join').subscribe();
   }
 }

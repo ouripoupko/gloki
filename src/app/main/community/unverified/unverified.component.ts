@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GlokiService } from 'src/app/services/gloki.service';
 
 @Component({
@@ -8,6 +8,18 @@ import { GlokiService } from 'src/app/services/gloki.service';
 })
 export class UnverifiedComponent {
 
-  @Output() joinAuthentication = new EventEmitter<void>();
+  @Input() communityId?: string;
+  joinEnable = true;
+
+  constructor (
+    private gloki: GlokiService
+  ) {}
+
+  joinAuthentication(event: void) {
+    if (!this.communityId) return;
+    console.log('unverified', this.communityId);
+    this.joinEnable = false;
+    this.gloki.write(this.communityId, 'request_join').subscribe();
+  }
 
 }
