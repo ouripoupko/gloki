@@ -1,0 +1,26 @@
+.people {
+    display: flex;
+    flex-direction: column;
+
+    .person {
+        border-bottom: 1px solid white;
+        display: flex;
+        flex-direction: row;
+        height: 71px;
+        padding: 14px;
+        gap: 14px;
+
+        .profile-pic {
+            width: 37px;
+            height: 41px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .name {
+            font-size: 23px;
+            display: flex;
+            align-items: center;
+        }
+    }
+}

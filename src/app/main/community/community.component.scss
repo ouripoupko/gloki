@@ -14,9 +14,28 @@
         flex-direction: row;
         justify-content: space-between;
     
-        .community-icon {
-            font-size: 40px;
-            padding: 0px 5px;
+        .community-icons {
+            display: flex;
+            align-items: center;
+
+            .community-icon {
+                font-size: 40px;
+                padding: 0px 5px;
+                width: 50px;
+                height: 54px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                img {
+                    height: 40px;
+                }
+
+                &.selected {
+                    background-color: $gloki-grey;
+                }
+            }
         }
     }
 

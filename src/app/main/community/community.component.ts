@@ -44,7 +44,7 @@ export class CommunityComponent implements OnInit {
 
   showCommunity() {
     console.log('community:', this.community)
-    this.isMember = this.agentService.agent in this.community?.members;
+    this.isMember = this.agentService.agent in (this.community?.members || {});
     const isCandidate = this.community?.nominates?.includes(this.agentService.agent);
     if (this.isMember) {
       this.subpage = Subpage.DELIBERATION;

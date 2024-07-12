@@ -1,1 +1,9 @@
-<p>members works!</p>
+<div class="people">
+    <div class="person" *ngFor="let item of community?.members | keyvalue">
+        <img class="profile-pic" *ngIf="profileService.others[item.key].image_url"
+             [src]="profileService.others[item.key].image_url" />
+        <div class="name">
+            {{profileService.others[item.key].first_name}} {{profileService.others[item.key].last_name}}
+        </div>
+    </div>
+</div>

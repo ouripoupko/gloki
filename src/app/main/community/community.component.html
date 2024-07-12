@@ -4,14 +4,18 @@
             {{ community?.contract?.name }}
         </div>
         <div class="community-icons" *ngIf="isMember">
-            <span class="material-symbols-outlined community-icon" (click)="subpage = Subpage.VERIFICATION">fingerprint</span>
-            <span class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" /></span>
-            <span class="community-icon" (click)="subpage = Subpage.DELIBERATION"><img src="assets/deliberate.svg" /></span>
-            <span class="material-symbols-outlined community-icon" (click)="subpage = Subpage.SHARE">share</span>
+            <div [ngClass]="{ 'selected': subpage == Subpage.VERIFICATION }"
+                class="material-symbols-outlined community-icon" (click)="subpage = Subpage.VERIFICATION">fingerprint</div>
+            <div [ngClass]="{ 'selected': subpage == Subpage.MEMBERS }"
+                class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" /></div>
+            <div [ngClass]="{ 'selected': subpage == Subpage.DELIBERATION }"
+                class="community-icon" (click)="subpage = Subpage.DELIBERATION"><img src="assets/deliberate.svg" /></div>
+            <div [ngClass]="{ 'selected': subpage == Subpage.SHARE }"
+                class="material-symbols-outlined community-icon" (click)="subpage = Subpage.SHARE">share</div>
         </div>
     </div>
     <app-unverified class="community-content" *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
-    <app-members class="community-content" *ngIf="subpage == Subpage.MEMBERS" />
+    <app-members class="community-content" *ngIf="subpage == Subpage.MEMBERS" [communityId]="communityId"/>
     <app-verification class="community-content" *ngIf="subpage == Subpage.VERIFICATION" [communityId]="communityId"/>
     <app-deliberation class="community-content" *ngIf="subpage == Subpage.DELIBERATION" />
     <app-share class="community-content" *ngIf="subpage == Subpage.SHARE" [contractId]="communityId || ''"/>

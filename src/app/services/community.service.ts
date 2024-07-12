@@ -12,7 +12,7 @@ const COMMUNITY_FILE_NAME = 'gloki_community.py';
 export interface Community {
   contract: Contract;
   tasks: {[key: string]: boolean};
-  members: any;
+  members: {[key: string]: string[]};
   nominates: any;
   properties: any;
   notifier: ReplaySubject<void>;
