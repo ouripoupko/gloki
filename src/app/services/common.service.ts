@@ -19,7 +19,7 @@ export class CommonService {
     return this.agentService.read(contract, partners_method).pipe(
       map((reply) => reply.some((partner: Partner) => (
         partner.agent === this.agentService.agent && partner.profile === profile
-      )))
+      )) ? reply : null)
     );
   }
 

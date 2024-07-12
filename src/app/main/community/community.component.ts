@@ -9,7 +9,8 @@ enum Subpage {
   UNVERIFIED,
   MEMBERS,
   DELIBERATION,
-  VERIFICATION
+  VERIFICATION,
+  SHARE
 }
 
 @Component({
@@ -20,14 +21,9 @@ enum Subpage {
 export class CommunityComponent implements OnInit {
   communityId?: string;
   community?: Community;
-  shareMode: boolean = false;
-  deliberationId: string = '';
-  tasks: any;
-  members: any;
-  nominates: any;
-  properties: any;
   subpage: Subpage = Subpage.NONE;
   readonly Subpage = Subpage;
+  isMember = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,9 +43,10 @@ export class CommunityComponent implements OnInit {
   }
 
   showCommunity() {
-    const isMember = this.agentService.agent in this.community?.members;
-    const isCandidate = this.agentService.agent in this.community?.nominates;
-    if (isMember) {
+    console.log('community:', this.community)
+    this.isMember = this.agentService.agent in this.community?.members;
+    const isCandidate = this.community?.nominates?.includes(this.agentService.agent);
+    if (this.isMember) {
       this.subpage = Subpage.DELIBERATION;
     } else if (isCandidate) {
       this.subpage = Subpage.VERIFICATION;
@@ -57,10 +54,6 @@ export class CommunityComponent implements OnInit {
       this.subpage = Subpage.UNVERIFIED;
     }
     console.log('community show', this.subpage);
-  }
-
-  toggleShareMode(mode: boolean): void {
-    this.shareMode = mode;
   }
 
   openLink(url: string): void {

@@ -1,36 +1,27 @@
 @import "src/variables.scss";
 @import '@material-symbols/font-400/outlined.css';
 
-.community-header {
-    padding: 23px 23px;
-    font-size: 35px;
-    border-bottom: 3px solid white;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    .community-icon {
-        font-size: 40px;
-        padding: 0px 5px;
-    }
-}
-
-.links {
-    margin: 64px 52px;
-    background-color: white;
-    color: $gloki-dark;
-    padding: 31px;
-    border-radius: 21px;
+.community-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
 
-    button {
-        color: white;
-        background-color: $gloki-blue;
-        border-radius: 9px;
-        font-size: 25px;
-        border: none;
-        padding: 10px;
+    .community-header {
+        padding: 19px 23px;
+        height: 9vh;
+        font-size: 35px;
+        border-bottom: 3px solid white;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    
+        .community-icon {
+            font-size: 40px;
+            padding: 0px 5px;
+        }
     }
+
+    .community-content {
+        height: 81vh;
+    }
+
 }

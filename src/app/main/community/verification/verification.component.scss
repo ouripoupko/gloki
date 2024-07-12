@@ -1,0 +1,86 @@
+@import "src/variables.scss";
+
+.verification-container {
+//    background-color: white;
+    color: $gloki-dark;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .verification-content {
+        display: flex;
+        flex-direction: column;
+        width: 65%;
+        margin-top: 3.5vh;
+        gap: 5vh;
+        color: white;
+
+        .title {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .people {
+            width: 100%; /* Width of two elements */
+            height: 432px;
+            overflow-y: scroll; /* Enable vertical scrolling */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-auto-rows: 216px; /* Each element has fixed height */
+
+            .person {
+                width: 100%;
+                height: 216px;
+                position: relative;
+
+                .profile-pic {
+                    width: 120px;
+                    height: 150px;
+                    object-fit: cover;
+                    border-radius: 21px;
+                }
+        
+                .grey-box {
+                    height: 120px;
+                    width: 150px;
+                    background: $gloki-grey;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 21px;
+                }
+
+                .name {
+                    font-size: 20px;
+                    color: $gloki-dark;
+                    font-style: italic;
+                    color: white;
+                }
+
+                .circle {
+                    width: 20px;
+                    height: 20px;
+                    position: absolute;
+                    left: 92px;
+                    top: 12px;
+                    border-radius: 10px;
+
+                    &.green {
+                        background-color: $gloki-green;
+                    }
+
+                    &.red {
+                        background-color: $gloki-red;
+                    }
+                }
+            }
+        }
+
+        .counter {
+            font-size: 25px;
+            color: $gloki-grey;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Contract, Method } from '../contract';
+import { Contract, Method, Partner } from '../contract';
 import { CommonService } from './common.service';
 import { AgentService } from '../agent.service';
 import { of, tap } from 'rxjs';
@@ -25,6 +25,7 @@ export class ProfileService {
 
   contract?: string;
   profile: Profile = {} as Profile;
+  others: {[key: string]: Profile} = {};
 
   constructor(
     private agentService: AgentService,
@@ -89,4 +90,17 @@ export class ProfileService {
       strNotEmpty(this.profile?.image_url) );
   }
 
+  readOthers (partners: Partner[]) {
+    for (let partner of partners) {
+      this.others[partner.agent] = {} as Profile;
+      let method = {} as Method;
+      method.name = 'get_profile';
+      method.values = {};
+      this.agentService.readRemote(partner.address, partner.agent, partner.profile, method).subscribe((profile => {
+        if(profile) {
+          Object.assign(this.others[partner.agent], profile);
+        }
+      }));
+    }
+  }
 }

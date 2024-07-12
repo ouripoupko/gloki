@@ -28,6 +28,7 @@ import { FormsModule } from '@angular/forms';
 import { NgxQrcodeStylingModule } from 'ngx-qrcode-styling';
 import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthenticateComponent } from './dialogs/authenticate/authenticate.component';
 
 LOAD_WASM().subscribe();
 
@@ -52,7 +53,8 @@ LOAD_WASM().subscribe();
     DeliberationComponent,
     MembersComponent,
     UnverifiedComponent,
-    VerificationComponent
+    VerificationComponent,
+    AuthenticateComponent
   ],
   imports: [
     BrowserModule,

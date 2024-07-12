@@ -1,0 +1,8 @@
+<div class="dialog-container">
+    <img [src]="data.profile.image_url"/>
+    <p>{{data.profile.first_name}} {{data.profile.last_name}}</p>
+    <p>Please follow the instructions:</p>
+    <p>{{data.instructions}}</p>
+    <button [mat-dialog-close]="true">Authenticate</button>
+    <button [mat-dialog-close]="false">Reject</button>
+</div>

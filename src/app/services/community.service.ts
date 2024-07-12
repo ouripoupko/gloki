@@ -11,7 +11,7 @@ const COMMUNITY_FILE_NAME = 'gloki_community.py';
 
 export interface Community {
   contract: Contract;
-  tasks: any;
+  tasks: {[key: string]: boolean};
   members: any;
   nominates: any;
   properties: any;
@@ -41,6 +41,7 @@ export class CommunityService {
           if (reply) {
             this.communities[contract.id] = { contract: contract, notifier: new ReplaySubject<void>(1)} as Community;
             this.readCommunity(contract.id);
+            this.profileService.readOthers(reply);
             this.listenService.subscribe(contract.id, 'contract_write', (content: any)=>{
               console.log('community listener', content);
               this.readCommunity(contract.id);

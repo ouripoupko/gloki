@@ -21,7 +21,7 @@ export class ShareComponent implements AfterViewInit {
     width: 325,
     height: 325,
     data: 'invalid invitation',
-    image: "assets/Share.svg",
+    image: "assets/Key.svg",
     margin: 0,
     dotsOptions: {
       color: '#334160',

@@ -1,15 +1,18 @@
-<div class="community-header">
-    <div class="community-name">
-        {{ community?.contract?.name }}
+<div class="community-container">
+    <div class="community-header">
+        <div class="community-name">
+            {{ community?.contract?.name }}
+        </div>
+        <div class="community-icons" *ngIf="isMember">
+            <span class="material-symbols-outlined community-icon" (click)="subpage = Subpage.VERIFICATION">fingerprint</span>
+            <span class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" /></span>
+            <span class="community-icon" (click)="subpage = Subpage.DELIBERATION"><img src="assets/deliberate.svg" /></span>
+            <span class="material-symbols-outlined community-icon" (click)="subpage = Subpage.SHARE">share</span>
+        </div>
     </div>
-    <div class="community-icons">
-        <span class="material-symbols-outlined community-icon">fingerprint</span>
-        <span class="community-icon"><img src="assets/members.svg" /></span>
-        <span class="community-icon"><img src="assets/deliberate.svg" /></span>
-        <span class="material-symbols-outlined community-icon">share</span>
-    </div>
+    <app-unverified class="community-content" *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
+    <app-members class="community-content" *ngIf="subpage == Subpage.MEMBERS" />
+    <app-verification class="community-content" *ngIf="subpage == Subpage.VERIFICATION" [communityId]="communityId"/>
+    <app-deliberation class="community-content" *ngIf="subpage == Subpage.DELIBERATION" />
+    <app-share class="community-content" *ngIf="subpage == Subpage.SHARE" [contractId]="communityId || ''"/>
 </div>
-<app-unverified *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
-<app-members *ngIf="subpage == Subpage.MEMBERS" />
-<app-verification *ngIf="subpage == Subpage.VERIFICATION" />
-<app-deliberation *ngIf="subpage == Subpage.DELIBERATION" />
