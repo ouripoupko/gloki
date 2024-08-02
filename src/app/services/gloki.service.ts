@@ -55,12 +55,17 @@ export class GlokiService {
         );
       }),
       map(_ => {
-        this.listenService.subscribe('', 'deploy_contract', this.login.bind(this));
-        this.listenService.subscribe('', 'a2a_reply_join', this.login.bind(this));
-        this.listenService.subscribe('', 'a2a_connect', this.login.bind(this));
+        this.listenService.subscribe('', 'deploy_contract', this.loginUpdate.bind(this));
+        this.listenService.subscribe('', 'a2a_reply_join', this.loginUpdate.bind(this));
+        this.listenService.subscribe('', 'a2a_connect', this.loginUpdate.bind(this));
         this.listenService.listen();
       })
     );
+  }
+
+  loginUpdate(message: any) {
+    console.log('loginUpdate', message)
+    this.login().subscribe()
   }
 
 

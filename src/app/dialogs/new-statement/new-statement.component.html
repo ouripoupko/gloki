@@ -1,0 +1,9 @@
+<div class="main-area">
+    <div class="input-area">
+        <input name="text" [(ngModel)]="text" autocomplete="off">
+        <label for="text">your statement</label>
+    </div>
+    <div class="button-area">
+        <button [mat-dialog-close]="text">Add</button>
+    </div>
+</div>

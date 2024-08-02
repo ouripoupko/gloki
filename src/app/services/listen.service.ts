@@ -25,7 +25,8 @@ export class ListenService {
     this.eventSource.addEventListener('message', message => {
       if(message.data.length > 0) {
         let content = JSON.parse(message.data)
-        console.log('listen', content);
+        console.log('listen', content, this.subscribers, content.contract, content.action);
+        this.subscribers['']?.[content.action]?.(content);
         this.subscribers[content.contract]?.[content.action]?.(content);
       }
     });

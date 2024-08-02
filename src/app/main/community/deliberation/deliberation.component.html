@@ -1,1 +1,11 @@
-<p>deliberation works!</p>
+<div class="deliberation-header">
+    <div class="title">{{title()}}</div>
+    <div [ngClass]="{ 'selected': isVoting }"
+        class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">how_to_vote</div>
+</div>
+<div class="deliberation-list">
+    <div class="just-list">
+        <div *ngFor="let statement of kids()" class="statement">{{statement.text}}</div>
+    </div>
+    <img class="add-btn" (click)="create()" src='assets/plus.svg'>
+</div>
