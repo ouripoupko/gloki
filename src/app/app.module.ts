@@ -30,6 +30,7 @@ import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthenticateComponent } from './dialogs/authenticate/authenticate.component';
 import { NewStatementComponent } from './dialogs/new-statement/new-statement.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 LOAD_WASM().subscribe();
 
@@ -65,7 +66,8 @@ LOAD_WASM().subscribe();
     FormsModule,
     NgxQrcodeStylingModule,
     NgxScannerQrcodeModule,
-    MatDialogModule
+    MatDialogModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

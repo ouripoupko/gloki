@@ -38,7 +38,7 @@ export class CommunityComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.communityId = params.get('communityId') || '';
       this.community = this.communityService.communities[this.communityId];
-      this.community.notifier.asObservable().subscribe(_=>this.showCommunity())
+      this.community?.notifier?.asObservable().subscribe(_=>this.showCommunity())
     });
   }
 

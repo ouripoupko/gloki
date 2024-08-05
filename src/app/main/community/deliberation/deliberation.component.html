@@ -1,11 +1,23 @@
 <div class="deliberation-header">
     <div class="title">{{title()}}</div>
     <div [ngClass]="{ 'selected': isVoting }"
-        class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">how_to_vote</div>
+        class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">
+        how_to_vote
+    </div>
 </div>
 <div class="deliberation-list">
-    <div class="just-list">
-        <div *ngFor="let statement of kids()" class="statement">{{statement.text}}</div>
+    <!-- fixed list for results -->
+    <div *ngIf="!isVoting" class="just-list">
+        <div *ngFor="let statement of kids()" class="list-item">
+            <div class="statement">{{statement.text}}</div>
+        </div>
+    </div>
+    <!-- dragable list for voting -->
+    <div *ngIf="isVoting" class="just-list" cdkDropList>
+        <div *ngFor="let statement of kids()" class="list-item" cdkDrag>
+            <div class="statement">{{statement.text}}</div>
+            <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+        </div>
     </div>
     <img class="add-btn" (click)="create()" src='assets/plus.svg'>
 </div>
