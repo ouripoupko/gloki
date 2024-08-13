@@ -26,6 +26,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
 
         &.selected {
             background-color: $gloki-grey;
@@ -44,6 +45,10 @@
     .just-list {
         width: 100%;
 
+        .drop-list {
+            min-height: 54px;
+        }
+
         .list-item {
             width: 100%;
             padding: 12px 23px;
@@ -60,6 +65,33 @@
                 white-space: nowrap;
             }
         }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            &::before, &::after {
+                content: "";
+                flex: 1;
+                border-bottom: 2px solid;
+            }
+
+            &.green {
+                border-color: $gloki-green;
+                color: $gloki-green;
+            }
+
+            &.red {
+                border-color: $gloki-red;
+                color: $gloki-red;
+            }
+    
+            span {
+                font-weight: bold;
+                margin: 0px 10px;
+            }
+        }
     }
 
     .add-btn {
@@ -73,4 +105,8 @@
     color: white;
     padding: 12px 23px;
     font-size: 23px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;        
 }

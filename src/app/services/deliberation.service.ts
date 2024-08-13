@@ -113,7 +113,7 @@ export class DeliberationService {
       .subscribe();
   }
 
-  async setAggregatedOrder(contract: string) {
+  setAggregatedOrder(contract: string) {
     let deliberation = this.deliberations[contract]
     if(!deliberation.parent || Object.keys(deliberation.parent.ranking_kids).length == 0) {
       deliberation.aggregateOrder = deliberation.kids ? [Object.keys(deliberation.kids)] : [[]];

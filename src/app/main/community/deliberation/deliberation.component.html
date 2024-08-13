@@ -13,10 +13,27 @@
         </div>
     </div>
     <!-- dragable list for voting -->
-    <div *ngIf="isVoting" class="just-list" cdkDropList>
-        <div *ngFor="let statement of kids()" class="list-item" cdkDrag>
-            <div class="statement">{{statement.text}}</div>
-            <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+    <div *ngIf="isVoting" class="just-list" cdkDropListGroup cdkScrollable>
+        <div class="support drop-list" cdkDropList id="support" (cdkDropListDropped)="drop($event)"
+            (cdkDropListEntered)="drag(false)" (cdkDropListExited)="drag(true)">
+            <div class="list-item" *ngFor="let key of support" dir="auto" cdkDrag>
+                <div class="statement">{{deliberation?.kids?.[key]?.text || ""}}</div>
+                <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+            </div>
+        </div>
+        <div class="separator green"><span>drag above statements you support</span></div>
+        <div class="drop-list" cdkDropList id="unsorted" (cdkDropListDropped)="drop($event)">
+            <div class="list-item" *ngFor="let key of unsorted" dir="auto" cdkDrag>
+                <div class="statement">{{deliberation?.kids?.[key]?.text || ""}}</div>
+                <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+            </div>
+        </div>
+        <div class="separator red"><span>drag below statements you oppose</span></div>
+        <div class="oppose drop-list" cdkDropList id="oppose" (cdkDropListDropped)="drop($event)">
+            <div class="list-item" *ngFor="let key of oppose" dir="auto" cdkDrag>
+                <div class="statement">{{deliberation?.kids?.[key]?.text || ""}}</div>
+                <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+            </div>
         </div>
     </div>
     <img class="add-btn" (click)="create()" src='assets/plus.svg'>
