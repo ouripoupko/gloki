@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Contract, Method } from '../contract';
 import { CommonService } from './common.service';
 import { ProfileService } from './profile.service';
-import { concatMap, of } from 'rxjs';
+import { concatMap, of, ReplaySubject, tap } from 'rxjs';
 import { AgentService } from '../agent.service';
+import { ListenService } from './listen.service';
 
 const DELIB_FILE_NAME = 'gloki_delib.py';
 
@@ -25,16 +26,19 @@ export interface Collection {
 }
 
 export interface Page {
-  parent: Collection;
+  parent: Statement | null;
   kids: Collection;
+  ranking_topics: Ranking | null;
 }
 
 export interface Deliberation {
   contract: Contract;
-  sid:string | null;
-  parent:Statement | null;
-  kids:Collection;
-  aggregateOrder:string[][];
+  sid: string | null;
+  page: Page;
+  aggregateOrder: string[][];
+  supportIndex: number;
+  opposeIndex: number;
+  notifier: ReplaySubject<void>;
 }
 
 @Injectable({
@@ -47,7 +51,8 @@ export class DeliberationService {
   constructor(
     private agentService: AgentService,
     private commonService: CommonService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private listenService: ListenService
   ) { }
 
   initialize(contracts: Contract[], profile: string) {
@@ -56,8 +61,12 @@ export class DeliberationService {
       if (contract.contract === DELIB_FILE_NAME) {
         this.commonService.isContractUsesProfile(contract.id, profile).subscribe((reply) => {
           if (reply) {
-            this.deliberations[contract.id] = { contract: contract, sid: null } as Deliberation;
-            this.readDeliberation(contract.id);
+            this.deliberations[contract.id] = { contract: contract, sid: null, notifier: new ReplaySubject<void>(1) } as Deliberation;
+            this.readDeliberation(contract.id, null).subscribe();
+            this.listenService.subscribe(contract.id, 'contract_write', (content: any)=>{
+              console.log('deliberation listener', content);
+              this.readDeliberation(contract.id, this.deliberations[contract.id].sid).subscribe();
+            })
           }
         });
       }
@@ -77,50 +86,48 @@ export class DeliberationService {
     );
   }
 
-  readDeliberation(contract: string) {
-    let sid = this.deliberations[contract].sid;
+  readDeliberation(contract: string, sid: string | null) {
     console.log('sid', sid);
     let method = { name: 'get_statements', values: {'parent': sid}} as Method;
-    this.agentService.read(contract, method).subscribe((page: Page) => {
-      if(page.parent && sid && sid in page.parent) {
-        this.deliberations[contract].parent = page.parent[sid];
-      }
-      else {
-        this.deliberations[contract].parent = null;
-      }
-      this.deliberations[contract].kids = page.kids;
+    return this.agentService.read(contract, method).pipe(
+      tap((page: Page) => {
+      this.deliberations[contract].page = page;
       this.setAggregatedOrder(contract);
-    });
+      this.deliberations[contract].notifier.next();
+      console.log('just notified', this.deliberations[contract].notifier)
+    }));
   }
 
-  createStatement(contract: string, statement: string): void {
+  createStatement(contract: string, sid: string | null, statement: string): void {
     const method = { name: 'create_statement',
-                     values: {'parent': this.deliberations[contract].sid, 'text': statement}} as Method;
+                     values: {'parent': sid, 'text': statement}} as Method;
     this.agentService.write(contract, method)
       .subscribe();
   }
 
-  setRanking(contract: string, sid: string, order: string[][]) {
+  setRanking(contract: string, sid: string | null, order: string[][]) {
     const method = { name: 'set_ranking',
                      values: {'sid': sid, 'order': order}} as Method;
     this.agentService.write(contract, method).subscribe();
   }
 
-  deleteStatement(contract: string): void {
+  deleteStatement(contract: string, sid: string): void {
     const method = { name: 'delete_statement',
-                     values: {'sid': this.deliberations[contract].sid}} as Method;
+                     values: {'sid': sid}} as Method;
     this.agentService.write(contract, method)
       .subscribe();
   }
 
   setAggregatedOrder(contract: string) {
     let deliberation = this.deliberations[contract]
-    if(!deliberation.parent || Object.keys(deliberation.parent.ranking_kids).length == 0) {
-      deliberation.aggregateOrder = deliberation.kids ? [Object.keys(deliberation.kids)] : [[]];
+    let ranking = deliberation.page.parent?.ranking_kids || deliberation.page.ranking_topics;
+    if(!ranking || Object.keys(ranking).length == 0) {
+      deliberation.aggregateOrder = deliberation.page.kids ? [Object.keys(deliberation.page.kids)] : [[]];
+      deliberation.supportIndex = 0;
+      deliberation.opposeIndex = 0;
     } else {
       deliberation.aggregateOrder = [];
-      let ranking = deliberation.parent.ranking_kids;
-      let kids = [...deliberation.parent.kids, 'support', 'oppose'];
+      let kids = [...Object.keys(deliberation.page.kids), 'support', 'oppose'];
       let n = kids.length;
       let indexes: {[keys: string]: number} = {};
       let sum_matrix: number[][] = [];
@@ -200,6 +207,20 @@ export class DeliberationService {
       }
 
       deliberation.aggregateOrder = smith_sets;
+      console.log('aggregateOrder', deliberation.aggregateOrder)
+      for (let index = 0; index < deliberation.aggregateOrder.length; ++index) {
+        let supportInnerIndex = deliberation.aggregateOrder[index].indexOf('support')
+        if (supportInnerIndex >= 0) {
+          deliberation.supportIndex = index;
+          deliberation.aggregateOrder[index].splice(supportInnerIndex, 1)
+        }
+        let opposeInnerIndex = deliberation.aggregateOrder[index].indexOf('oppose')
+        if (opposeInnerIndex >= 0) {
+          deliberation.opposeIndex = index;
+          deliberation.aggregateOrder[index].splice(opposeInnerIndex, 1)
+        }
+      }
+      console.log('aggregateOrder', deliberation.aggregateOrder)
     }
   }
 }

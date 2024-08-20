@@ -1,40 +1,57 @@
 <div class="deliberation-header">
-    <div class="title">{{title()}}</div>
-    <div [ngClass]="{ 'selected': isVoting }"
-        class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">
-        how_to_vote
+    <div class="title">{{this.deliberation.page.parent?.text || 'Topics:'}}</div>
+    <div class="icon-set">
+        <div *ngIf="this.deliberation.page.parent" class="material-symbols-outlined deliberation-icon" (click)="goOut()">door_open</div>
+        <div [ngClass]="{ 'selected': isVoting }"
+            class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">
+            how_to_vote
+        </div>
     </div>
 </div>
 <div class="deliberation-list">
     <!-- fixed list for results -->
     <div *ngIf="!isVoting" class="just-list">
-        <div *ngFor="let statement of kids()" class="list-item">
-            <div class="statement">{{statement.text}}</div>
-        </div>
+        <ng-template #listOfCards let-fromIndex="fromIndex" let-toIndex="toIndex" let-title="title"
+            let-doCount="doCount" let-offset="offset">
+            <ng-container *ngFor="let group of deliberation.aggregateOrder | slice:fromIndex:toIndex, let i = index">
+                <mat-expansion-panel *ngIf="group.length" class="statement-group-card" [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title *ngIf="doCount">{{title}} {{offset+i+1}}:</mat-panel-title>
+                        <mat-panel-title *ngIf="!doCount">{{title}}:</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let key of group" class="list-item" [ngClass]="{ 'selected': selected==key }" (click)="selected=key">
+                        <div class="statement">
+                            {{deliberation.page.kids[key].text}}
+                        </div>
+                        <div *ngIf="selected==key" class="material-symbols-outlined" (click)="goIn(key)">door_open</div>
+                    </div>
+                </mat-expansion-panel>
+            </ng-container>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: 0,
+            toIndex: deliberation.supportIndex, title: 'Rank', doCount: true, offset: 0}"></ng-container>
+        <ng-container *ngTemplateOutlet="listOfCards; context: {
+            fromIndex: deliberation.supportIndex, toIndex: deliberation.opposeIndex+1, title: 'Unsorted', doCount: false, offset: 0}"></ng-container>
+        <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.opposeIndex+1,
+            toIndex: deliberation.aggregateOrder.length, title: 'Rank', doCount: true, offset: deliberation.supportIndex}"></ng-container>
     </div>
+
     <!-- dragable list for voting -->
-    <div *ngIf="isVoting" class="just-list" cdkDropListGroup cdkScrollable>
-        <div class="support drop-list" cdkDropList id="support" (cdkDropListDropped)="drop($event)"
-            (cdkDropListEntered)="drag(false)" (cdkDropListExited)="drag(true)">
-            <div class="list-item" *ngFor="let key of support" dir="auto" cdkDrag>
-                <div class="statement">{{deliberation?.kids?.[key]?.text || ""}}</div>
-                <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+    <div *ngIf="isVoting" class="just-list" cdkDropListGroup>
+        <ng-template #sortingSection let-name="name" let-list="list">
+            <div class="drop-list" cdkDropList [id]="name" (cdkDropListDropped)="drop($event)">
+                <div class="list-item" *ngFor="let key of list" dir="auto" cdkDrag>
+                    <div class="statement">{{deliberation.page.kids[key].text || ""}}</div>
+                    <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+                </div>
             </div>
-        </div>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'support', list: support}"></ng-container>
         <div class="separator green"><span>drag above statements you support</span></div>
-        <div class="drop-list" cdkDropList id="unsorted" (cdkDropListDropped)="drop($event)">
-            <div class="list-item" *ngFor="let key of unsorted" dir="auto" cdkDrag>
-                <div class="statement">{{deliberation?.kids?.[key]?.text || ""}}</div>
-                <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
-            </div>
-        </div>
+        <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'unsorted', list: unsorted}"></ng-container>
         <div class="separator red"><span>drag below statements you oppose</span></div>
-        <div class="oppose drop-list" cdkDropList id="oppose" (cdkDropListDropped)="drop($event)">
-            <div class="list-item" *ngFor="let key of oppose" dir="auto" cdkDrag>
-                <div class="statement">{{deliberation?.kids?.[key]?.text || ""}}</div>
-                <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
-            </div>
-        </div>
+        <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'oppose', list: oppose}"></ng-container>
     </div>
-    <img class="add-btn" (click)="create()" src='assets/plus.svg'>
+    <img *ngIf="!isVoting" class="add-btn" (click)="create()" src='assets/plus.svg'>
+    <div *ngIf="isVoting" class="check-btn material-symbols-outlined" (click)="vote()">done_outline</div>
 </div>

@@ -27,7 +27,6 @@ export class CommunityComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private agentService: AgentService,
     public gloki: GlokiService,
     public communityService: CommunityService

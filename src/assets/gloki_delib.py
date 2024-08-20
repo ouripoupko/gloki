@@ -7,6 +7,7 @@ class Delib:
         if not self.parameters.exists():
             self.parameters['topics'] = []
             self.parameters['counter'] = 1
+            self.parameters['ranking_topics'] = {}
 
     def approve_partner(self, partner):
         return True
@@ -48,22 +49,27 @@ class Delib:
                 del self.statements[sid]
 
     def set_ranking(self, sid, order):
-        _counter = self.parameters['counter']
-        self.parameters['counter'] = _counter + 1
-        self.statements[sid] = {f'ranking_kids.{master()}': order, 'counter': _counter}
+        if sid in self.statements:
+            _counter = self.parameters['counter']
+            self.parameters['counter'] = _counter + 1
+            self.statements[sid] = {f'ranking_kids.{master()}': order, 'counter': _counter}
+        else:
+            self.parameters['ranking_topics'] = {master(): order}
 
     def delete_ranking(self, sid):
         pass
 
     def get_statements(self, parent):
+        parent_statement = None
+        ranking_topics = None
         if parent:
-            parent_statement = {parent: self.statements[parent].get_dict()}
+            parent_statement = self.statements[parent].get_dict()
             sids = self.statements[parent]['kids']
         else:
-            parent_statement = None
+            ranking_topics = self.parameters['ranking_topics']
             sids = self.parameters['topics']
         kids = {sid: self.statements[sid].get_dict() for sid in sids}
-        return {'parent': parent_statement, 'kids': kids}
+        return {'parent': parent_statement, 'kids': kids, 'ranking_topics': ranking_topics}
 
     def get_updates(self, counter):
         return self.statements.get('counter', '>', counter)
