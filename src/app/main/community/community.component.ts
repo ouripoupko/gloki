@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgentService } from 'src/app/agent.service';
 import { Community, CommunityService } from 'src/app/services/community.service';
+import { DeliberationService } from 'src/app/services/deliberation.service';
 import { GlokiService } from 'src/app/services/gloki.service';
 
 enum Subpage {
@@ -24,12 +25,15 @@ export class CommunityComponent implements OnInit {
   subpage: Subpage = Subpage.NONE;
   readonly Subpage = Subpage;
   isMember = false;
+  isChatting = false;
+  isJoining = false;
 
   constructor(
     private route: ActivatedRoute,
     private agentService: AgentService,
     public gloki: GlokiService,
-    public communityService: CommunityService
+    public communityService: CommunityService,
+    private deliberationService: DeliberationService
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +41,7 @@ export class CommunityComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.communityId = params.get('communityId') || '';
       this.community = this.communityService.communities[this.communityId];
-      this.community?.notifier?.asObservable().subscribe(_=>this.showCommunity())
+      this.community?.notifier?.asObservable().subscribe(_=>this.showCommunity());
     });
   }
 
@@ -52,6 +56,8 @@ export class CommunityComponent implements OnInit {
     } else {
       this.subpage = Subpage.UNVERIFIED;
     }
+    let contractId = this.community?.properties?.deliberation;
+    this.isChatting = this.isMember && contractId in this.deliberationService.deliberations;
     console.log('community show', this.subpage);
   }
 
@@ -59,18 +65,12 @@ export class CommunityComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  openApp(app: string, contract: string) {
-    // const baseURL = window.location.origin;
-    // const url = new URL("/" + app, baseURL);
-    // url.searchParams.append("server", this.gloki.server);
-    // url.searchParams.append("agent", this.gloki.agent);
-    // url.searchParams.append("contract", contract);
-    // console.log('url', url);
-
-    // window.open(url, "_blank");
-  }
-
   joinDelib() {
-    // this.gloki.joinDelib(this.communityId);
+    if(this.communityId && this.community) {
+      let server = this.communityService.communities[this.communityId].contract.address;
+      let agent = this.communityService.communities[this.communityId].contract.pid;
+      this.isJoining = true;
+      this.deliberationService.joinDelib(server, agent, this.community.properties.deliberation);
+    }
   }
 }

@@ -1,52 +1,81 @@
 @import "src/variables.scss";
 @import '@material-symbols/font-400/outlined.css';
 
-.community-container {
+
+:host {
     display: flex;
     flex-direction: column;
 
-    .community-header {
-        padding: 19px 23px;
-        height: 9vh;
-        font-size: 35px;
-        border-bottom: 3px solid white;
+    .community-container {
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    
-        .community-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        
-        .community-icons {
-            display: flex;
-            align-items: center;
+        flex-direction: column;
+        height: 90%;
 
-            .community-icon {
-                font-size: 40px;
-                padding: 0px 5px;
-                width: 50px;
-                height: 54px;
-                border-radius: 8px;
+        .community-header {
+            padding: 19px 23px;
+            height: 9vh;
+            font-size: 35px;
+            border-bottom: 3px solid white;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        
+            .community-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .community-icons {
                 display: flex;
                 align-items: center;
-                justify-content: center;
 
-                img {
-                    height: 40px;
+                .community-icon {
+                    font-size: 40px;
+                    padding: 0px 5px;
+                    width: 50px;
+                    height: 54px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        height: 40px;
+                    }
+
+                    &.selected {
+                        background-color: $gloki-grey;
+                    }
                 }
+            }
+        }
 
-                &.selected {
+        .community-content {
+            height: 81vh;
+        }
+
+        .centered-button-parent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        
+            .centered-button {
+                cursor: pointer;
+                border-radius: 9px;
+                height: 6.3vh;
+                background-color: $gloki-blue;
+                color: white;
+                font-size: 25px;
+                font-weight: 600;
+                border: none;
+
+                &:disabled {
                     background-color: $gloki-grey;
+                    cursor: not-allowed;
                 }
             }
         }
     }
-
-    .community-content {
-        height: 81vh;
-    }
-
 }

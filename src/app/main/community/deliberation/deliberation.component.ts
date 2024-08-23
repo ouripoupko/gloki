@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import { NewStatementComponent } from 'src/app/dialogs/new-statement/new-statement.component';
 import { Deliberation, DeliberationService } from 'src/app/services/deliberation.service';
 import { AgentService } from 'src/app/agent.service';
+import { CommunityService } from 'src/app/services/community.service';
 
 @Component({
   selector: 'app-deliberation',
@@ -14,6 +15,7 @@ import { AgentService } from 'src/app/agent.service';
 export class DeliberationComponent {
 
   @Input() public contractId?: string;
+  @Input() public communityId?: string;
   deliberation: Deliberation = {} as Deliberation;
   isVoting: boolean = false;
   unsorted: string[] = [];
@@ -24,18 +26,21 @@ export class DeliberationComponent {
 
   constructor(
     public deliberationService: DeliberationService,
+    public communityService: CommunityService,
     public agentService: AgentService,
     public dialog: MatDialog
   ) {
    }
 
   ngOnInit(): void {
-    if(this.contractId) {
-      this.deliberation = this.deliberationService.deliberations[this.contractId];
-      this.deliberation.notifier?.asObservable().subscribe(_=> {
-        this.init();
-        console.log('got notification');
-    });
+    if(this.contractId && this.communityId) {
+      if(this.contractId in this.deliberationService.deliberations) {
+        this.deliberation = this.deliberationService.deliberations[this.contractId];
+        this.deliberation.notifier?.asObservable().subscribe(_=> {
+          this.init();
+          console.log('got notification');
+        });
+      }
     }
   }
 

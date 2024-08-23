@@ -69,7 +69,7 @@ export class AgentService {
     );
   }
 
-  joinContract(address: string, other_agent: string, contract_id: string, profile: string): Observable<any> {
+  joinContract(address: string, other_agent: string, contract_id: string, profile: string | null): Observable<any> {
     let params = new HttpParams().set('action', 'join_contract');
     return this.http.put(`${this.server}/ibc/app/${this.agent}`,
                          { address: address, agent: other_agent, contract: contract_id, profile: profile },

@@ -69,19 +69,6 @@ export class GlokiService {
   }
 
 
-
-  // joinDelib(community: string) {
-  //   if (community in this.communityDeliberation && this.profileContract) {
-  //     const communityContract = this.communityContracts[community];
-  //     const delibId = this.communityDeliberation[community];
-  //     this.agentService.joinContract(this.server, this.agent, communityContract.address,
-  //       communityContract.pid, delibId, this.profileContract).subscribe();
-  //   }
-
-  // }
-
-
-
   getInvite(id: string) {
     if (!(id in this.communityService.communities)) return "invalid invitation";
     return JSON.stringify({
@@ -91,23 +78,6 @@ export class GlokiService {
       name: this.communityService.communities[id].contract.name
     } as Invite);
   }
-
-  // parseInvite(invite: string) {
-  //   try {
-  //     let result = {} as Invite;
-  //     let json = JSON.parse(invite);
-  //     result.server = json.server;
-  //     result.agent = json.agent;
-  //     result.contract = json.contract;
-  //     result.name = json.name;
-  //     if (strNotEmpty(result.server) && strNotEmpty(result.agent) && strNotEmpty(result.contract) && strNotEmpty(result.name)) {
-  //       return result
-  //     }
-  //   } catch {
-  //   }
-
-  //   return undefined;
-  // }
 
   read(id: string, methodName: string, params = {}) {
     if (!id) return of(null);

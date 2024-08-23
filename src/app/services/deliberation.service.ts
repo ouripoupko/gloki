@@ -86,6 +86,11 @@ export class DeliberationService {
     );
   }
 
+
+  joinDelib(server: string, agent: string, community: string) {
+    this.agentService.joinContract(server, agent, community, this.profileService.contract || null).subscribe();
+  }
+
   readDeliberation(contract: string, sid: string | null) {
     console.log('sid', sid);
     let method = { name: 'get_statements', values: {'parent': sid}} as Method;
