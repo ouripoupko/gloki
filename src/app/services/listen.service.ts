@@ -14,7 +14,7 @@ export class ListenService {
     private agentService: AgentService
   ) { }
 
-  subscribe(contract: string, action: string, target: (content: any) => void) {
+  register(contract: string, action: string, target: (content: any) => void) {
     this.subscribers[contract] = {...this.subscribers[contract], [action]: target};
   }
 

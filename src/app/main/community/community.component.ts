@@ -25,15 +25,12 @@ export class CommunityComponent implements OnInit {
   subpage: Subpage = Subpage.NONE;
   readonly Subpage = Subpage;
   isMember = false;
-  isChatting = false;
-  isJoining = false;
 
   constructor(
     private route: ActivatedRoute,
     private agentService: AgentService,
     public gloki: GlokiService,
-    public communityService: CommunityService,
-    private deliberationService: DeliberationService
+    public communityService: CommunityService
   ) { }
 
   ngOnInit(): void {
@@ -56,8 +53,6 @@ export class CommunityComponent implements OnInit {
     } else {
       this.subpage = Subpage.UNVERIFIED;
     }
-    let contractId = this.community?.properties?.deliberation;
-    this.isChatting = this.isMember && contractId in this.deliberationService.deliberations;
     console.log('community show', this.subpage);
   }
 
@@ -65,12 +60,4 @@ export class CommunityComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  joinDelib() {
-    if(this.communityId && this.community) {
-      let server = this.communityService.communities[this.communityId].contract.address;
-      let agent = this.communityService.communities[this.communityId].contract.pid;
-      this.isJoining = true;
-      this.deliberationService.joinDelib(server, agent, this.community.properties.deliberation);
-    }
-  }
 }

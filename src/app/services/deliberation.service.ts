@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Contract, Method } from '../contract';
 import { CommonService } from './common.service';
 import { ProfileService } from './profile.service';
-import { concatMap, of, ReplaySubject, tap } from 'rxjs';
+import { concatMap, of, ReplaySubject, Subject, tap } from 'rxjs';
 import { AgentService } from '../agent.service';
 import { ListenService } from './listen.service';
 
@@ -47,6 +47,8 @@ export interface Deliberation {
 export class DeliberationService {
 
   deliberations: {[key: string]: Deliberation} = {};
+  notifier = new Subject<string>();
+
 
   constructor(
     private agentService: AgentService,
@@ -61,9 +63,13 @@ export class DeliberationService {
       if (contract.contract === DELIB_FILE_NAME) {
         this.commonService.isContractUsesProfile(contract.id, profile).subscribe((reply) => {
           if (reply) {
-            this.deliberations[contract.id] = { contract: contract, sid: null, notifier: new ReplaySubject<void>(1) } as Deliberation;
-            this.readDeliberation(contract.id, null).subscribe();
-            this.listenService.subscribe(contract.id, 'contract_write', (content: any)=>{
+            if (!(contract.id in this.deliberations)) {
+              this.deliberations[contract.id] = { contract: contract, sid: null, notifier: new ReplaySubject<void>(1) } as Deliberation;
+            }
+            this.readDeliberation(contract.id, null).subscribe(_ => {
+              this.notifier.next(contract.id);
+            });
+            this.listenService.register(contract.id, 'contract_write', (content: any)=>{
               console.log('deliberation listener', content);
               this.readDeliberation(contract.id, this.deliberations[contract.id].sid).subscribe();
             })

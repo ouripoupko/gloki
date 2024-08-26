@@ -41,7 +41,7 @@ export class ProfileService {
         return this.readProfile().pipe(
           tap(_ => {
             if(this.contract) {
-              this.listenService.subscribe(this.contract, 'contract_write', (content: any)=>{this.readProfile().subscribe()});
+              this.listenService.register(this.contract, 'contract_write', (content: any)=>{this.readProfile().subscribe()});
             }
           })
         );
@@ -54,7 +54,7 @@ export class ProfileService {
     return this.commonService.deployContract(PROFILE_CONTRACT_NAME, PROFILE_FILE_NAME, "", {}).pipe(
       tap(reply => {
         this.contract = reply;
-        this.listenService.subscribe(this.contract, 'contract_write', (content: any)=>{this.readProfile().subscribe()});
+        this.listenService.register(this.contract, 'contract_write', (content: any)=>{this.readProfile().subscribe()});
       })
     );
   }

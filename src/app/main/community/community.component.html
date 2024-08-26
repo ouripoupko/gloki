@@ -17,14 +17,7 @@
     <app-unverified class="community-content" *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
     <app-members class="community-content" *ngIf="subpage == Subpage.MEMBERS" [communityId]="communityId"/>
     <app-verification class="community-content" *ngIf="subpage == Subpage.VERIFICATION" [communityId]="communityId"/>
-    <ng-container *ngIf="subpage == Subpage.DELIBERATION">
-        <app-deliberation class="community-content"  *ngIf="isChatting"
-            [contractId]="community?.properties?.deliberation"
-            [communityId]="communityId" />
-        <div *ngIf="!isChatting" class="centered-button-parent">
-            <div *ngIf="!isMember">Get authenticated in the community to join the discussion</div>
-            <button *ngIf="isMember" class="centered-button" (click)="joinDelib()" [disabled]="isJoining">Click to join the discussion</button>
-        </div>
-    </ng-container>
+    <app-deliberation class="community-content" *ngIf="subpage == Subpage.DELIBERATION"
+        [contractId]="community?.properties?.deliberation" [communityId]="communityId" />
     <app-share class="community-content" *ngIf="subpage == Subpage.SHARE" [contractId]="communityId || ''"/>
 </div>

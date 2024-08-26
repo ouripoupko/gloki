@@ -54,28 +54,5 @@
         .community-content {
             height: 81vh;
         }
-
-        .centered-button-parent {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        
-            .centered-button {
-                cursor: pointer;
-                border-radius: 9px;
-                height: 6.3vh;
-                background-color: $gloki-blue;
-                color: white;
-                font-size: 25px;
-                font-weight: 600;
-                border: none;
-
-                &:disabled {
-                    background-color: $gloki-grey;
-                    cursor: not-allowed;
-                }
-            }
-        }
     }
 }

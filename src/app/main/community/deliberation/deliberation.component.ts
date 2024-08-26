@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
+import { CdkDragDrop} from '@angular/cdk/drag-drop';
 
 import { NewStatementComponent } from 'src/app/dialogs/new-statement/new-statement.component';
 import { Deliberation, DeliberationService } from 'src/app/services/deliberation.service';
 import { AgentService } from 'src/app/agent.service';
 import { CommunityService } from 'src/app/services/community.service';
+import { ListenService } from 'src/app/services/listen.service';
+import { filter, take, takeWhile } from 'rxjs';
 
 @Component({
   selector: 'app-deliberation',
@@ -23,6 +25,8 @@ export class DeliberationComponent {
   oppose: string[] = [];
   list_of_lists: {[key: string]: string[]} = {};
   selected = '';
+  isChatting = false;
+  isJoining = false;
 
   constructor(
     public deliberationService: DeliberationService,
@@ -33,21 +37,24 @@ export class DeliberationComponent {
    }
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  init() {
     if(this.contractId && this.communityId) {
       if(this.contractId in this.deliberationService.deliberations) {
+        this.isChatting = true;
         this.deliberation = this.deliberationService.deliberations[this.contractId];
         this.deliberation.notifier?.asObservable().subscribe(_=> {
-          this.init();
-          console.log('got notification');
+          this.readPage();
         });
       }
     }
   }
 
-  init() {
+  readPage() {
     let rankings = this.deliberation.page.parent?.ranking_kids || this.deliberation.page.ranking_topics;
     if(rankings) {
-      console.log('set ranks');
       this.support = [...(rankings[this.agentService.agent]?.[0] || [])];
       this.oppose = [...(rankings[this.agentService.agent]?.[1] || [])];
       this.unsorted = Object.keys(this.deliberation.page.kids);
@@ -101,6 +108,22 @@ export class DeliberationComponent {
       this.deliberation.sid = this.deliberation.page.parent?.parent || null;
       this.selected = '';
       this.deliberationService.readDeliberation(this.contractId, this.deliberation.sid).subscribe();
+    }
+  }
+
+  joinDelib() {
+    if(this.communityId && this.contractId) {
+      let server = this.communityService.communities[this.communityId].contract.address;
+      let agent = this.communityService.communities[this.communityId].contract.pid;
+      this.deliberationService.notifier.pipe(
+        filter(value => value === this.contractId),
+        take(1)
+      )
+      .subscribe(value => {
+        this.init();
+      });
+      this.isJoining = true;
+      this.deliberationService.joinDelib(server, agent, this.contractId);
     }
   }
 }

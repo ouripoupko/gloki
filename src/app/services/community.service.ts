@@ -39,10 +39,12 @@ export class CommunityService {
       if (contract.contract === COMMUNITY_FILE_NAME) {
         this.commonService.isContractUsesProfile(contract.id, profile).subscribe((reply) => {
           if (reply) {
-            this.communities[contract.id] = { contract: contract, notifier: new ReplaySubject<void>(1)} as Community;
+            if (!(contract.id in this.communities)) {
+              this.communities[contract.id] = { contract: contract, notifier: new ReplaySubject<void>(1)} as Community;
+            }
             this.readCommunity(contract.id);
             this.profileService.readOthers(reply);
-            this.listenService.subscribe(contract.id, 'contract_write', (content: any)=>{
+            this.listenService.register(contract.id, 'contract_write', (content: any)=>{
               console.log('community listener', content);
               this.readCommunity(contract.id);
             })

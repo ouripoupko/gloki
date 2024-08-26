@@ -55,9 +55,9 @@ export class GlokiService {
         );
       }),
       map(_ => {
-        this.listenService.subscribe('', 'deploy_contract', this.loginUpdate.bind(this));
-        this.listenService.subscribe('', 'a2a_reply_join', this.loginUpdate.bind(this));
-        this.listenService.subscribe('', 'a2a_connect', this.loginUpdate.bind(this));
+        this.listenService.register('', 'deploy_contract', this.loginUpdate.bind(this));
+        this.listenService.register('', 'a2a_reply_join', this.loginUpdate.bind(this));
+        this.listenService.register('', 'a2a_connect', this.loginUpdate.bind(this));
         this.listenService.listen();
       })
     );
