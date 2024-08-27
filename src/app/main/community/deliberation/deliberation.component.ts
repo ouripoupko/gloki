@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop} from '@angular/cdk/drag-drop';
 
@@ -14,7 +14,7 @@ import { filter, take, takeWhile } from 'rxjs';
   templateUrl: './deliberation.component.html',
   styleUrl: './deliberation.component.scss'
 })
-export class DeliberationComponent {
+export class DeliberationComponent implements OnInit {
 
   @Input() public contractId?: string;
   @Input() public communityId?: string;

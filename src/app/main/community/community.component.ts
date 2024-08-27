@@ -10,8 +10,7 @@ enum Subpage {
   UNVERIFIED,
   MEMBERS,
   DELIBERATION,
-  VERIFICATION,
-  SHARE
+  VERIFICATION
 }
 
 @Component({

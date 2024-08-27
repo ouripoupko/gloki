@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxQrcodeStylingComponent, Options } from 'ngx-qrcode-styling';
 import { GlokiService } from 'src/app/services/gloki.service';
 
@@ -8,13 +9,11 @@ import { GlokiService } from 'src/app/services/gloki.service';
   styleUrl: './share.component.scss'
 })
 export class ShareComponent implements AfterViewInit {
-  message: string = "Have a lovely day";
-  @Output() toggleEvent = new EventEmitter<boolean>();
-  @Input() contractId = '';
   @ViewChild('qrcode', { static: false }) public qrcode!: NgxQrcodeStylingComponent;
 
   constructor (
-    private gloki: GlokiService
+    private gloki: GlokiService,
+    @Inject(MAT_DIALOG_DATA) public data: {contractId: string}
   ) {}
 
   public config: Options = {
@@ -46,16 +45,10 @@ export class ShareComponent implements AfterViewInit {
   };
 
   ngAfterViewInit(): void {
-    this.config.data = this.gloki.getInvite(this.contractId);
+    this.config.data = this.gloki.getInvite(this.data.contractId);
     this.qrcode.update(this.config, {});
   }
 
-  onChange(event: any, qrcode: any) {
-    this.config.data = this.message;
-    qrcode.update(this.config, {});
-  }
-
   toggleShare(value: boolean) {
-    this.toggleEvent.emit(value);
   }
 }

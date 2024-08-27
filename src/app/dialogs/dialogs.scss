@@ -26,6 +26,20 @@
     font-family: 'DM Sans';
 }
 
+.share-box
+.mat-mdc-dialog-container
+.mdc-dialog__container
+.mat-mdc-dialog-surface {
+    max-width: none;
+    width: $gloki-width;
+    height: 63vh;
+    background-color: white;
+    border-radius: 0px 0px 21px 21px;
+    position: absolute;
+    top: 19vh;
+    font-family: 'DM Sans';
+}
+
 .dialog-backdrop {
     cursor: default;
 }
