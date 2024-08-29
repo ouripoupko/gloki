@@ -46,7 +46,11 @@ export class CommunityComponent implements OnInit {
     this.isMember = this.agentService.agent in (this.community?.members || {});
     const isCandidate = this.community?.nominates?.includes(this.agentService.agent);
     if (this.isMember) {
-      this.subpage = Subpage.DELIBERATION;
+      if(this.community?.nominates?.length > 0) {
+        this.subpage = Subpage.MEMBERS;
+      } else {
+        this.subpage = Subpage.DELIBERATION;
+      }
     } else if (isCandidate) {
       this.subpage = Subpage.VERIFICATION;
     } else {
@@ -59,4 +63,10 @@ export class CommunityComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  checkTasks() {
+    return {
+      exist: this.community && Object.keys(this.community.tasks).length > 0,
+      done: this.community && Object.values(this.community.tasks).every(x => x===true)
+    }
+  }
 }

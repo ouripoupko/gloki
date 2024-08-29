@@ -36,7 +36,6 @@ export class AgentService {
     return this.http.get<Boolean>(`${this.server}/ibc/app/${this.agent}`, {params: params}).pipe(
         tap(_ => console.log('query agent')),
         catchError(this.handleError<Boolean>('isExistAgent')),
-        first()
       );
   }
 
@@ -45,7 +44,6 @@ export class AgentService {
     return this.http.put<Boolean>(`${this.server}/ibc/app/${this.agent}`, {address: this.server}, {...this.httpOptions, params:params} ).pipe(
       tap(_ => console.log('added new identity')),
       catchError(this.handleError<Boolean>('registerAgent')),
-      first()
     );
   }
 
@@ -54,7 +52,6 @@ export class AgentService {
     return this.http.get<Contract[]>(`${this.server}/ibc/app/${this.agent}`, {params: params}).pipe(
         tap(_ => console.log('fetched contracts')),
         catchError(this.handleError<Contract[]>('getContracts', [])),
-        first()
       );
   }
 
@@ -65,7 +62,6 @@ export class AgentService {
                                     {...this.httpOptions, params: params}).pipe(
       tap(_ => console.log('added contract')),
       catchError(this.handleError<string>('addContract')),
-      first()
     );
   }
 
@@ -76,7 +72,6 @@ export class AgentService {
                           {...this.httpOptions, params: params}).pipe(
       tap(_ => console.log('joined contract')),
       catchError(this.handleError<any>('connect')),
-      first()
     );
   }
 

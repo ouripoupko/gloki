@@ -29,8 +29,10 @@
             .community-icons {
                 display: flex;
                 align-items: center;
+                gap: 10px;
 
                 .community-icon {
+                    position: relative;
                     font-size: 40px;
                     padding: 0px 5px;
                     width: 50px;
@@ -48,6 +50,24 @@
                     &.selected {
                         background-color: $gloki-grey;
                     }
+
+                    .circle {
+                        width: 20px;
+                        height: 20px;
+                        position: absolute;
+                        left: 28px;
+                        top: 2px;
+                        border-radius: 10px;
+    
+                        &.green {
+                            background-color: $gloki-green;
+                        }
+
+                        &.red {
+                            background-color: $gloki-red;
+                        }
+                    }
+    
                 }
             }
         }

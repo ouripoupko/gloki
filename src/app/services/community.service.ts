@@ -6,6 +6,8 @@ import { ListenService } from './listen.service';
 import { ProfileService } from './profile.service';
 import { ReplaySubject, concatMap, map, of, tap } from 'rxjs';
 import { DeliberationService } from './deliberation.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthenticateComponent } from '../dialogs/authenticate/authenticate.component';
 
 const COMMUNITY_FILE_NAME = 'gloki_community.py';
 
@@ -30,7 +32,8 @@ export class CommunityService {
     private commonService: CommonService,
     private listenService: ListenService,
     private profileService: ProfileService,
-    private deliberationService: DeliberationService
+    private deliberationService: DeliberationService,
+    public dialog: MatDialog
   ) { }
 
   initialize(contracts: Contract[], profile: string) {
@@ -87,6 +90,27 @@ export class CommunityService {
       Object.assign(this.communities[communityId], community);
       this.communities[communityId].notifier.next();
     });
+  }
+
+  authenticate(agent: string, community?: Community) {
+    if(community) {
+      const dialogRef = this.dialog.open(AuthenticateComponent, {
+        panelClass: 'info-box',
+        backdropClass: 'dialog-backdrop',
+        data: {
+          instructions: community?.properties['instructions'],
+          profile: this.profileService.others[agent]
+        }
+      });
+      dialogRef.afterClosed().subscribe(didApprove => {
+        if (didApprove !== undefined && community?.contract) {
+          let method = {} as Method;
+          method.name = didApprove ? 'approve' : 'disapprove';
+          method.values = didApprove ? {'approved': agent} : {'disapproved': agent};
+          this.agentService.write(community.contract.id, method).subscribe();
+        }
+      });
+    }
   }
 
 }

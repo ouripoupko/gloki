@@ -4,10 +4,12 @@
             {{ community?.contract?.name }}
         </div>
         <div class="community-icons" *ngIf="isMember">
-            <div [ngClass]="{ 'selected': subpage == Subpage.VERIFICATION }"
-                class="material-symbols-outlined community-icon" (click)="subpage = Subpage.VERIFICATION">fingerprint</div>
             <div [ngClass]="{ 'selected': subpage == Subpage.MEMBERS }"
-                class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" /></div>
+                class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" />
+                <ng-container *ngIf="checkTasks() as tasks">
+                    <div *ngIf="tasks.exist" class='circle' [ngClass]="{'red': !tasks.done, 'green': tasks.done}"></div>
+                </ng-container>
+            </div>
             <div [ngClass]="{ 'selected': subpage == Subpage.DELIBERATION }"
                 class="community-icon" (click)="subpage = Subpage.DELIBERATION"><img src="assets/deliberate.svg" /></div>
         </div>

@@ -2,7 +2,8 @@
     <div class="verification-content">
         <div class="title">Verify people</div>
         <div class="people">
-            <div class="person" *ngFor="let item of community?.tasks | keyvalue" (click)="authenticate(item.key)">
+            <div class="person" *ngFor="let item of community?.tasks | keyvalue"
+                (click)="communityService.authenticate(item.key, community)">
                 <div class="grey-box" *ngIf="!profileService.others[item.key].image_url">
                     <img class="camera-icon" src="assets/camera.svg" />
                 </div>

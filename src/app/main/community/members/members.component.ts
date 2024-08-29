@@ -10,6 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 export class MembersComponent implements OnInit {
   @Input() communityId?: string;
   community?: Community;
+  justClicked: {[key: string]: boolean} = {};
 
   constructor(
     public communityService: CommunityService,
@@ -23,4 +24,9 @@ export class MembersComponent implements OnInit {
     }
   }
 
+  callAuthenticate(key: string) {
+    console.log('callAuthenticate');
+    this.justClicked[key] = true;
+    this.communityService.authenticate(key, this.community);
+  }
 }

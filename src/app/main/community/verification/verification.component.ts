@@ -17,9 +17,7 @@ export class VerificationComponent implements OnInit {
 
   constructor(
     public communityService: CommunityService,
-    public profileService: ProfileService,
-    private agentService: AgentService,
-    public dialog: MatDialog
+    public profileService: ProfileService
   ) { }
 
   ngOnInit(): void {
@@ -33,22 +31,4 @@ export class VerificationComponent implements OnInit {
     return this.community ? Object.values(this.community.tasks).filter(x => x).length : 0;
   }
 
-  authenticate(agent: string) {
-    const dialogRef = this.dialog.open(AuthenticateComponent, {
-      panelClass: 'info-box',
-      backdropClass: 'dialog-backdrop',
-      data: {
-        instructions: this.community?.properties['instructions'],
-        profile: this.profileService.others[agent]
-      }
-    });
-    dialogRef.afterClosed().subscribe(didApprove => {
-      if (didApprove !== undefined && this.community?.contract) {
-        let method = {} as Method;
-        method.name = didApprove ? 'approve' : 'disapprove';
-        method.values = didApprove ? {'approved': agent} : {'disapproved': agent};
-        this.agentService.write(this.community.contract.id, method).subscribe();
-      }
-    });
-  }
 }
