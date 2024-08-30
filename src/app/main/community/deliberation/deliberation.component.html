@@ -13,15 +13,15 @@
         <!-- fixed list for results -->
         <div *ngIf="!isVoting" class="just-list">
             <ng-template #listOfCards let-fromIndex="fromIndex" let-toIndex="toIndex" let-title="title"
-                let-doCount="doCount" let-offset="offset">
+                let-doCount="doCount" let-offset="offset" let-color="color">
                 <ng-container *ngFor="let group of deliberation.aggregateOrder | slice:fromIndex:toIndex, let i = index">
-                    <mat-expansion-panel *ngIf="group.length" class="statement-group-card" [expanded]="true">
-                        <mat-expansion-panel-header>
+                    <mat-expansion-panel *ngIf="group.length" [class]="'statement-group-card ' + color" [expanded]="true">
+                        <mat-expansion-panel-header class="card-header">
                             <mat-panel-title *ngIf="doCount">{{title}} {{offset+i+1}}:</mat-panel-title>
                             <mat-panel-title *ngIf="!doCount">{{title}}:</mat-panel-title>
                         </mat-expansion-panel-header>
-                        <div *ngFor="let key of group" class="list-item" [ngClass]="{ 'selected': selected==key }" (click)="selected=key">
-                            <div class="statement">
+                        <div class="card-list-item" *ngFor="let key of group" (click)="selected = selected==key ? '' : key">
+                            <div class="card-statement" [ngClass]="{ 'selected': selected==key }" >
                                 {{deliberation.page.kids[key].text}}
                             </div>
                             <div *ngIf="selected==key" class="material-symbols-outlined" (click)="goIn(key)">door_open</div>
@@ -29,12 +29,13 @@
                     </mat-expansion-panel>
                 </ng-container>
             </ng-template>
-            <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: 0,
-                toIndex: deliberation.supportIndex, title: 'Rank', doCount: true, offset: 0}"></ng-container>
-            <ng-container *ngTemplateOutlet="listOfCards; context: {
-                fromIndex: deliberation.supportIndex, toIndex: deliberation.opposeIndex+1, title: 'Unsorted', doCount: false, offset: 0}"></ng-container>
+            <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: 0, toIndex: deliberation.supportIndex,
+                title: 'Rank', doCount: true, offset: 0, color: 'green'}"></ng-container>
+            <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.supportIndex,
+                toIndex: deliberation.opposeIndex+1, title: 'Unsorted', doCount: false, offset: 0, color: ''}"></ng-container>
             <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.opposeIndex+1,
-                toIndex: deliberation.aggregateOrder.length, title: 'Rank', doCount: true, offset: deliberation.supportIndex}"></ng-container>
+                toIndex: deliberation.aggregateOrder.length, title: 'Rank',
+                doCount: true, offset: deliberation.supportIndex, color: 'red'}"></ng-container>
         </div>
 
         <!-- dragable list for voting -->

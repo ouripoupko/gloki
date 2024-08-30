@@ -56,9 +56,45 @@
         }
 
         .statement-group-card {
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(white, 0.6);
             border-radius: 21px;
             margin: 20px;
+
+            &.green {
+                background-color: rgba($gloki-green, 0.6);
+            }
+
+            &.red {
+                background-color: rgba($gloki-red, 0.6);
+            }
+
+            .card-header {
+                font-size: 20px;
+            }
+
+            .card-list-item {
+                width: 100%;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;        
+                font-size: 24px;
+                line-height: 36px;
+    
+                .card-statement {
+                    &:not(.selected) {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    &.selected {
+                        line-height: normal;
+                        margin: 4px 0px;
+                    }
+                }
+            }
         }
 
         .list-item {
@@ -69,11 +105,6 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;        
-
-
-            &.selected {
-                background-color: $gloki-grey;
-            }
 
             .statement {
                 font-size: 23px;
