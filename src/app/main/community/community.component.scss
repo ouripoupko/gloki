@@ -5,11 +5,12 @@
 :host {
     display: flex;
     flex-direction: column;
+    height: 90%;
 
     .community-container {
         display: flex;
         flex-direction: column;
-        height: 90%;
+        height: 100%;
 
         .community-header {
             padding: 2vh 15px;
@@ -73,7 +74,7 @@
         }
 
         .community-content {
-            height: 81vh;
+            height: 100%;
         }
     }
 }
