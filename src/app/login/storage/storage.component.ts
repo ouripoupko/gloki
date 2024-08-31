@@ -34,6 +34,7 @@ export class StorageComponent {
   }
 
   selectOption(option: string) {
+    this.errorMessage = '';
     this.selectedServer = option.replace(/<b>|<\/b>/gi,'');
     this.autocompleteVisible = false;
     this.mayContinue = this.isValidHttpUrl();
