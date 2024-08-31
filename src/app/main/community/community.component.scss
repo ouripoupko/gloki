@@ -12,9 +12,9 @@
         height: 90%;
 
         .community-header {
-            padding: 19px 23px;
+            padding: 2vh 15px;
             height: 9vh;
-            font-size: 35px;
+            font-size: 3.8vh;
             border-bottom: 3px solid white;
             display: flex;
             flex-direction: row;
@@ -33,10 +33,10 @@
 
                 .community-icon {
                     position: relative;
-                    font-size: 40px;
+                    font-size: 4.3vh;
                     padding: 0px 5px;
-                    width: 50px;
-                    height: 54px;
+                    width: 5.4vh;
+                    height: 5.8vh;
                     border-radius: 8px;
                     display: flex;
                     align-items: center;
@@ -44,7 +44,7 @@
                     cursor: pointer;
 
                     img {
-                        height: 40px;
+                        height: 4.3vh;
                     }
 
                     &.selected {
@@ -52,10 +52,10 @@
                     }
 
                     .circle {
-                        width: 20px;
-                        height: 20px;
+                        width: 2.2vh;
+                        height: 2.2vh;
                         position: absolute;
-                        left: 28px;
+                        left: 3vh;
                         top: 2px;
                         border-radius: 10px;
     

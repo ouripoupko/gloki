@@ -95,7 +95,7 @@ export class CommunityService {
   authenticate(agent: string, community?: Community) {
     if(community) {
       const dialogRef = this.dialog.open(AuthenticateComponent, {
-        panelClass: 'info-box',
+        panelClass: 'authenticate-box',
         backdropClass: 'dialog-backdrop',
         data: {
           instructions: community?.properties['instructions'],

@@ -12,6 +12,19 @@
     font-family: 'DM Sans';
 }
 
+.authenticate-box
+.mat-mdc-dialog-container
+.mdc-dialog__container
+.mat-mdc-dialog-surface {
+    width: calc($gloki-width * 0.85);
+    height: 70vh;
+    background-color: white;
+    border-radius: 21px;
+    position: absolute;
+    top: 20vh;
+    font-family: 'DM Sans';
+}
+
 .scan-box
 .mat-mdc-dialog-container
 .mdc-dialog__container

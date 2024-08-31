@@ -2,7 +2,7 @@
 @import '@material-symbols/font-400/outlined.css';
 
 .deliberation-header {
-    padding: 19px 23px;
+    padding: 2vh 15px;
     height: 9vh;
     border-bottom: 1px solid white;
     display: flex;
@@ -12,7 +12,7 @@
 
     .title {
         overflow: hidden;
-        font-size: 30px;
+        font-size: 3.2vh;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
@@ -22,10 +22,10 @@
         flex-direction: row;
 
         .deliberation-icon {
-            font-size: 40px;
+            font-size: 4.3vh;
             padding: 0px 5px;
-            width: 50px;
-            height: 54px;
+            width: 5.4vh;
+            height: 5.8vh;
             border-radius: 8px;
             display: flex;
             align-items: center;
