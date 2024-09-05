@@ -25,10 +25,9 @@ export class AgentService {
     this.server = server;
   }
 
-  listen(contracts: string[]): EventSource {
+  listen(): EventSource {
     console.log('connecting to SSE');
-    let query = contracts.map(contract => `agent=${this.agent}&contract=${contract ?? ''}`).join('&');
-    return new EventSource(`${this.server}/stream?${query}`);
+    return new EventSource(`${this.server}/stream?agent=${this.agent}&contract=`);
   }
 
   isExistAgent(): Observable<Boolean> {
@@ -77,28 +76,19 @@ export class AgentService {
   write(contract: string, method: Method): Observable<any> {
     const url = `${this.server}/ibc/app/${this.agent}/${contract}/${method.name}`;
     let params = new HttpParams().set('action', 'contract_write');
-    return this.http.post<any>(url, method, {...this.httpOptions, params: params}).pipe(
-      tap(_ => console.log('wrote something')),
-      catchError(this.handleError<any>(`write name=${method.name}`))
-    );
+    return this.http.post<any>(url, method, {...this.httpOptions, params: params});
   }
 
   read(contract: string, method: Method): Observable<any> {
     const url = `${this.server}/ibc/app/${this.agent}/${contract}/${method.name}`;
     let params = new HttpParams().set('action', 'contract_read');
-    return this.http.post<any>(url, method, {...this.httpOptions, params: params}).pipe(
-      tap(_ => console.log('read something')),
-      catchError(this.handleError<any>(`read name=${method.name}`))
-    );
+    return this.http.post<any>(url, method, {...this.httpOptions, params: params});
   }
 
   readRemote(server: string, agent: string, contract: string, method: Method): Observable<any> {
     const url = `${server}/ibc/app/${agent}/${contract}/${method.name}`;
     let params = new HttpParams().set('action', 'contract_read');
-    return this.http.post<any>(url, method, {...this.httpOptions, params: params}).pipe(
-      tap(_ => console.log('read something')),
-      catchError(this.handleError<any>(`read name=${method.name}`))
-    );
+    return this.http.post<any>(url, method, {...this.httpOptions, params: params});
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

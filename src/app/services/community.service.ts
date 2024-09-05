@@ -45,12 +45,9 @@ export class CommunityService {
             if (!(contract.id in this.communities)) {
               this.communities[contract.id] = { contract: contract, notifier: new ReplaySubject<void>(1)} as Community;
             }
-            this.readCommunity(contract.id);
+            this.readCommunity(contract.id).subscribe();
             this.profileService.readOthers(reply);
-            this.listenService.register(contract.id, 'contract_write', (content: any)=>{
-              console.log('community listener', content);
-              this.readCommunity(contract.id);
-            })
+            this.listenService.register(contract.id, 'contract_write', _ => this.readCommunity(contract.id))
           }
         });
       }
@@ -86,10 +83,12 @@ export class CommunityService {
     let method = {} as Method;
     method.name = 'get_all';
     method.values = {};
-    this.agentService.read(communityId, method).subscribe((community: Community) => {
-      Object.assign(this.communities[communityId], community);
-      this.communities[communityId].notifier.next();
-    });
+    return this.agentService.read(communityId, method).pipe(
+      map((community: Community) => {
+        Object.assign(this.communities[communityId], community);
+        this.communities[communityId].notifier.next();
+      })
+    );
   }
 
   authenticate(agent: string, community?: Community) {

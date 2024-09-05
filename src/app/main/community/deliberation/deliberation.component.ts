@@ -6,8 +6,7 @@ import { NewStatementComponent } from 'src/app/dialogs/new-statement/new-stateme
 import { Deliberation, DeliberationService } from 'src/app/services/deliberation.service';
 import { AgentService } from 'src/app/agent.service';
 import { CommunityService } from 'src/app/services/community.service';
-import { ListenService } from 'src/app/services/listen.service';
-import { filter, take, takeWhile } from 'rxjs';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-deliberation',

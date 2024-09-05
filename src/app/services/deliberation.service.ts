@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Contract, Method } from '../contract';
 import { CommonService } from './common.service';
 import { ProfileService } from './profile.service';
-import { concatMap, of, ReplaySubject, Subject, tap } from 'rxjs';
+import { concatMap, map, of, ReplaySubject, Subject, tap } from 'rxjs';
 import { AgentService } from '../agent.service';
 import { ListenService } from './listen.service';
 
@@ -69,10 +69,8 @@ export class DeliberationService {
             this.readDeliberation(contract.id, null).subscribe(_ => {
               this.notifier.next(contract.id);
             });
-            this.listenService.register(contract.id, 'contract_write', (content: any)=>{
-              console.log('deliberation listener', content);
-              this.readDeliberation(contract.id, this.deliberations[contract.id].sid).subscribe();
-            })
+            this.listenService.register(contract.id, 'contract_write', _ => 
+              this.readDeliberation(contract.id, this.deliberations[contract.id].sid))
           }
         });
       }
@@ -98,15 +96,14 @@ export class DeliberationService {
   }
 
   readDeliberation(contract: string, sid: string | null) {
-    console.log('sid', sid);
     let method = { name: 'get_statements', values: {'parent': sid}} as Method;
     return this.agentService.read(contract, method).pipe(
-      tap((page: Page) => {
-      this.deliberations[contract].page = page;
-      this.setAggregatedOrder(contract);
-      this.deliberations[contract].notifier.next();
-      console.log('just notified', this.deliberations[contract].notifier)
-    }));
+      map((page: Page) => {
+        this.deliberations[contract].page = page;
+        this.setAggregatedOrder(contract);
+        this.deliberations[contract].notifier.next();
+      }
+    ));
   }
 
   createStatement(contract: string, sid: string | null, statement: string): void {

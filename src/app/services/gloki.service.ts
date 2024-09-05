@@ -40,32 +40,28 @@ export class GlokiService {
   }
 
   login() {
+    this.listenService.register('', 'deploy_contract', _ => this.readContracts());
+    this.listenService.register('', 'a2a_reply_join', _ => this.readContracts());
+    this.listenService.register('', 'a2a_connect', _ => this.readContracts());
+    this.listenService.listen();
+    return this.readContracts();
+  }
+
+  readContracts() {
     return this.agentService.getContracts().pipe(
       concatMap((contracts: Contract[]) => {
         return this.profileService.initialize(contracts).pipe(
-          concatMap(_ => {
+          tap(_ => {
             if (this.profileService.contract) {
               this.communityService.initialize(contracts, this.profileService.contract);
               this.deliberationService.initialize(contracts, this.profileService.contract);
-              return of(null);
             } else {
-              return this.profileService.deployProfileContract();
+              this.profileService.deployProfileContract();
             }
           })
         );
-      }),
-      map(_ => {
-        this.listenService.register('', 'deploy_contract', this.loginUpdate.bind(this));
-        this.listenService.register('', 'a2a_reply_join', this.loginUpdate.bind(this));
-        this.listenService.register('', 'a2a_connect', this.loginUpdate.bind(this));
-        this.listenService.listen();
       })
     );
-  }
-
-  loginUpdate(message: any) {
-    console.log('loginUpdate', message)
-    this.login().subscribe()
   }
 
 

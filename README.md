@@ -28,4 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Known defects
 
-- login flow has no error message when ibc is down
+- None at the very moment
