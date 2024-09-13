@@ -1,8 +1,8 @@
 <ng-container *ngIf="isChatting">
     <div class="deliberation-header">
-        <div class="title">{{this.deliberation.page.parent?.text || 'Topics:'}}</div>
+        <div class="title">{{this.deliberation.page && this.deliberation.page.parent?.text || 'Topics:'}}</div>
         <div class="icon-set">
-            <div *ngIf="this.deliberation.page.parent" class="material-symbols-outlined deliberation-icon" (click)="goOut()">door_open</div>
+            <div *ngIf="this.deliberation.page?.parent" class="material-symbols-outlined deliberation-icon" (click)="goOut()">door_open</div>
             <div [ngClass]="{ 'selected': isVoting }"
                 class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">
                 how_to_vote
@@ -34,7 +34,7 @@
             <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.supportIndex,
                 toIndex: deliberation.opposeIndex+1, title: 'Unsorted', doCount: false, offset: 0, color: ''}"></ng-container>
             <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.opposeIndex+1,
-                toIndex: deliberation.aggregateOrder.length, title: 'Rank',
+                toIndex: deliberation.aggregateOrder?.length, title: 'Rank',
                 doCount: true, offset: deliberation.supportIndex, color: 'red'}"></ng-container>
         </div>
 

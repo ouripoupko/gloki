@@ -44,15 +44,18 @@ export class DeliberationComponent implements OnInit {
       if(this.contractId in this.deliberationService.deliberations) {
         this.isChatting = true;
         this.deliberation = this.deliberationService.deliberations[this.contractId];
+        this.readPage();
         this.deliberation.notifier?.asObservable().subscribe(_=> {
-          this.readPage();
+          if (!this.isVoting) {
+            this.readPage();
+          }
         });
       }
     }
   }
 
   readPage() {
-    let rankings = this.deliberation.page.parent?.ranking_kids || this.deliberation.page.ranking_topics;
+    let rankings = this.deliberation.page?.parent?.ranking_kids || this.deliberation.page?.ranking_topics;
     if(rankings) {
       this.support = [...(rankings[this.agentService.agent]?.[0] || [])];
       this.oppose = [...(rankings[this.agentService.agent]?.[1] || [])];

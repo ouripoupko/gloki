@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Contract, Method } from '../contract';
 import { CommonService } from './common.service';
 import { ProfileService } from './profile.service';
-import { concatMap, map, of, ReplaySubject, Subject, tap } from 'rxjs';
+import { concatMap, map, of, Subject, tap } from 'rxjs';
 import { AgentService } from '../agent.service';
 import { ListenService } from './listen.service';
 
@@ -38,7 +38,7 @@ export interface Deliberation {
   aggregateOrder: string[][];
   supportIndex: number;
   opposeIndex: number;
-  notifier: ReplaySubject<void>;
+  notifier: Subject<void>;
 }
 
 @Injectable({
@@ -64,7 +64,7 @@ export class DeliberationService {
         this.commonService.isContractUsesProfile(contract.id, profile).subscribe((reply) => {
           if (reply) {
             if (!(contract.id in this.deliberations)) {
-              this.deliberations[contract.id] = { contract: contract, sid: null, notifier: new ReplaySubject<void>(1) } as Deliberation;
+              this.deliberations[contract.id] = { contract: contract, sid: null, notifier: new Subject<void>() } as Deliberation;
             }
             this.readDeliberation(contract.id, null).subscribe(_ => {
               this.notifier.next(contract.id);
