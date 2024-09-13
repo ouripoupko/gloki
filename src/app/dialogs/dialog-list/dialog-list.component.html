@@ -1,0 +1,13 @@
+<mat-dialog-content>
+    <div class="list-dialog">
+        <div class="title">Select your gloKi</div>
+        <div class="list">
+            <div *ngFor="let item of data" class="list-item" [mat-dialog-close]="item">
+                {{ item }}
+            </div>
+            <div *ngIf="!data.length" class="message">
+                You don't have any gloKi stored on this device yet. Close this dialog and create a new one.
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

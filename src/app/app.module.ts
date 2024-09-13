@@ -34,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticateComponent } from './dialogs/authenticate/authenticate.component';
 import { NewStatementComponent } from './dialogs/new-statement/new-statement.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DialogListComponent } from './dialogs/dialog-list/dialog-list.component';
 
 LOAD_WASM().subscribe();
 
@@ -60,7 +61,8 @@ LOAD_WASM().subscribe();
     UnverifiedComponent,
     VerificationComponent,
     AuthenticateComponent,
-    NewStatementComponent
+    NewStatementComponent,
+    DialogListComponent
   ],
   imports: [
     BrowserModule,

@@ -28,4 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Known defects
 
-- None at the very moment
+- add statement should be a page, not dialog
+- long lists push icon below screen
+- icon better be a floating button
+- X icon on bottom of (which page?) is redundant
