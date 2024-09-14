@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Known defects
 
-- add statement should be a page, not dialog
+- need to check again if sorting page is safe from updates
 - long lists push icon below screen
 - icon better be a floating button
-- X icon on bottom of (which page?) is redundant
+- community name in scan dialog is jibrish if in hebrew
