@@ -6,6 +6,8 @@ import { DialogListComponent } from 'src/app/dialogs/dialog-list/dialog-list.com
 
 @Component({
   selector: 'app-gloki',
+  standalone: true,
+  imports: [],
   templateUrl: './gloki.component.html',
   styleUrl: './gloki.component.scss'
 })

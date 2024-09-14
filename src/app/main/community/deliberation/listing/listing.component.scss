@@ -1,0 +1,61 @@
+.deliberation-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 89%;
+    width: 100%;
+
+    .just-list {
+        width: 100%;
+        overflow-y: auto;
+
+        .statement-group-card {
+            background-color: rgba(white, 0.6);
+            border-radius: 21px;
+            margin: 20px;
+
+            &.green {
+                background-color: rgba($gloki-green, 0.6);
+            }
+
+            &.red {
+                background-color: rgba($gloki-red, 0.6);
+            }
+
+            .card-header {
+                font-size: 20px;
+            }
+
+            .card-list-item {
+                width: 100%;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;        
+                font-size: 24px;
+                line-height: 36px;
+    
+                .card-statement {
+                    &:not(.selected) {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    &.selected {
+                        line-height: normal;
+                        margin: 4px 0px;
+                    }
+                }
+            }
+        }
+    }
+
+    .add-btn {
+        margin: 3vh;
+        width: 50px;
+        cursor: pointer;
+    }
+}

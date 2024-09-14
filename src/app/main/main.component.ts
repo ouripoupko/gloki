@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { GlokiService } from '../services/gloki.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { MainBarComponent } from './main-bar/main-bar.component';
 
 @Component({
   selector: 'app-main',
+  standalone: true,
+  imports: [
+    RouterModule,
+    MainBarComponent
+  ],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })

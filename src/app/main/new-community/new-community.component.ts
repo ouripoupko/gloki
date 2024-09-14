@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
@@ -7,6 +8,10 @@ import { GlokiService } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-new-community',
+  standalone: true,
+  imports: [
+    FormsModule
+  ],
   templateUrl: './new-community.component.html',
   styleUrl: './new-community.component.scss'
 })

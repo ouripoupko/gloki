@@ -1,5 +1,6 @@
 <mat-dialog-content>
     <div class="list-dialog">
+        <div class="closing-x" mat-dialog-close><div class="slightly-raise-x">x</div></div>
         <div class="title">Select your gloKi</div>
         <div class="list">
             <div *ngFor="let item of data" class="list-item" [mat-dialog-close]="item">

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AgentService } from 'src/app/agent.service';
@@ -8,6 +9,10 @@ import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-verification',
+  standalone: true,
+  imports: [
+    CommonModule
+  ],
   templateUrl: './verification.component.html',
   styleUrl: './verification.component.scss'
 })

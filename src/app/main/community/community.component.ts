@@ -1,9 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgentService } from 'src/app/agent.service';
 import { Community, CommunityService } from 'src/app/services/community.service';
 import { DeliberationService } from 'src/app/services/deliberation.service';
 import { GlokiService } from 'src/app/services/gloki.service';
+import { DeliberationComponent } from './deliberation/deliberation.component';
+import { MembersComponent } from './members/members.component';
+import { UnverifiedComponent } from './unverified/unverified.component';
+import { VerificationComponent } from './verification/verification.component';
 
 enum Subpage {
   NONE,
@@ -15,6 +20,14 @@ enum Subpage {
 
 @Component({
   selector: 'app-community',
+  standalone: true,
+  imports: [
+    CommonModule,
+    DeliberationComponent,
+    MembersComponent,
+    UnverifiedComponent,
+    VerificationComponent
+  ],
   templateUrl: './community.component.html',
   styleUrl: './community.component.scss'
 })

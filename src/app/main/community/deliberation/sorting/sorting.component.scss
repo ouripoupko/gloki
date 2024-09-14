@@ -1,0 +1,77 @@
+.deliberation-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 89%;
+    width: 100%;
+
+    .just-list {
+        width: 100%;
+        overflow-y: auto;
+
+        .drop-list {
+            min-height: 54px;
+        }
+
+        .list-item {
+            width: 100%;
+            padding: 12px 23px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;        
+
+            .statement {
+                font-size: 23px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            &::before, &::after {
+                content: "";
+                flex: 1;
+                border-bottom: 2px solid;
+            }
+
+            &.green {
+                border-color: $gloki-green;
+                color: $gloki-green;
+            }
+
+            &.red {
+                border-color: $gloki-red;
+                color: $gloki-red;
+            }
+    
+            span {
+                font-weight: bold;
+                margin: 0px 10px;
+            }
+        }
+    }
+
+    .check-btn {
+        margin: 3vh;
+        font-size: 50px;
+        cursor: pointer;
+    }
+}
+
+.cdk-drag-preview {
+    color: white;
+    padding: 12px 23px;
+    font-size: 23px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;        
+}

@@ -1,0 +1,30 @@
+<div class="deliberation-list">
+    <!-- fixed list for results -->
+    <div class="just-list">
+        <ng-template #listOfCards let-fromIndex="fromIndex" let-toIndex="toIndex" let-title="title"
+            let-doCount="doCount" let-offset="offset" let-color="color">
+            <ng-container *ngFor="let group of deliberation.aggregateOrder | slice:fromIndex:toIndex, let i = index">
+                <mat-expansion-panel *ngIf="group.length" [class]="'statement-group-card ' + color" [expanded]="true">
+                    <mat-expansion-panel-header class="card-header">
+                        <mat-panel-title *ngIf="doCount">{{title}} {{offset+i+1}}:</mat-panel-title>
+                        <mat-panel-title *ngIf="!doCount">{{title}}:</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="card-list-item" *ngFor="let key of group" (click)="selected = selected==key ? '' : key">
+                        <div class="card-statement" [ngClass]="{ 'selected': selected==key }" >
+                            {{deliberation.page.kids[key].text}}
+                        </div>
+                        <div *ngIf="selected==key" class="material-symbols-outlined" (click)="goIn(key)">door_open</div>
+                    </div>
+                </mat-expansion-panel>
+            </ng-container>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: 0, toIndex: deliberation.supportIndex,
+            title: 'Rank', doCount: true, offset: 0, color: 'green'}"></ng-container>
+        <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.supportIndex,
+            toIndex: deliberation.opposeIndex+1, title: 'Unsorted', doCount: false, offset: 0, color: ''}"></ng-container>
+        <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.opposeIndex+1,
+            toIndex: deliberation.aggregateOrder?.length, title: 'Rank',
+            doCount: true, offset: deliberation.supportIndex, color: 'red'}"></ng-container>
+    </div>
+    <img class="add-btn" (click)="addEvent.emit()" src='assets/plus.svg'>
+</div>

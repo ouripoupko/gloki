@@ -1,63 +1,22 @@
-<ng-container *ngIf="isChatting">
+<ng-container *ngIf="subpage!==Subpage.NONE">
     <div class="deliberation-header">
         <div class="title">{{this.deliberation.page && this.deliberation.page.parent?.text || 'Topics:'}}</div>
         <div class="icon-set">
-            <div *ngIf="this.deliberation.page?.parent" class="material-symbols-outlined deliberation-icon" (click)="goOut()">door_open</div>
-            <div [ngClass]="{ 'selected': isVoting }"
-                class="material-symbols-outlined deliberation-icon" (click)="isVoting = !isVoting">
+            <div *ngIf="this.deliberation.page?.parent && subpage === Subpage.LISTING"
+                class="material-symbols-outlined deliberation-icon"
+                (click)="goOut()">door_open</div>
+            <div *ngIf="subpage !== Subpage.ADDING"
+                [ngClass]="{ 'selected': subpage===Subpage.SORTING}"
+                class="material-symbols-outlined deliberation-icon"
+                (click)="subpage = subpage === Subpage.SORTING ? Subpage.LISTING : Subpage.SORTING">
                 how_to_vote
             </div>
         </div>
     </div>
-    <div class="deliberation-list">
-        <!-- fixed list for results -->
-        <div *ngIf="!isVoting" class="just-list">
-            <ng-template #listOfCards let-fromIndex="fromIndex" let-toIndex="toIndex" let-title="title"
-                let-doCount="doCount" let-offset="offset" let-color="color">
-                <ng-container *ngFor="let group of deliberation.aggregateOrder | slice:fromIndex:toIndex, let i = index">
-                    <mat-expansion-panel *ngIf="group.length" [class]="'statement-group-card ' + color" [expanded]="true">
-                        <mat-expansion-panel-header class="card-header">
-                            <mat-panel-title *ngIf="doCount">{{title}} {{offset+i+1}}:</mat-panel-title>
-                            <mat-panel-title *ngIf="!doCount">{{title}}:</mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="card-list-item" *ngFor="let key of group" (click)="selected = selected==key ? '' : key">
-                            <div class="card-statement" [ngClass]="{ 'selected': selected==key }" >
-                                {{deliberation.page.kids[key].text}}
-                            </div>
-                            <div *ngIf="selected==key" class="material-symbols-outlined" (click)="goIn(key)">door_open</div>
-                        </div>
-                    </mat-expansion-panel>
-                </ng-container>
-            </ng-template>
-            <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: 0, toIndex: deliberation.supportIndex,
-                title: 'Rank', doCount: true, offset: 0, color: 'green'}"></ng-container>
-            <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.supportIndex,
-                toIndex: deliberation.opposeIndex+1, title: 'Unsorted', doCount: false, offset: 0, color: ''}"></ng-container>
-            <ng-container *ngTemplateOutlet="listOfCards; context: {fromIndex: deliberation.opposeIndex+1,
-                toIndex: deliberation.aggregateOrder?.length, title: 'Rank',
-                doCount: true, offset: deliberation.supportIndex, color: 'red'}"></ng-container>
-        </div>
-
-        <!-- dragable list for voting -->
-        <div *ngIf="isVoting" class="just-list" cdkDropListGroup>
-            <ng-template #sortingSection let-name="name" let-list="list">
-                <div class="drop-list" cdkDropList [id]="name" (cdkDropListDropped)="drop($event)">
-                    <div class="list-item" *ngFor="let key of list" dir="auto" cdkDrag>
-                        <div class="statement">{{deliberation.page.kids[key].text || ""}}</div>
-                        <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'support', list: support}"></ng-container>
-            <div class="separator green"><span>drag above statements you support</span></div>
-            <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'unsorted', list: unsorted}"></ng-container>
-            <div class="separator red"><span>drag below statements you oppose</span></div>
-            <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'oppose', list: oppose}"></ng-container>
-        </div>
-        <img *ngIf="!isVoting" class="add-btn" (click)="create()" src='assets/plus.svg'>
-        <div *ngIf="isVoting" class="check-btn material-symbols-outlined" (click)="vote()">done_outline</div>
-    </div>
+    <app-sorting *ngIf="subpage === Subpage.SORTING" [contractId]="contractId" (closeEvent)="subpage=Subpage.LISTING"></app-sorting>
+    <app-listing *ngIf="subpage === Subpage.LISTING" [contractId]="contractId" (addEvent)="subpage=Subpage.ADDING"></app-listing>
+    <app-new-statement *ngIf="subpage === Subpage.ADDING" [contractId]="contractId" (closeEvent)="subpage=Subpage.LISTING"></app-new-statement>
 </ng-container>
-<div *ngIf="!isChatting" class="centered-button-parent">
+<div *ngIf="subpage===Subpage.NONE" class="centered-button-parent">
     <button class="centered-button" (click)="joinDelib()" [disabled]="isJoining">Click to join the discussion</button>
 </div>

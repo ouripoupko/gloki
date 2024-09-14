@@ -3,6 +3,8 @@ import { GlokiService } from 'src/app/services/gloki.service';
 
 @Component({
   selector: 'app-unverified',
+  standalone: true,
+  imports: [],
   templateUrl: './unverified.component.html',
   styleUrl: './unverified.component.scss'
 })

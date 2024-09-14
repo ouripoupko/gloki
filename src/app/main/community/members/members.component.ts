@@ -1,9 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Community, CommunityService } from 'src/app/services/community.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-members',
+  standalone: true,
+  imports: [
+    CommonModule
+  ],
   templateUrl: './members.component.html',
   styleUrl: './members.component.scss'
 })

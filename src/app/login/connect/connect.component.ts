@@ -6,6 +6,8 @@ import { InfoComponent } from 'src/app/dialogs/info/info.component';
 
 @Component({
   selector: 'app-connect',
+  standalone: true,
+  imports: [],
   templateUrl: './connect.component.html',
   styleUrl: './connect.component.scss'
 })

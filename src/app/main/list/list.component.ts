@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { CommunityService } from 'src/app/services/community.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-list',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })

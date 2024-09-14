@@ -5,6 +5,8 @@ import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-do-login',
+  standalone: true,
+  imports: [],
   templateUrl: './do-login.component.html',
   styleUrl: './do-login.component.scss'
 })

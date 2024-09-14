@@ -1,15 +1,31 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop} from '@angular/cdk/drag-drop';
 
-import { NewStatementComponent } from 'src/app/dialogs/new-statement/new-statement.component';
 import { Deliberation, DeliberationService } from 'src/app/services/deliberation.service';
 import { AgentService } from 'src/app/agent.service';
 import { CommunityService } from 'src/app/services/community.service';
 import { filter, take } from 'rxjs';
+import { SortingComponent } from './sorting/sorting.component';
+import { NewStatementComponent } from './new-statement/new-statement.component';
+import { ListingComponent } from './listing/listing.component';
+import { CommonModule } from '@angular/common';
+
+enum Subpage {
+  NONE,
+  LISTING,
+  ADDING,
+  SORTING
+};
 
 @Component({
   selector: 'app-deliberation',
+  standalone: true,
+  imports: [
+    CommonModule,
+    SortingComponent,
+    NewStatementComponent,
+    ListingComponent
+  ],
   templateUrl: './deliberation.component.html',
   styleUrl: './deliberation.component.scss'
 })
@@ -18,14 +34,9 @@ export class DeliberationComponent implements OnInit {
   @Input() public contractId?: string;
   @Input() public communityId?: string;
   deliberation: Deliberation = {} as Deliberation;
-  isVoting: boolean = false;
-  unsorted: string[] = [];
-  support: string[] = [];
-  oppose: string[] = [];
-  list_of_lists: {[key: string]: string[]} = {};
-  selected = '';
-  isChatting = false;
-  isJoining = false;
+  isJoining: boolean = false;
+  readonly Subpage = Subpage;
+  subpage: Subpage = Subpage.NONE;
 
   constructor(
     public deliberationService: DeliberationService,
@@ -42,74 +53,9 @@ export class DeliberationComponent implements OnInit {
   init() {
     if(this.contractId && this.communityId) {
       if(this.contractId in this.deliberationService.deliberations) {
-        this.isChatting = true;
+        this.subpage = Subpage.LISTING;
         this.deliberation = this.deliberationService.deliberations[this.contractId];
-        this.readPage();
-        this.deliberation.notifier?.asObservable().subscribe(_=> {
-          if (!this.isVoting) {
-            this.readPage();
-          }
-        });
       }
-    }
-  }
-
-  readPage() {
-    let rankings = this.deliberation.page?.parent?.ranking_kids || this.deliberation.page?.ranking_topics;
-    if(rankings) {
-      this.support = [...(rankings[this.agentService.agent]?.[0] || [])];
-      this.oppose = [...(rankings[this.agentService.agent]?.[1] || [])];
-      this.unsorted = Object.keys(this.deliberation.page.kids);
-      this.support = this.support.filter( x => this.unsorted.includes(x) );
-      this.oppose = this.oppose.filter( x => this.unsorted.includes(x) );
-      this.unsorted = this.unsorted.filter( x => !this.support.includes(x) && !this.oppose.includes(x) )
-      this.list_of_lists = {
-        'unsorted': this.unsorted,
-        'support': this.support,
-        'oppose': this.oppose
-      }
-    }
-  }
-
-  create() {
-    const dialogRef = this.dialog.open(NewStatementComponent, {
-      panelClass: 'info-box',
-      backdropClass: 'dialog-backdrop'
-    });
-    dialogRef.afterClosed().subscribe(text => {
-      if(this.contractId && text && text.trim() !== '') {
-        this.deliberationService.createStatement(this.contractId, this.deliberation.sid || null, text)
-      }
-    });
-
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    let key = this.list_of_lists[event.previousContainer.id][event.previousIndex];
-    this.list_of_lists[event.previousContainer.id].splice(event.previousIndex, 1);
-    this.list_of_lists[event.container.id].splice(event.currentIndex, 0, key);
-  }
-
-  vote() {
-    if (this.contractId) {
-      this.deliberationService.setRanking(this.contractId, this.deliberation.sid || null, [this.support, this.oppose]);
-      this.isVoting = false;
-    }
-  }
-
-  goIn(sid: string) {
-    if (this.contractId) {
-      this.deliberation.sid = sid;
-      this.selected = '';
-      this.deliberationService.readDeliberation(this.contractId, sid).subscribe();
-    }
-  }
-
-  goOut() {
-    if (this.contractId) {
-      this.deliberation.sid = this.deliberation.page.parent?.parent || null;
-      this.selected = '';
-      this.deliberationService.readDeliberation(this.contractId, this.deliberation.sid).subscribe();
     }
   }
 
@@ -126,6 +72,13 @@ export class DeliberationComponent implements OnInit {
       });
       this.isJoining = true;
       this.deliberationService.joinDelib(server, agent, this.contractId);
+    }
+  }
+
+  goOut() {
+    if (this.contractId) {
+      this.deliberation.sid = this.deliberation.page.parent?.parent || null;
+      this.deliberationService.readDeliberation(this.contractId, this.deliberation.sid).subscribe();
     }
   }
 }

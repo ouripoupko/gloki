@@ -1,0 +1,19 @@
+<div class="deliberation-list">
+    <!-- dragable list for voting -->
+    <div class="just-list" cdkDropListGroup>
+        <ng-template #sortingSection let-name="name" let-list="list">
+            <div class="drop-list" cdkDropList [id]="name" (cdkDropListDropped)="drop($event)">
+                <div class="list-item" *ngFor="let key of list" dir="auto" cdkDrag>
+                    <div class="statement">{{deliberation.page.kids[key].text || ""}}</div>
+                    <div cdkDragHandle class="material-symbols-outlined">drag_handle</div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'support', list: support}"></ng-container>
+        <div class="separator green"><span>drag above statements you support</span></div>
+        <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'unsorted', list: unsorted}"></ng-container>
+        <div class="separator red"><span>drag below statements you oppose</span></div>
+        <ng-container *ngTemplateOutlet="sortingSection; context: {name: 'oppose', list: oppose}"></ng-container>
+    </div>
+    <div class="check-btn material-symbols-outlined" (click)="vote()">done_outline</div>
+</div>

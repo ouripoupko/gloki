@@ -1,7 +1,33 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { provideRouter, Routes } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { MainComponent } from './app/main/main.component';
+import { LoginComponent } from './app/login/login.component';
+import { ListComponent } from './app/main/list/list.component';
+import { CommunityComponent } from './app/main/community/community.component';
+import { ProfileComponent } from './app/main/profile/profile.component';
+import { NewCommunityComponent } from './app/main/new-community/new-community.component';
 
-import { AppModule } from './app/app.module';
+const routes: Routes = [
+  {
+    path: '',
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'login' },
+      { path: 'login', component: LoginComponent },
+      { path: 'main', component: MainComponent, children: [
+        { path: 'communities', component: ListComponent },
+        { path: 'community/:communityId', component: CommunityComponent },
+        { path: 'profile', component: ProfileComponent },
+        { path: 'create', component: NewCommunityComponent }
+      ]}
+    ]
+  }
+];
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()
+  ]
+}).catch(err => console.error(err));

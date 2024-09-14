@@ -1,13 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import {
   ScannerQRCodeConfig,
   ScannerQRCodeResult,
   NgxScannerQrcodeComponent,
+  NgxScannerQrcodeModule,
 } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-scan',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    NgxScannerQrcodeModule
+  ],
   templateUrl: './scan.component.html',
   styleUrl: './scan.component.scss'
 })

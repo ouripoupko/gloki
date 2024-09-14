@@ -4,9 +4,16 @@ import { GlokiService } from 'src/app/services/gloki.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
 import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-storage',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './storage.component.html',
   styleUrl: './storage.component.scss'
 })

@@ -4,9 +4,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
