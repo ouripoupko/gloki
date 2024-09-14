@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { NgxQrcodeStylingComponent, NgxQrcodeStylingModule, Options } from 'ngx-qrcode-styling';
 import { GlokiService } from 'src/app/services/gloki.service';
 
@@ -7,6 +7,7 @@ import { GlokiService } from 'src/app/services/gloki.service';
   selector: 'app-share',
   standalone: true,
   imports: [
+    MatDialogModule,
     NgxQrcodeStylingModule
   ],
   templateUrl: './share.component.html',

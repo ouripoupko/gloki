@@ -1,11 +1,11 @@
 <div class="new-statement-container">
     <div class="input-area">
         <div class="title">Add your statement:</div>
-        <textarea rows="4" [(ngModel)]="statement"></textarea>
+        <textarea rows="5" [(ngModel)]="statement"></textarea>
         <div class="add-description">Better to be concise. One short sentence is the best.</div>
     </div>
     <div class="button-area">
-        <button id="cancel" routerLink="../communities" replaceUrl>Cancel</button>
+        <button id="cancel" (click)="closeEvent.emit()">Cancel</button>
         <button [disabled]="statement.trim()===''" (click)="onAdd()">Add</button>
     </div>
 </div>

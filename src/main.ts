@@ -8,6 +8,7 @@ import { ListComponent } from './app/main/list/list.component';
 import { CommunityComponent } from './app/main/community/community.component';
 import { ProfileComponent } from './app/main/profile/profile.component';
 import { NewCommunityComponent } from './app/main/new-community/new-community.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(),
+    BrowserAnimationsModule
   ]
 }).catch(err => console.error(err));

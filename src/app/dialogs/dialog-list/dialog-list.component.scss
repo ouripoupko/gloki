@@ -26,7 +26,7 @@
     }
 
     .title {
-        font-size: 3.2vh;
+        font-size: $gloki-fs-header;
         font-weight: bold;
         padding: 3vh 0;
         border-bottom: 1px solid $gloki-dark;
@@ -37,7 +37,7 @@
         flex-direction: column;
 
         .list-item {
-            font-size: 2.2vh;
+            font-size: $gloki-fs-regular;
             padding: 1vh;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -47,7 +47,7 @@
 
         .message {
             padding-top: 2vh;
-            font-size: 2.2vh;
+            font-size: $gloki-fs-regular;
         }
     }
 }

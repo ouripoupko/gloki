@@ -1,46 +1,58 @@
 @import "src/variables.scss";
 
-.new-statement-container {
+:host {
     height: 80vh;
-    margin-top: 7.5vh;
+    margin-top: 5vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
-    .input-area {
+    .new-statement-container {
+        width: 75%;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        gap: 2vh;
+    
+        .input-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 2vh;
+    
+            .title {
+                font-size: 3.2vh;
+                font-weight: bold;
+            }
+            
+            textarea {
+                font-size: 2.2vh;
+                width: 100%;
+            }
 
-        .title {
-            font-size: 35px;
-            font-weight: bold;
+            .add-description {
+                font-size: 2.2vh;
+            }
         }
-        
-        textarea {
-            font-size: 21px;
+            
+        .button-area {
             margin-top: 1.5vh;
-            width: 100%;
-        }
-    }
-        
-    .button-area {
-        margin-top: 1.5vh;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        gap: calc($gloki-width * 0.035);
-
-        button {
-            border-radius: 9px;
-            width: calc($gloki-width * 0.2);
-            height: 3.6vh;
-            font-size: 15px;
-            border: none;
-        }
-
-        #cancel {
-            background-color: $gloki-grey;
-            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: calc($gloki-width * 0.035);
+    
+            button {
+                border-radius: 9px;
+                width: calc($gloki-width * 0.2);
+                height: 3.6vh;
+                font-size: 15px;
+                border: none;
+            }
+    
+            #cancel {
+                background-color: $gloki-grey;
+                color: white;
+            }
         }
     }
 }

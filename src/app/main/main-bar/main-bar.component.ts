@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { Invite } from 'src/app/contract';
 import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
@@ -13,7 +13,8 @@ import { ProfileService } from 'src/app/services/profile.service';
   selector: 'app-main-bar',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   templateUrl: './main-bar.component.html',
   styleUrl: './main-bar.component.scss'
