@@ -36,7 +36,7 @@ export class StorageComponent {
     private gloki: GlokiService,
     public dialog: MatDialog
   ) {
-    this.cachedOptions = JSON.parse(window.localStorage.getItem(this.storageKey) ?? '[]');
+    this.cachedOptions = JSON.parse(localStorage.getItem(this.storageKey) ?? '[]');
     this.options = [...this.cachedOptions, ...this.originalOptions];
   }
 
@@ -54,7 +54,9 @@ export class StorageComponent {
         if (!this.cachedOptions.includes(this.selectedServer) && !this.originalOptions.includes(this.selectedServer)) {
           this.cachedOptions.push(this.selectedServer);
         }
-        window.localStorage.setItem(this.storageKey, JSON.stringify(this.cachedOptions));
+        localStorage.setItem(this.storageKey, JSON.stringify(this.cachedOptions));
+        sessionStorage.setItem('server', this.selectedServer);
+        sessionStorage.setItem('agent',this.state.key);
         this.state.step = result ? 4 : 3;
         this.state.isLoading = false;
       },
@@ -105,7 +107,7 @@ export class StorageComponent {
       panelClass: 'scan-box',
       backdropClass: 'dialog-backdrop',
       data: {
-        testResult: (result: string) => result,
+        parseResult: (result: Int8Array) => String.fromCharCode(...result),
         resultHeader: 'IBC Address:',
         resultStringify: (result: string) => result
       }

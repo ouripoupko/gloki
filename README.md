@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Known defects
 
-- need to check again if sorting page is safe from updates
 - long lists push icon below screen
 - icon better be a floating button
 - community name in scan dialog is jibrish if in hebrew
+- save session data to survive refresh

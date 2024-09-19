@@ -7,6 +7,7 @@ import {
   NgxScannerQrcodeComponent,
   NgxScannerQrcodeModule,
 } from 'ngx-scanner-qrcode';
+import { Buffer } from 'buffer';
 
 @Component({
   selector: 'app-scan',
@@ -48,7 +49,7 @@ export class ScanComponent {
   
   constructor (
     @Inject(MAT_DIALOG_DATA) public data: {
-      testResult: (result: string) => boolean,
+      parseResult: (result: Int8Array) => any,
       resultHeader: string,
       resultStringify: (result: any) => string
     }
@@ -56,7 +57,7 @@ export class ScanComponent {
 
   public onEvent(e: ScannerQRCodeResult[], action?: any): void {
     e && action && action.stop();
-    this.result = this.data.testResult(e?.[0]?.value);
+    this.result = this.data.parseResult(e?.[0]?.data);
     console.log('result', this.result);
     this.showResults = true;
   }

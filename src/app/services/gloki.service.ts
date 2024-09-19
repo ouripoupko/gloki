@@ -6,6 +6,7 @@ import { ProfileService } from './profile.service';
 import { CommunityService } from './community.service';
 import { DeliberationService } from './deliberation.service';
 import { ListenService } from './listen.service';
+import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
@@ -67,12 +68,11 @@ export class GlokiService {
 
   getInvite(id: string) {
     if (!(id in this.communityService.communities)) return "invalid invitation";
-    return JSON.stringify({
-      server: this.agentService.server,
-      agent: this.agentService.agent,
-      contract: id,
-      name: this.communityService.communities[id].contract.name
-    } as Invite);
+    const s = this.agentService.server;
+    const a = Buffer.from(this.agentService.agent, 'hex').toString('latin1');
+    const c = Buffer.from(id, 'hex').toString('latin1');
+    const n = Buffer.from(this.communityService.communities[id].contract.name, 'utf-8').toString('latin1');
+    return String.fromCharCode(s.length, a.length, c.length, n.length) + s + a + c + n;
   }
 
   read(id: string, methodName: string, params = {}) {

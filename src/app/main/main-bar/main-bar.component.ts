@@ -8,6 +8,7 @@ import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
 import { ShareComponent } from 'src/app/dialogs/share/share.component';
 import { CommunityService } from 'src/app/services/community.service';
 import { ProfileService } from 'src/app/services/profile.service';
+import { Buffer } from 'buffer'
 
 @Component({
   selector: 'app-main-bar',
@@ -56,14 +57,20 @@ export class MainBarComponent implements OnInit {
       panelClass: 'scan-box',
       backdropClass: 'dialog-backdrop',
       data: {
-        testResult: (result: string) => {
-          return JSON.parse(result) as Invite;
+        parseResult: (result: Int8Array) => {
+          const indexes = result.slice(0, 4).reduce((acc, curr) => [...acc, acc[acc.length - 1] + curr], [4]);
+          return {
+            server: Buffer.from(result.slice(indexes[0], indexes[1])).toString('ascii'),
+            agent: Buffer.from(result.slice(indexes[1], indexes[2])).toString('hex'),
+            contract: Buffer.from(result.slice(indexes[2], indexes[3])).toString('hex'),
+            name: Buffer.from(result.slice(indexes[3], indexes[4])).toString('utf-8'),
+          } as Invite
         },
         resultHeader: 'Community Name:',
         resultStringify: (result: Invite) => result.name
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: Invite) => {
       if (result) {
         this.communityService.joinCommunity(result).subscribe(() => {
           this.router.navigate(['main', 'communities'], {replaceUrl: true})
