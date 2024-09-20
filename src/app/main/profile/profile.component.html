@@ -36,9 +36,10 @@
       <img src="assets/x.svg">
     </a>
   </div>
-  <div class="information">
+  <div class="information" *ngIf="!isEdit">
     <button (click)="viewGlokiInfo()">View gloKi</button>
     <button (click)="viewIbcInfo()">View IBC address</button>
+    <button (click)="logout()">Logout</button>
   </div>
   <div class="description" *ngIf="isEdit">
     <p class="big-p">

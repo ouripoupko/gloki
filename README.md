@@ -29,6 +29,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Known defects
 
 - long lists push icon below screen
-- icon better be a floating button
-- community name in scan dialog is jibrish if in hebrew
-- save session data to survive refresh
+- replace buffer with https://github.com/sindresorhus/uint8array-extras/tree/main

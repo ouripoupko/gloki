@@ -55,6 +55,10 @@ export class CommunityService {
     console.log('finished building communities', this.communities);
   }
 
+  clear() {
+    this.communities = {};
+  }
+
   deployCommunity(name: string, instructions: string) {
     if (!this.profileService.contract) return of();
     return this.commonService.deployContract(name, COMMUNITY_FILE_NAME, this.profileService.contract, {}).pipe(

@@ -8,7 +8,7 @@ import { ScanComponent } from 'src/app/dialogs/scan/scan.component';
 import { ShareComponent } from 'src/app/dialogs/share/share.component';
 import { CommunityService } from 'src/app/services/community.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Buffer } from 'buffer'
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-main-bar',
@@ -29,7 +29,8 @@ export class MainBarComponent implements OnInit {
     private communityService: CommunityService,
     public dialog: MatDialog,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private utilService: UtilService
   ) {}
 
   ngOnInit(): void {
@@ -58,12 +59,13 @@ export class MainBarComponent implements OnInit {
       backdropClass: 'dialog-backdrop',
       data: {
         parseResult: (result: Int8Array) => {
+          console.log('result', result, result.length);
           const indexes = result.slice(0, 4).reduce((acc, curr) => [...acc, acc[acc.length - 1] + curr], [4]);
           return {
-            server: Buffer.from(result.slice(indexes[0], indexes[1])).toString('ascii'),
-            agent: Buffer.from(result.slice(indexes[1], indexes[2])).toString('hex'),
-            contract: Buffer.from(result.slice(indexes[2], indexes[3])).toString('hex'),
-            name: Buffer.from(result.slice(indexes[3], indexes[4])).toString('utf-8'),
+            server: this.utilService.int8ArrayToString(result.slice(indexes[0], indexes[1]), 'ascii'),
+            agent: this.utilService.int8ArrayToHex(result.slice(indexes[1], indexes[2])),
+            contract: this.utilService.int8ArrayToHex(result.slice(indexes[2], indexes[3])),
+            name: this.utilService.int8ArrayToString(result.slice(indexes[3], indexes[4]), 'utf8'),
           } as Invite
         },
         resultHeader: 'Community Name:',

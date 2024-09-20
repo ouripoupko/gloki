@@ -3,6 +3,7 @@
         <h1>Unverified</h1>
         <h2>Get verified to join discussions and vote in this community.</h2>
         <div class="unverified-message-content">Show other people your face in a video call or in-person to confirm that you are a real person. We'll walk you through the steps.</div>
+        <div *ngIf="error" class="error-message">* {{ error }}</div>
         <button [disabled]="!joinEnable" (click)="joinAuthentication()">Get verified</button>
     </div>
     <div *ngIf="isFirst" class="unverified-message">

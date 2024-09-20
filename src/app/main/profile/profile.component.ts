@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { GlokiService } from '../../services/gloki.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InfoComponent } from 'src/app/dialogs/info/info.component';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/services/profile.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AgentService } from 'src/app/agent.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   userPhoto: string = '';
 
   constructor (
-    public gloki: GlokiService,
+    private agentService: AgentService,
     public profileService: ProfileService,
     public dialog: MatDialog,
     private router: Router
@@ -48,13 +48,6 @@ export class ProfileComponent implements OnInit {
     }, err => {
       console.error("Photo error", err);
     });
-
-    /*const reader = new FileReader();
-    reader.onload = (e: any) => {
-      //this.gloki.profile.image_url = e.target.result;
-      this.userPhoto = e.target.result;
-    };
-    reader.readAsDataURL(file);*/
   }
 
   saveProfile() {
@@ -132,10 +125,14 @@ export class ProfileComponent implements OnInit {
   }
 
   viewGlokiInfo() {
-  //   this.viewInfo('Your gloki:', this.gloki.agent)
+    this.viewInfo('Your gloki:', this.agentService.agent)
   }
 
   viewIbcInfo() {
-  //   this.viewInfo('Your IBC address:', this.gloki.server)
+    this.viewInfo('Your IBC address:', this.agentService.server)
+  }
+
+  logout() {
+    this.router.navigate(['login'], {replaceUrl: true});
   }
 }

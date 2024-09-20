@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AgentService } from '../agent.service';
-import { Contract, Invite, Method } from '../contract';
-import { concatMap, map, of, tap } from 'rxjs';
+import { Contract, Method } from '../contract';
+import { concatMap, of, tap } from 'rxjs';
 import { ProfileService } from './profile.service';
 import { CommunityService } from './community.service';
 import { DeliberationService } from './deliberation.service';
 import { ListenService } from './listen.service';
-import { Buffer } from 'buffer';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +20,15 @@ export class GlokiService {
     private profileService: ProfileService,
     private communityService: CommunityService,
     private deliberationService: DeliberationService,
-    private listenService: ListenService
+    private listenService: ListenService,
+    private utilService: UtilService
   ) { }
 
   setServer(server: string, agent: string) {
+    this.communityService.clear();
+    this.deliberationService.clear();
+    this.listenService.clear();
+    this.profileService.clear();
     this.agentService.setServer(server, agent)
     return this.agentService.isExistAgent().pipe(
       tap((reply: any) => {
@@ -68,11 +73,13 @@ export class GlokiService {
 
   getInvite(id: string) {
     if (!(id in this.communityService.communities)) return "invalid invitation";
-    const s = this.agentService.server;
-    const a = Buffer.from(this.agentService.agent, 'hex').toString('latin1');
-    const c = Buffer.from(id, 'hex').toString('latin1');
-    const n = Buffer.from(this.communityService.communities[id].contract.name, 'utf-8').toString('latin1');
-    return String.fromCharCode(s.length, a.length, c.length, n.length) + s + a + c + n;
+    const s = this.utilService.stringToInt8Array(this.agentService.server);
+    const a = this.utilService.hexToInt8Array(this.agentService.agent);
+    const c = this.utilService.hexToInt8Array(id);
+    const n = this.utilService.stringToInt8Array(this.communityService.communities[id].contract.name);
+    const lengths = new Int8Array([s.length, a.length, c.length, n.length]);
+    const all = this.utilService.concatInt8Arrays([lengths, s, a, c, n]);
+    return this.utilService.int8ArrayToString(all, 'latin1');
   }
 
   read(id: string, methodName: string, params = {}) {

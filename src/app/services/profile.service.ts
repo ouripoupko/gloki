@@ -50,6 +50,11 @@ export class ProfileService {
     return of(null);
   }
 
+  clear() {
+    this.contract = undefined;
+    this.profile = {} as Profile;
+  }
+
   deployProfileContract() {
     this.commonService.deployContract(PROFILE_CONTRACT_NAME, PROFILE_FILE_NAME, "", {}).subscribe(reply => {
       this.contract = reply;

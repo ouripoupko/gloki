@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { StateService } from './state.service';
 import { ConnectComponent } from './connect/connect.component';
 import { DoLoginComponent } from './do-login/do-login.component';
@@ -21,7 +21,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   hamburgerOpen: boolean = false;
   backward: number[] = [1, 1, 2, 2];
@@ -31,13 +31,12 @@ export class LoginComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef
   ) { }
 
+  ngOnInit(): void {
+    this.state.step = 1;
+  }
+
   ngAfterViewInit() {
     // After view is initialized, manually trigger change detection
     this.cdr.detectChanges();
   }
-
-  location(full: boolean) {
-    return full ? location.origin : location.hostname + (location.port ? ' (' + location.port + ')' : '');
-  }
-
 }

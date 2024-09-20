@@ -77,6 +77,10 @@ export class DeliberationService {
     }
   }
 
+  clear() {
+    this.deliberations = {};
+  }
+
   deployDelib(name: string, community: string) {
     console.log('deploy deliberation', name, community);
     if (!this.profileService.contract) return of();

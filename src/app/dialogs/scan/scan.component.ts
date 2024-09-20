@@ -7,7 +7,6 @@ import {
   NgxScannerQrcodeComponent,
   NgxScannerQrcodeModule,
 } from 'ngx-scanner-qrcode';
-import { Buffer } from 'buffer';
 
 @Component({
   selector: 'app-scan',

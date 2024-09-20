@@ -23,8 +23,7 @@ export class StorageComponent {
   autocompleteVisible: boolean = false;
   cachedOptions: string[] = [];
   originalOptions = [
-    'https://gdi.gloki.contact',
-    'http://localhost:5001'
+    'https://gdi.gloki.contact'
   ];
   options: string[] = [];
   mayContinue = false;
