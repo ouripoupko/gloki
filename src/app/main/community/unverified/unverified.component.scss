@@ -1,6 +1,6 @@
 @import "src/variables.scss";
 
-.unverified-container {
+:host {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -17,17 +17,17 @@
         padding: calc($gloki-width * 0.07);
 
         h1 {
-            font-size: 3.2vh;
+            font-size: $gloki-fs-title;
             margin: 0px;
         }
 
         h2 {
-            font-size: 2.7vh;
+            font-size: $gloki-fs-header;
             margin: 0px;
         }
 
         .unverified-message-content {
-            font-size: 2.2vh;
+            font-size: $gloki-fs-regular;
         }
 
         .error-message {
@@ -37,7 +37,7 @@
         button {
             background-color: $gloki-blue;
             border-radius: 9px;
-            font-size: 2.7vh;
+            font-size: $gloki-fs-header;
             color: white;
             height: 6.3vh;
             border: none;

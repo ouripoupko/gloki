@@ -1,7 +1,6 @@
 @import "src/variables.scss";
 
-.verification-container {
-//    background-color: white;
+:host {
     color: $gloki-dark;
     width: 100%;
     height: 100%;
@@ -18,14 +17,14 @@
         color: white;
 
         .title {
-            font-size: 30px;
+            font-size: $gloki-fs-title;
             font-weight: bold;
         }
 
         .people {
             width: 100%; /* Width of two elements */
             height: 432px;
-            overflow-y: scroll; /* Enable vertical scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* 2 columns */
             grid-auto-rows: 216px; /* Each element has fixed height */
@@ -53,7 +52,7 @@
                 }
 
                 .name {
-                    font-size: 20px;
+                    font-size: $gloki-fs-regular;
                     font-style: italic;
                     color: white;
                 }
@@ -78,7 +77,7 @@
         }
 
         .counter {
-            font-size: 25px;
+            font-size: $gloki-fs-header;
             color: $gloki-grey;
         }
     }

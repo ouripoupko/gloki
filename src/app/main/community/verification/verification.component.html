@@ -1,24 +1,21 @@
-<div class="verification-container">
-    <div class="verification-content">
-        <div class="title">Verify people</div>
-        <div class="people">
-            <div class="person" *ngFor="let item of community?.tasks | keyvalue"
-                (click)="communityService.authenticate(item.key, community)">
-                <div class="grey-box" *ngIf="!profileService.others[item.key].image_url">
-                    <img class="camera-icon" src="assets/camera.svg" />
-                </div>
-                <img class="profile-pic" *ngIf="profileService.others[item.key].image_url"
-                     [src]="profileService.others[item.key].image_url" />
-                <div class='circle' [ngClass]="{'red': !item.value, 'green': item.value}"></div>
-                <div class="name">
-                    {{profileService.others[item.key].first_name}}
-                </div>
-                <div class="name">
-                    {{profileService.others[item.key].last_name}}
-                </div>
+<div class="verification-content">
+    <div class="title">Verify people</div>
+    <div class="people">
+        <div class="person" *ngFor="let item of community?.tasks | keyvalue"
+            (click)="communityService.authenticate(item.key, community)">
+            <div class="grey-box" *ngIf="!profileService.others[item.key].image_url">
+                <img class="camera-icon" src="assets/camera.svg" />
+            </div>
+            <img class="profile-pic" *ngIf="profileService.others[item.key].image_url"
+                    [src]="profileService.others[item.key].image_url" />
+            <div class='circle' [ngClass]="{'red': !item.value, 'green': item.value}"></div>
+            <div class="name">
+                {{profileService.others[item.key].first_name}}
+            </div>
+            <div class="name">
+                {{profileService.others[item.key].last_name}}
             </div>
         </div>
-        <div class="counter">{{countVerified()}} of {{community? (community.tasks | keyvalue).length : 0}} people verified</div>
-
     </div>
+    <div class="counter">{{countVerified()}} of {{community? (community.tasks | keyvalue).length : 0}} people verified</div>
 </div>

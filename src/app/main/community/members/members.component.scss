@@ -1,8 +1,10 @@
 @import "src/variables.scss";
 
-.people {
+:host {
+    height: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 
     .person {
         border-bottom: 1px solid white;
@@ -10,13 +12,15 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 71px;
-        padding: 14px;
+        padding: 15px 15px;
 
         .details {
             display: flex;
+            align-items: center;
             flex-direction: row;
             gap: 14px;
+            overflow: hidden;
+            white-space: nowrap;
 
             .profile-pic {
                 width: 37px;
@@ -26,15 +30,15 @@
             }
             
             .name {
-                font-size: 23px;
-                display: flex;
-                align-items: center;
+                font-size: $gloki-fs-header;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
         button {
             background-color: $gloki-red;
-            font-size: 23px;
+            font-size: $gloki-fs-header;
             border-radius: 9px;
             color: white;
             font-weight: 600;
@@ -44,7 +48,7 @@
 
         .green {
             color: $gloki-green;
-            font-size: 23px;
+            font-size: $gloki-fs-header;
             font-weight: 600;
         }
     }

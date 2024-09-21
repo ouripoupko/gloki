@@ -1,14 +1,12 @@
-<div class="unverified-container">
-    <div *ngIf="!isFirst" class="unverified-message">
-        <h1>Unverified</h1>
-        <h2>Get verified to join discussions and vote in this community.</h2>
-        <div class="unverified-message-content">Show other people your face in a video call or in-person to confirm that you are a real person. We'll walk you through the steps.</div>
-        <div *ngIf="error" class="error-message">* {{ error }}</div>
-        <button [disabled]="!joinEnable" (click)="joinAuthentication()">Get verified</button>
-    </div>
-    <div *ngIf="isFirst" class="unverified-message">
-        <h1>Welcome</h1>
-        <h2>Be the first to join the community.</h2>
-        <button [disabled]="!joinEnable" (click)="joinAuthentication()">Join</button>
-    </div>
+<div *ngIf="!isFirst" class="unverified-message">
+    <h1>Unverified</h1>
+    <h2>Get verified to join discussions and vote in this community.</h2>
+    <div class="unverified-message-content">Show other people your face in a video call or in-person to confirm that you are a real person. We'll walk you through the steps.</div>
+    <div *ngIf="error" class="error-message">* {{ error }}</div>
+    <button [disabled]="!joinEnable" (click)="joinAuthentication()">Get verified</button>
+</div>
+<div *ngIf="isFirst" class="unverified-message">
+    <h1>Welcome</h1>
+    <h2>Be the first to join the community.</h2>
+    <button [disabled]="!joinEnable" (click)="joinAuthentication()">Join</button>
 </div>
