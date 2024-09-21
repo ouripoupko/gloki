@@ -1,4 +1,4 @@
-<h1>Type your IBC address&thinsp;<sup><span (click)="showInfo()" class="raised-circle">?</span></sup></h1>
+<div class="login-title">Type your IBC address&thinsp;<sup><span (click)="showInfo()" class="raised-circle">?</span></sup></div>
 <div class="input-container">
     <!-- Input field -->
     <input type="text" class="input-field" placeholder="Type address..."
@@ -15,4 +15,4 @@
         * {{errorMessage}}
     </div>
 </div>
-<button class="continue" [disabled]="!mayContinue" (click)="onServerSelected($event)">Continue</button>
+<button [disabled]="!mayContinue" (click)="onServerSelected($event)">Continue</button>

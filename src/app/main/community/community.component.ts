@@ -46,7 +46,6 @@ export class CommunityComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('community init');
     this.route.paramMap.subscribe(params => {
       this.communityId = params.get('communityId') || '';
       this.community = this.communityService.communities[this.communityId];
@@ -55,7 +54,6 @@ export class CommunityComponent implements OnInit {
   }
 
   showCommunity() {
-    console.log('community:', this.community)
     this.isMember = this.agentService.agent in (this.community?.members || {});
     const isCandidate = this.community?.nominates?.includes(this.agentService.agent);
     if (this.isMember) {
@@ -69,7 +67,6 @@ export class CommunityComponent implements OnInit {
     } else {
       this.subpage = Subpage.UNVERIFIED;
     }
-    console.log('community show', this.subpage);
   }
 
   openLink(url: string): void {

@@ -25,12 +25,10 @@ export class MembersComponent implements OnInit {
   ngOnInit(): void {
     if(this.communityId) {
       this.community = this.communityService.communities[this.communityId];
-      console.log('members', this.community.members)
     }
   }
 
   callAuthenticate(key: string) {
-    console.log('callAuthenticate');
     this.justClicked[key] = true;
     this.communityService.authenticate(key, this.community);
   }

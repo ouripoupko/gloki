@@ -112,7 +112,6 @@ export class StorageComponent {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
       this.selectedServer = result;
       this.mayContinue = this.isValidHttpUrl();
     });

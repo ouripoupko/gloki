@@ -23,7 +23,6 @@ export class ListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('ngOnInit list checking if profile exists');
     if (!this.profileService.isProfileFull()) {
       this.router.navigate(['main', 'profile'], {replaceUrl: true})
     }

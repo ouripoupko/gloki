@@ -22,8 +22,8 @@ export class ShareComponent implements AfterViewInit {
   ) {}
 
   public config: Options = {
-    width: 325,
-    height: 325,
+    width: Math.min(325, innerWidth*0.8),
+    height: Math.min(325, innerWidth*0.8),
     data: 'invalid invitation',
     image: "assets/Key.svg",
     margin: 0,

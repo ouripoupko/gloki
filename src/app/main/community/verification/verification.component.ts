@@ -28,7 +28,6 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     if(this.communityId) {
       this.community = this.communityService.communities[this.communityId];
-      console.log('tasks', this.community.tasks)
     }
   }
 

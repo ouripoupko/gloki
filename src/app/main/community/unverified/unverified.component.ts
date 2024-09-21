@@ -44,7 +44,6 @@ export class UnverifiedComponent implements OnInit {
 
   joinAuthentication(event: void) {
     if (!this.communityId) return;
-    console.log('unverified', this.communityId);
     this.joinEnable = false;
     this.error = undefined;
     this.gloki.write(this.communityId, 'request_join').subscribe(reply => {

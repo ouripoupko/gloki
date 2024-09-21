@@ -59,7 +59,6 @@ export class MainBarComponent implements OnInit {
       backdropClass: 'dialog-backdrop',
       data: {
         parseResult: (result: Int8Array) => {
-          console.log('result', result, result.length);
           const indexes = result.slice(0, 4).reduce((acc, curr) => [...acc, acc[acc.length - 1] + curr], [4]);
           return {
             server: this.utilService.int8ArrayToString(result.slice(indexes[0], indexes[1]), 'ascii'),

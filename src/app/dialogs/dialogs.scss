@@ -4,11 +4,11 @@
 .mdc-dialog__container
 .mat-mdc-dialog-surface {
     width: calc($gloki-width * 0.75);
-    height: 40vh;
+    height: 45vh;
     background-color: white;
     border-radius: 21px;
     position: absolute;
-    top: 37.5vh;
+    top: 30vh;
     font-family: 'DM Sans';
 }
 
@@ -21,7 +21,7 @@
     background-color: white;
     border-radius: 21px;
     position: absolute;
-    top: 20vh;
+    top: 15vh;
     font-family: 'DM Sans';
 }
 
@@ -35,7 +35,7 @@
     background-color: white;
     border-radius: 0px 0px 21px 21px;
     position: absolute;
-    top: 10vh;
+    top: 7vh;
     font-family: 'DM Sans';
 }
 
@@ -45,11 +45,11 @@
 .mat-mdc-dialog-surface {
     max-width: none;
     width: $gloki-width;
-    height: 63vh;
+    height: calc(min(375px, 80vw) + 32vh);
     background-color: white;
     border-radius: 0px 0px 21px 21px;
     position: absolute;
-    top: 19vh;
+    top: 14vh;
     font-family: 'DM Sans';
 }
 

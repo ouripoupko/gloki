@@ -1,0 +1,14 @@
+@import "../login.shared.scss";
+
+:host {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vh;
+    gap: 1vh;
+
+    .login-title {
+        font-size: $gloki-fs-banner;
+    }
+}

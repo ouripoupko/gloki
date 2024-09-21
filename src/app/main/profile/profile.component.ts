@@ -30,7 +30,6 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('ngOnInit profile page');
     if (this.profileService.isProfileFull()) {
       this.isEdit = false;
       this.userPhoto = this.profileService.profile?.image_url;

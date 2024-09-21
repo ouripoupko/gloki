@@ -81,9 +81,7 @@ export class ProfileService {
     let method = {} as Method;
     method.name = 'set_values';
     method.values = {'items': this.profile};
-    return this.agentService.write(this.contract, method).pipe(
-      tap((reply)=> {console.log('write contract', reply);})
-    );
+    return this.agentService.write(this.contract, method);
   }
 
   isProfileFull() {

@@ -40,7 +40,6 @@ export class GlokiComponent {
       data: glokies
     });
     dialogRef.afterClosed().subscribe(key => {
-      console.log('dialog list', key);
       if (key) {
         this.state.key = key;
         this.state.step = 2;

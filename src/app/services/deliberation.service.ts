@@ -82,7 +82,6 @@ export class DeliberationService {
   }
 
   deployDelib(name: string, community: string) {
-    console.log('deploy deliberation', name, community);
     if (!this.profileService.contract) return of();
     return this.commonService.deployContract(name, DELIB_FILE_NAME, this.profileService.contract, {community: community}).pipe(
       concatMap(contract => {
@@ -219,7 +218,6 @@ export class DeliberationService {
       }
 
       deliberation.aggregateOrder = smith_sets;
-      console.log('aggregateOrder', deliberation.aggregateOrder)
       for (let index = 0; index < deliberation.aggregateOrder.length; ++index) {
         let supportInnerIndex = deliberation.aggregateOrder[index].indexOf('support')
         if (supportInnerIndex >= 0) {
@@ -232,7 +230,6 @@ export class DeliberationService {
           deliberation.aggregateOrder[index].splice(opposeInnerIndex, 1)
         }
       }
-      console.log('aggregateOrder', deliberation.aggregateOrder)
     }
   }
 }

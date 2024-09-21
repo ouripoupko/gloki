@@ -1,23 +1,22 @@
 @import "src/variables.scss";
 @import '@material-symbols/font-400/outlined.css';
 
-.login-container {
+:host {
     background-image: linear-gradient(150deg, $gloki-blue, $gloki-dark);
     color: white;
     width: $gloki-width;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
 
     .header {
+        flex: 0 0 25%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        height: 32%;
-        width: 100%;
 
         .top-bar {
             display: flex;
@@ -36,83 +35,28 @@
         }
     }
 
-    ::ng-deep .main-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .main-content {
+        flex: 0 0 50%;
         width: 100%;
-        margin-top: 5.5vh;
-        height: 40%;
-    
-        h1 {
-            margin-block: 1.6vh;
-
-            .raised-circle {
-                border-radius: 50%;
-                width: 2vh;
-                height: 2vh;
-                display: inline-block;
-                background: white;
-                color: $gloki-dark;
-                text-align: center;
-                font-size: $gloki-fs-small;
-                transform: translateY(-1vh);
-                cursor: pointer;
-            }
-        }
-
-        button {
-            border-radius: 2.2vh;
-            border-width: 4px;
-            border-style: solid;
-            border-color: white;
-            width: 75%;
-            height: 9.6vh;
-            font-size: $gloki-fs-header;
-            margin: 1.6vh;
-            color: $gloki-dark;
-            cursor: pointer;
-
-            &.inverse {
-                background-color: $gloki-dark;
-                color: white;
-                border-color: white;
-            }
-        }
-
-        select {
-            border-radius: 2.2vh;
-            border-width: 4px;
-            border-style: solid;
-            border-color: white;
-            width: 75%;
-            height: 9.6vh;
-            font-size: $gloki-fs-header;
-            margin: 1.6vh;
-            color: $gloki-dark;
-
-            &:invalid {
-                color: $gloki-grey;
-            }
-
-            option {
-                color: $gloki-dark;
-            }
-        }
     }
 
     .footer {
+        flex: 0 0 25%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        margin-top: 10vh;
+
+        .loading-message {
+            flex: 0 0 50%;
+        }
 
         .progress-indicator {
+            flex: 0 0 50%;
+            width: 100%;
             display: flex;
             flex-direction: row;
             justify-content: center;
-            width: 100%;
             font-size: $gloki-fs-small;
 
             .progress-bar {

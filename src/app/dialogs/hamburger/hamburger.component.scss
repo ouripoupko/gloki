@@ -1,7 +1,7 @@
 @import "src/variables.scss";
 @import '@material-symbols/font-400/outlined.css';
 
-.hamburger-container {
+:host {
     background-image: linear-gradient(150deg, $gloki-blue, $gloki-dark 39%);
     width: $gloki-width;
     height: 100%;

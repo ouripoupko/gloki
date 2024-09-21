@@ -25,7 +25,6 @@ export class MainComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    console.log('main ngOnInit', this.gloki.agentExists);
     if (this.gloki.agentExists) {
       this.doLogin();
     } else {

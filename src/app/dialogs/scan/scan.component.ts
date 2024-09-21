@@ -57,7 +57,6 @@ export class ScanComponent {
   public onEvent(e: ScannerQRCodeResult[], action?: any): void {
     e && action && action.stop();
     this.result = this.data.parseResult(e?.[0]?.data);
-    console.log('result', this.result);
     this.showResults = true;
   }
 
