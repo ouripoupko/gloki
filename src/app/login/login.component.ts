@@ -38,5 +38,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // After view is initialized, manually trigger change detection
     this.cdr.detectChanges();
+    scrollTo(0, 0);
   }
 }

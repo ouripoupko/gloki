@@ -28,5 +28,3 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Known defects
 
-- long lists push icon below screen
-- replace buffer with https://github.com/sindresorhus/uint8array-extras/tree/main

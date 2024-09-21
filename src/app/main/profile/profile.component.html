@@ -31,9 +31,7 @@
       <button (click)="editProfile()">Edit</button>
     </div>
   </div>
-  <a routerLink="/main/communities" replaceUrl>
-    <img src="assets/x.svg">
-  </a>
+  <a class="material-symbols-outlined close-icon" routerLink="/main/communities" replaceUrl>close</a>
 </div>
 <div class="information" *ngIf="!isEdit">
   <button (click)="viewGlokiInfo()">View gloKi</button>
