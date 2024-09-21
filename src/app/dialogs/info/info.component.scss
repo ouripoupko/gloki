@@ -22,7 +22,7 @@
         background: $gloki-dark;
         color: white;
         text-align: center;
-        font-size: 15px;
+        font-size: $gloki-fs-small;
         cursor: pointer;
 
         .slightly-raise-x {
@@ -31,20 +31,20 @@
     }
 
     .info-header {
-        font-size: 3.2vh;
+        font-size: $gloki-fs-title;
         font-weight: bold;
         line-height: normal;
     }
     
     .info-summary {
-        font-size: 2.5vh;
+        font-size: $gloki-fs-header;
         font-weight: bold;
         line-height: 1.2;
         letter-spacing: normal;
     }
     
     .info-content {
-        font-size: 2.2vh;
+        font-size: $gloki-fs-regular;
         font-weight: 400;
         line-height: 1.1;
         letter-spacing: normal;

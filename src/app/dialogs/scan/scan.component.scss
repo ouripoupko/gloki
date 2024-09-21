@@ -29,7 +29,7 @@
         background-color: $gloki-blue;
         color: white;
         margin-bottom: 5vh;
-        font-size: 25px;
+        font-size: $gloki-fs-header;
         font-weight: 600;
         border: none;
     }
@@ -47,7 +47,7 @@
 
     h1 {
         max-width: calc($gloki-width * 0.78);
-        font-size: 30px;
+        font-size: $gloki-fs-title;
         font-weight: bold;
         color: $gloki-dark;
         margin: 10px 0px;
@@ -60,7 +60,7 @@
         height: 6.3vh;
         background-color: $gloki-blue;
         color: white;
-        font-size: 25px;
+        font-size: $gloki-fs-header;
         font-weight: 600;
         margin: 10px 0px;
         border: none;

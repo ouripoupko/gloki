@@ -28,7 +28,8 @@
             }
 
             .card-header {
-                font-size: 20px;
+                font-size: $gloki-fs-regular;
+                background: unset;
             }
 
             .card-list-item {
@@ -38,7 +39,7 @@
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;        
-                font-size: 24px;
+                font-size: $gloki-fs-header;
                 line-height: 36px;
     
                 .card-statement {

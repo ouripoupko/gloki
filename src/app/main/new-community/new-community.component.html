@@ -1,6 +1,6 @@
 <div class="input-area">
     <div class="title">Create<br>community</div>
-    <input name="name" [(ngModel)]="name" autocomplete="off">
+    <input #communityName name="name" [(ngModel)]="name" autocomplete="off">
     <label for="name">community name</label>
     <div class="desc-and-info">
         <textarea rows="4" name="description" [(ngModel)]="description"></textarea>

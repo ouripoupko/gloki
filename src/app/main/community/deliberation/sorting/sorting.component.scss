@@ -1,12 +1,12 @@
 @import "src/variables.scss";
 @import '@material-symbols/font-400/outlined.css';
 
-.deliberation-list {
+:host {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 89%;
+    height: 100%;
     width: 100%;
 
     .just-list {
@@ -19,7 +19,7 @@
 
         .list-item {
             width: 100%;
-            padding: 12px 23px;
+            padding: 5px 23px;
             cursor: pointer;
             display: flex;
             flex-direction: row;
@@ -27,10 +27,14 @@
             align-items: center;        
 
             .statement {
-                font-size: 23px;
+                font-size: $gloki-fs-regular;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+
+            .drag-icon {
+                font-size: $gloki-fs-icon;
             }
         }
 
@@ -64,7 +68,7 @@
 
     .check-btn {
         margin: 3vh;
-        font-size: 50px;
+        font-size: $gloki-fs-icon;
         cursor: pointer;
     }
 }
@@ -72,7 +76,7 @@
 .cdk-drag-preview {
     color: white;
     padding: 12px 23px;
-    font-size: 23px;
+    font-size: $gloki-fs-regular;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterModule } from '@angular/router';
@@ -15,16 +15,21 @@ import { CommunityService } from 'src/app/services/community.service';
   templateUrl: './new-community.component.html',
   styleUrl: './new-community.component.scss'
 })
-export class NewCommunityComponent {
+export class NewCommunityComponent implements AfterViewInit {
 
   name: string = '';
   description: string = '';
+  @ViewChild('communityName') nameInput!: ElementRef;
 
   constructor (
     private communityService: CommunityService,
     private router: Router,
     public dialog: MatDialog,
   ) {}
+
+  ngAfterViewInit() {
+    this.nameInput.nativeElement.focus();
+  }
 
   onSave(event: any) {
     this.communityService.deployCommunity(this.name, this.description).subscribe(_ => {

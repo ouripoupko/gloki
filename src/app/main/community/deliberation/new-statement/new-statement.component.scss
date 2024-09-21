@@ -1,58 +1,53 @@
 @import "src/variables.scss";
 
 :host {
-    height: 80vh;
     margin-top: 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2vh;
 
-    .new-statement-container {
+    .input-area {
         width: 75%;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
         gap: 2vh;
-    
-        .input-area {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            gap: 2vh;
-    
-            .title {
-                font-size: 3.2vh;
-                font-weight: bold;
-            }
-            
-            textarea {
-                font-size: 2.2vh;
-                width: 100%;
-            }
 
-            .add-description {
-                font-size: 2.2vh;
-            }
+        .title {
+            font-size: $gloki-fs-title;
+            font-weight: bold;
         }
-            
-        .button-area {
-            margin-top: 1.5vh;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            gap: calc($gloki-width * 0.035);
-    
-            button {
-                border-radius: 9px;
-                width: calc($gloki-width * 0.2);
-                height: 3.6vh;
-                font-size: 15px;
-                border: none;
-            }
-    
-            #cancel {
-                background-color: $gloki-grey;
-                color: white;
-            }
+        
+        textarea {
+            font-size: $gloki-fs-regular;
+            width: 100%;
+        }
+
+        .add-description {
+            font-size: $gloki-fs-regular;
+        }
+    }
+        
+    .button-area {
+        width: 75%;
+        margin-top: 1.5vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: calc($gloki-width * 0.035);
+
+        button {
+            border-radius: 9px;
+            width: calc($gloki-width * 0.2);
+            height: 3.6vh;
+            font-size: $gloki-fs-small;
+            border: none;
+        }
+
+        #cancel {
+            background-color: $gloki-grey;
+            color: white;
         }
     }
 }

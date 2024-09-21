@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Deliberation, DeliberationService } from 'src/app/services/deliberation.service';
 
@@ -11,22 +11,26 @@ import { Deliberation, DeliberationService } from 'src/app/services/deliberation
   templateUrl: './new-statement.component.html',
   styleUrl: './new-statement.component.scss'
 })
-export class NewStatementComponent implements OnInit{
+export class NewStatementComponent implements OnInit, AfterViewInit {
 
   @Input() public contractId?: string;
   deliberation: Deliberation = {} as Deliberation;
   @Output() closeEvent = new EventEmitter<null>();
   statement = '';
+  @ViewChild('textareaElement') textarea!: ElementRef;
 
   constructor(
     public deliberationService: DeliberationService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     if(this.contractId) {
       this.deliberation = this.deliberationService.deliberations[this.contractId];
     }
+  }
+
+  ngAfterViewInit() {
+    this.textarea.nativeElement.focus();
   }
 
   onAdd() {

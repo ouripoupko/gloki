@@ -34,10 +34,6 @@
                 margin-left: auto;
             }
         }
-
-        .gloki-logo {
-            font-size: 8.5vh;
-        }
     }
 
     ::ng-deep .main-content {
@@ -59,7 +55,7 @@
                 background: white;
                 color: $gloki-dark;
                 text-align: center;
-                font-size: 1.6vh;
+                font-size: $gloki-fs-small;
                 transform: translateY(-1vh);
                 cursor: pointer;
             }
@@ -72,7 +68,7 @@
             border-color: white;
             width: 75%;
             height: 9.6vh;
-            font-size: 2.6vh;
+            font-size: $gloki-fs-header;
             margin: 1.6vh;
             color: $gloki-dark;
             cursor: pointer;
@@ -91,7 +87,7 @@
             border-color: white;
             width: 75%;
             height: 9.6vh;
-            font-size: 2.6vh;
+            font-size: $gloki-fs-header;
             margin: 1.6vh;
             color: $gloki-dark;
 
@@ -117,7 +113,7 @@
             flex-direction: row;
             justify-content: center;
             width: 100%;
-            font-size: 15px;
+            font-size: $gloki-fs-small;
 
             .progress-bar {
                 position: relative;

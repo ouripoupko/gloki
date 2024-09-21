@@ -10,7 +10,7 @@
     gap: 2.8vh;
 
     .description {
-        font-size: 25px;
+        font-size: $gloki-fs-header;
         font-weight: 600;
         color: $gloki-dark;
         width: calc($gloki-width * 0.88);
@@ -18,7 +18,7 @@
     }
 
     .instructions {
-        font-size: 20px;
+        font-size: $gloki-fs-regular;
         color: $gloki-dark;
         width: calc($gloki-width * 0.88);
     }
@@ -38,7 +38,7 @@
         background-color: $gloki-blue;
         color: white;
         margin-bottom: 6vh;
-        font-size: 25px;
+        font-size: $gloki-fs-header;
         font-weight: 600;
     }
 }
