@@ -1,22 +1,23 @@
-<div class="community-container">
-    <div class="community-header">
-        <div class="community-name">
-            {{ community?.contract?.name }}
-        </div>
-        <div class="community-icons" *ngIf="isMember">
-            <div [ngClass]="{ 'selected': subpage == Subpage.MEMBERS }"
-                class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" />
-                <ng-container *ngIf="checkTasks() as tasks">
-                    <div *ngIf="tasks.exist" class='circle' [ngClass]="{'red': !tasks.done, 'green': tasks.done}"></div>
-                </ng-container>
-            </div>
-            <div [ngClass]="{ 'selected': subpage == Subpage.DELIBERATION }"
-                class="community-icon" (click)="subpage = Subpage.DELIBERATION"><img src="assets/deliberate.svg" /></div>
-        </div>
+<div class="community-header">
+    <div class="community-name">
+        {{ community?.contract?.name }}
     </div>
-    <app-unverified class="community-content" *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
-    <app-members class="community-content" *ngIf="subpage == Subpage.MEMBERS" [communityId]="communityId"/>
-    <app-verification class="community-content" *ngIf="subpage == Subpage.VERIFICATION" [communityId]="communityId"/>
-    <app-deliberation class="community-content" *ngIf="subpage == Subpage.DELIBERATION"
-        [contractId]="community?.properties?.deliberation" [communityId]="communityId" />
+    <div class="community-icons" *ngIf="isMember">
+        <div [ngClass]="{ 'selected': subpage == Subpage.MEMBERS }"
+            class="community-icon" (click)="subpage = Subpage.MEMBERS"><img src="assets/members.svg" />
+            <ng-container *ngIf="checkTasks() as tasks">
+                <div *ngIf="tasks.exist" class='circle' [ngClass]="{'red': !tasks.done, 'green': tasks.done}"></div>
+            </ng-container>
+        </div>
+        <div [ngClass]="{ 'selected': subpage == Subpage.DELIBERATION }"
+            class="community-icon" (click)="subpage = Subpage.DELIBERATION"><img src="assets/deliberate.svg" /></div>
+    </div>
+</div>
+<div class="the-rest">
+    <app-unverified *ngIf="subpage == Subpage.UNVERIFIED" [communityId]="communityId"/>
+    <app-members *ngIf="subpage == Subpage.MEMBERS" [communityId]="communityId"/>
+    <app-verification *ngIf="subpage == Subpage.VERIFICATION" [communityId]="communityId"/>
+    <app-deliberation *ngIf="subpage == Subpage.DELIBERATION"
+        [contractId]="community?.properties?.deliberation" [communityId]="communityId"
+    />
 </div>

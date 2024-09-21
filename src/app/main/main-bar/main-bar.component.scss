@@ -1,12 +1,11 @@
 @import "src/variables.scss";
 @import '@material-symbols/font-400/outlined.css';
 
-.mainbar-container {
+:host {
     padding: 17px 15px;
     display: flex;
     justify-content: space-between;
     border-bottom: 3px solid white;
-    height: 10vh;
 
     .logo {
         width: 85px;

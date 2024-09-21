@@ -1,11 +1,11 @@
-<div class="main-container">
-    <ng-container *ngIf="isLoading">
-        <div class="centralized">
-            <img src="assets/200w.gif">
-        </div>
-    </ng-container>
-    <ng-container *ngIf="!isLoading">
-        <app-main-bar />
+<ng-container *ngIf="isLoading">
+    <div class="centralized">
+        <img src="assets/200w.gif">
+    </div>
+</ng-container>
+<ng-container *ngIf="!isLoading">
+    <app-main-bar />
+    <div class="the-rest">
         <router-outlet></router-outlet>
-    </ng-container>
-</div>
+    </div>
+</ng-container>

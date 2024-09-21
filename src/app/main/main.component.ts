@@ -36,6 +36,7 @@ export class MainComponent implements OnInit{
           next: result => {
             if (result) {
               this.doLogin();
+              this.router.navigate(['main', 'communities'], {replaceUrl: true});
             } else {
               this.restart();
             }

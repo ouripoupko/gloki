@@ -3,78 +3,72 @@
 
 
 :host {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    height: 90%;
 
-    .community-container {
+    .community-header {
+        height: 9.9%;
+        padding: 2vh 15px;
+        font-size: 3.8vh;
+        border-bottom: 3px solid white;
         display: flex;
-        flex-direction: column;
-        height: 100%;
-
-        .community-header {
-            padding: 2vh 15px;
-            height: 9vh;
-            font-size: 3.8vh;
-            border-bottom: 3px solid white;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+        flex-direction: row;
+        justify-content: space-between;
+    
+        .community-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         
-            .community-name {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            
-            .community-icons {
+        .community-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .community-icon {
+                position: relative;
+                font-size: 4.3vh;
+                padding: 0px 5px;
+                width: 5.4vh;
+                height: 5.8vh;
+                border-radius: 8px;
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                justify-content: center;
+                cursor: pointer;
 
-                .community-icon {
-                    position: relative;
-                    font-size: 4.3vh;
-                    padding: 0px 5px;
-                    width: 5.4vh;
-                    height: 5.8vh;
-                    border-radius: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-
-                    img {
-                        height: 4.3vh;
-                    }
-
-                    &.selected {
-                        background-color: $gloki-grey;
-                    }
-
-                    .circle {
-                        width: 2.2vh;
-                        height: 2.2vh;
-                        position: absolute;
-                        left: 3vh;
-                        top: 2px;
-                        border-radius: 10px;
-    
-                        &.green {
-                            background-color: $gloki-green;
-                        }
-
-                        &.red {
-                            background-color: $gloki-red;
-                        }
-                    }
-    
+                img {
+                    height: 4.3vh;
                 }
+
+                &.selected {
+                    background-color: $gloki-grey;
+                }
+
+                .circle {
+                    width: 2.2vh;
+                    height: 2.2vh;
+                    position: absolute;
+                    left: 3vh;
+                    top: 2px;
+                    border-radius: 10px;
+
+                    &.green {
+                        background-color: $gloki-green;
+                    }
+
+                    &.red {
+                        background-color: $gloki-red;
+                    }
+                }
+
             }
         }
+    }
 
-        .community-content {
-            height: 100%;
-        }
+    .the-rest {
+        height: 90.1%;
     }
 }

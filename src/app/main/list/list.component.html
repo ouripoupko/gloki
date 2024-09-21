@@ -1,4 +1,3 @@
-<!-- <app-scan *ngIf="findMode"/> -->
 <div class="community-list">
   <div class="just-list">
       <div *ngFor="let item of communityService.communities | keyvalue" class="community" [routerLink]="'../community/'+item.key">

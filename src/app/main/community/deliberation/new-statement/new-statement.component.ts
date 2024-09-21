@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Deliberation, DeliberationService } from 'src/app/services/deliberation.service';
 
@@ -11,7 +11,7 @@ import { Deliberation, DeliberationService } from 'src/app/services/deliberation
   templateUrl: './new-statement.component.html',
   styleUrl: './new-statement.component.scss'
 })
-export class NewStatementComponent {
+export class NewStatementComponent implements OnInit{
 
   @Input() public contractId?: string;
   deliberation: Deliberation = {} as Deliberation;
@@ -21,6 +21,12 @@ export class NewStatementComponent {
   constructor(
     public deliberationService: DeliberationService
   ) {
+  }
+
+  ngOnInit(): void {
+    if(this.contractId) {
+      this.deliberation = this.deliberationService.deliberations[this.contractId];
+    }
   }
 
   onAdd() {

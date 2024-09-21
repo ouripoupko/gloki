@@ -1,10 +1,12 @@
 @import "src/variables.scss";
 
-.main-container {
+:host {
     background: linear-gradient(167.1deg, $gloki-dark 16.16%, $gloki-blue 94.75%);
     width: $gloki-width;
     height: 100%;
     color: white;
+    display: flex;
+    flex-direction: column;
 
     .centralized {
         display: flex;
@@ -17,8 +19,11 @@
         }
     }
 
-    a {
-        color: white;
+    app-main-bar {
+        height: 9%;
     }
 
+    .the-rest {
+        height: 91%;
+    }
 }

@@ -13,9 +13,11 @@
             </div>
         </div>
     </div>
-    <app-sorting *ngIf="subpage === Subpage.SORTING" [contractId]="contractId" (closeEvent)="subpage=Subpage.LISTING"></app-sorting>
-    <app-listing *ngIf="subpage === Subpage.LISTING" [contractId]="contractId" (addEvent)="subpage=Subpage.ADDING"></app-listing>
-    <app-new-statement *ngIf="subpage === Subpage.ADDING" [contractId]="contractId" (closeEvent)="subpage=Subpage.LISTING"></app-new-statement>
+    <div class="the-rest">
+        <app-sorting *ngIf="subpage === Subpage.SORTING" [contractId]="contractId" (closeEvent)="subpage=Subpage.LISTING"></app-sorting>
+        <app-listing *ngIf="subpage === Subpage.LISTING" [contractId]="contractId" (addEvent)="subpage=Subpage.ADDING"></app-listing>
+        <app-new-statement *ngIf="subpage === Subpage.ADDING" [contractId]="contractId" (closeEvent)="subpage=Subpage.LISTING"></app-new-statement>
+    </div>
 </ng-container>
 <div *ngIf="subpage===Subpage.NONE" class="centered-button-parent">
     <button class="centered-button" (click)="joinDelib()" [disabled]="isJoining">Click to join the discussion</button>
