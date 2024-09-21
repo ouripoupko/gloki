@@ -2,9 +2,10 @@
 @import '@material-symbols/font-400/outlined.css';
 
 :host {
-    padding: 17px 15px;
+    padding: 0px 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 3px solid white;
 
     .logo {
@@ -17,7 +18,7 @@
         gap: 20px;
 
         .header-icon {
-            font-size: 40px;
+            font-size: $gloki-fs-icon;
             cursor: pointer;
         }
 

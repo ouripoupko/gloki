@@ -1,84 +1,79 @@
 @import "src/variables.scss";
 
 :host {
-    height: 80vh;
     margin-top: 7.5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .new-community-container {
+    .input-area {
         width: 75%;
         display: flex;
         flex-direction: column;
-    
-        .input-area {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-    
-            .title {
-                font-size: 35px;
-                font-weight: bold;
-            }
-    
-            input {
+        justify-content: flex-start;
+
+        .title {
+            font-size: $gloki-fs-banner;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            height: 5.9vh;
+            font-size: $gloki-fs-header;
+            margin-top: 3.2vh;
+        }
+        
+        label {
+            font-size: $gloki-fs-small;
+        }
+        
+        .desc-and-info {
+            position: relative;
+
+            textarea {
+                font-size: $gloki-fs-regular;
+                margin-top: 1.5vh;
                 width: 100%;
-                height: 5.9vh;
-                font-size: 28px;
-                margin-top: 3.2vh;
             }
-            
-            label {
-                font-size: 15px;
-            }
-            
-            .desc-and-info {
-                position: relative;
-    
-                textarea {
-                    font-size: 21px;
-                    margin-top: 1.5vh;
-                    width: 100%;
-                }
-    
-                .raised-circle {
-                    position: absolute;
-                    top: 1.5vh;
-                    right: -3vh;
-                    border-radius: 50%;
-                    width: 2vh;
-                    height: 2vh;
-                    display: inline-block;
-                    background: white;
-                    color: $gloki-dark;
-                    text-align: center;
-                    font-size: 1.6vh;
-                    transform: translateY(-1vh);
-                    cursor: pointer;
-                }
+
+            .raised-circle {
+                position: absolute;
+                top: 1.5vh;
+                right: -3vh;
+                border-radius: 50%;
+                width: 2vh;
+                height: 2vh;
+                display: inline-block;
+                background: white;
+                color: $gloki-dark;
+                text-align: center;
+                font-size: $gloki-fs-small;
+                transform: translateY(-1vh);
+                cursor: pointer;
             }
         }
-            
-        .button-area {
-            margin-top: 1.5vh;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            gap: calc($gloki-width * 0.035);
-    
-            button {
-                border-radius: 9px;
-                width: calc($gloki-width * 0.2);
-                height: 3.6vh;
-                font-size: 15px;
-                border: none;
-            }
-    
-            #cancel {
-                background-color: $gloki-grey;
-                color: white;
-            }
+    }
+        
+    .button-area {
+        width: 75%;
+        margin-top: 1.5vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: calc($gloki-width * 0.035);
+
+        button {
+            border-radius: 9px;
+            width: calc($gloki-width * 0.2);
+            height: 3.6vh;
+            font-size: $gloki-fs-small;
+            border: none;
         }
-    }    
+
+        #cancel {
+            background-color: $gloki-grey;
+            color: white;
+        }
+    }
 }

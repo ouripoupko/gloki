@@ -1,16 +1,14 @@
-<div class="new-community-container">
-    <div class="input-area">
-        <div class="title">Create<br>community</div>
-        <input name="name" [(ngModel)]="name" autocomplete="off">
-        <label for="name">community name</label>
-        <div class="desc-and-info">
-            <textarea rows="4" name="description" [(ngModel)]="description"></textarea>
-            <span (click)="showInfo()" class="raised-circle">?</span>
-        </div>
-        <label for="description">newcomer instructions</label>
+<div class="input-area">
+    <div class="title">Create<br>community</div>
+    <input name="name" [(ngModel)]="name" autocomplete="off">
+    <label for="name">community name</label>
+    <div class="desc-and-info">
+        <textarea rows="4" name="description" [(ngModel)]="description"></textarea>
+        <span (click)="showInfo()" class="raised-circle">?</span>
     </div>
-    <div class="button-area">
-        <button id="cancel" routerLink="../communities" replaceUrl>Cancel</button>
-        <button [disabled]="name.trim()===''" (click)="onSave($event)">Save</button>
-    </div>
+    <label for="description">newcomer instructions</label>
+</div>
+<div class="button-area">
+    <button id="cancel" routerLink="../communities" replaceUrl>Cancel</button>
+    <button [disabled]="name.trim()===''" (click)="onSave($event)">Save</button>
 </div>

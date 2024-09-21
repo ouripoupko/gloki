@@ -1,21 +1,24 @@
 @import "src/variables.scss";
 
-.community-list {
+:host {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 90%;
-    width: 100%;
 
     .just-list {
         width: 100%;
         overflow-y: auto;
+        flex: 1;
         
         .community {
             width: 100%;
-            padding: 19px 23px;
-            font-size: 35px;
+            padding: 15px 23px;
+            display: flex;
+            align-items: center;
+            font-size: $gloki-fs-banner;
             border-bottom: 1px solid white;
             cursor: pointer;
         }

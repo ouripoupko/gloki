@@ -8,13 +8,14 @@
     flex-direction: column;
 
     .community-header {
-        height: 9.9%;
-        padding: 2vh 15px;
-        font-size: 3.8vh;
+        height: 7.5%;
+        padding: 0px 15px;
+        font-size: $gloki-fs-title;
         border-bottom: 3px solid white;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
     
         .community-name {
             overflow: hidden;
@@ -29,10 +30,10 @@
 
             .community-icon {
                 position: relative;
-                font-size: 4.3vh;
+                font-size: $gloki-fs-icon;
                 padding: 0px 5px;
                 width: 5.4vh;
-                height: 5.8vh;
+                height: 5.4vh;
                 border-radius: 8px;
                 display: flex;
                 align-items: center;
@@ -40,7 +41,7 @@
                 cursor: pointer;
 
                 img {
-                    height: 4.3vh;
+                    height: 4vh;
                 }
 
                 &.selected {
@@ -69,6 +70,6 @@
     }
 
     .the-rest {
-        height: 90.1%;
+        height: 92.5%;
     }
 }
